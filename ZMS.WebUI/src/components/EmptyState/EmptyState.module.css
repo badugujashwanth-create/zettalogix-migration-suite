@@ -1,0 +1,18 @@
+.empty {
+  border-radius: var(--radius-lg);
+  background: linear-gradient(155deg, var(--surface-white), #f1f5ff);
+  padding: 36px;
+  text-align: center;
+  box-shadow: var(--shadow-soft);
+}
+
+.empty h3 {
+  margin: 0 0 8px;
+  color: var(--text-strong);
+}
+
+.empty p {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.6;
+}

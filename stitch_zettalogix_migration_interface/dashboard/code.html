@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Zettalogix Migration Suite - Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary": "#fcf8fc",
+                        "on-tertiary-container": "#454c65",
+                        "on-secondary-fixed-variant": "#5c5b5f",
+                        "secondary-dim": "#545256",
+                        "on-primary-container": "#4741b3",
+                        "surface-container-high": "#dce9ff",
+                        "primary-fixed": "#e2dfff",
+                        "tertiary-dim": "#4b526c",
+                        "secondary-container": "#e5e1e6",
+                        "on-tertiary": "#faf8ff",
+                        "on-primary": "#faf6ff",
+                        "tertiary-container": "#d2d9f8",
+                        "outline-variant": "#87b5f0",
+                        "secondary-fixed-dim": "#d7d3d8",
+                        "surface-bright": "#f8f9ff",
+                        "on-error-container": "#782232",
+                        "on-error": "#fff7f7",
+                        "secondary": "#605e62",
+                        "surface-dim": "#c4dcff",
+                        "surface-container-highest": "#d3e4ff",
+                        "primary-container": "#e2dfff",
+                        "surface-container": "#e6eeff",
+                        "background": "#f8f9ff",
+                        "inverse-primary": "#8c88fd",
+                        "secondary-fixed": "#e5e1e6",
+                        "surface": "#f8f9ff",
+                        "tertiary-fixed-dim": "#c4cbe9",
+                        "on-tertiary-fixed": "#323951",
+                        "tertiary": "#575e78",
+                        "on-secondary-fixed": "#403f43",
+                        "primary-fixed-dim": "#d3d0ff",
+                        "error": "#9e3f4e",
+                        "outline": "#4f7db5",
+                        "on-tertiary-fixed-variant": "#4e556f",
+                        "surface-tint": "#544fc0",
+                        "on-primary-fixed": "#332c9f",
+                        "on-primary-fixed-variant": "#514cbd",
+                        "inverse-on-surface": "#8f9eb4",
+                        "primary": "#544fc0",
+                        "surface-container-low": "#eff4ff",
+                        "error-container": "#ff8b9a",
+                        "surface-variant": "#d3e4ff",
+                        "on-surface": "#00345e",
+                        "inverse-surface": "#010f20",
+                        "primary-dim": "#4742b3",
+                        "error-dim": "#4f0116",
+                        "on-surface-variant": "#306197",
+                        "tertiary-fixed": "#d2d9f8",
+                        "on-secondary-container": "#525155",
+                        "on-background": "#00345e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-slate-50 dark:bg-slate-950 flex flex-col p-6 space-y-8 bg-slate-100 dark:bg-slate-900 shadow-[inset_-1px_0_0_0_rgba(0,0,0,0.05)] font-inter tracking-tight antialiased">
+<div class="flex flex-col space-y-1">
+<div class="flex items-center space-x-3 mb-8">
+<div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dataset</span>
+</div>
+<div>
+<h1 class="text-xl font-bold tracking-tighter text-slate-900 dark:text-slate-50">Zettalogix</h1>
+<p class="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant font-bold opacity-70">Migration Suite</p>
+</div>
+</div>
+<nav class="flex-1 flex flex-col space-y-1">
+<!-- Dashboard Active -->
+<a class="flex items-center px-4 py-3 text-indigo-700 dark:text-indigo-400 font-semibold bg-white dark:bg-slate-800 rounded-md transition-colors scale-95 active:scale-100 duration-150" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center px-4 py-3 text-slate-600 dark:text-slate-400 hover:text-indigo-600 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors scale-95 active:scale-100 duration-150" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="analytics">analytics</span>
+<span>Job Monitor</span>
+</a>
+<a class="flex items-center px-4 py-3 text-slate-600 dark:text-slate-400 hover:text-indigo-600 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors scale-95 active:scale-100 duration-150" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="add_task">add_task</span>
+<span>Create Job</span>
+</a>
+<a class="flex items-center px-4 py-3 text-slate-600 dark:text-slate-400 hover:text-indigo-600 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors scale-95 active:scale-100 duration-150" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="settings_input_component">settings_input_component</span>
+<span>Connections</span>
+</a>
+<a class="flex items-center px-4 py-3 text-slate-600 dark:text-slate-400 hover:text-indigo-600 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors scale-95 active:scale-100 duration-150" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="history_edu">history_edu</span>
+<span>Activity Logs</span>
+</a>
+</nav>
+</div>
+<div class="mt-auto flex flex-col space-y-1 border-t border-slate-200 dark:border-slate-800 pt-6">
+<button class="mb-4 py-3 px-4 bg-primary text-on-primary rounded-xl font-bold text-sm tracking-tight hover:opacity-90 transition-opacity">
+                Start Migration
+            </button>
+<a class="flex items-center px-4 py-2 text-slate-600 dark:text-slate-400 hover:text-indigo-600 transition-colors" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="menu_book">menu_book</span>
+<span>Documentation</span>
+</a>
+<a class="flex items-center px-4 py-2 text-slate-600 dark:text-slate-400 hover:text-indigo-600 transition-colors" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</div>
+</aside>
+<!-- TopAppBar -->
+<header class="fixed top-0 right-0 left-64 h-16 z-40 flex items-center justify-between px-8 w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-100 dark:border-slate-800 shadow-sm shadow-slate-200/50 dark:shadow-none font-inter text-sm font-medium">
+<div class="flex items-center flex-1 max-w-xl">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container border-none rounded-lg focus:ring-2 focus:ring-primary/20 text-sm placeholder:text-on-surface-variant/50" placeholder="Search migrations, datasets, or logs..." type="text"/>
+</div>
+</div>
+<div class="flex items-center space-x-6 ml-8">
+<button class="relative text-on-surface-variant hover:text-primary transition-colors duration-300">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-300">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<div class="flex items-center space-x-3 pl-6 border-l border-slate-100 dark:border-slate-800">
+<div class="text-right">
+<p class="text-sm font-bold text-on-surface leading-none">Admin User</p>
+<p class="text-[11px] text-on-surface-variant font-medium">System Architect</p>
+</div>
+<img alt="Administrator Profile" class="w-10 h-10 rounded-full border-2 border-surface-container-high object-cover" data-alt="professional portrait of a system administrator in a modern office setting, soft professional lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAL6_qhTNuhwRWrXk2S0KmZS0OVfBLdykGBlL1lmfo0hUcLjkcTGUM95-VLSjXQywgoeL5vNX6xiAzsp5eNzZiJK7-jWZfgGDkgtjGL8votnwVJ2HKcXtw3B0jeSRFXniSKQfoqUzPiNeGoxOqhs9dZ4hU4A1dKqeT-7zaL_wp4_AwWS09sfSBsTMVlt8IMAYGs4zqVjygB2W2J3wlyaY8Dt8T_MhqoGYX9P1VJQJy6vEcHZCXvPZ6pHd39B2O4PmflRSeEaP3eFZ0"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-24 px-8 pb-12 min-h-screen">
+<div class="max-w-[1440px] mx-auto">
+<!-- Hero Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<div class="bg-surface-container-lowest p-6 rounded-xl transition-all border border-transparent hover:border-outline-variant/20 group">
+<p class="text-on-surface-variant text-xs font-bold uppercase tracking-widest mb-2">Active Jobs</p>
+<div class="flex items-end justify-between">
+<span class="text-4xl font-extrabold tracking-tight text-on-surface">12</span>
+<span class="text-primary bg-primary-container/30 px-2 py-1 rounded text-[10px] font-bold">LIVE NOW</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl transition-all border border-transparent hover:border-outline-variant/20">
+<p class="text-on-surface-variant text-xs font-bold uppercase tracking-widest mb-2">Success Rate</p>
+<div class="flex items-end justify-between">
+<span class="text-4xl font-extrabold tracking-tight text-on-surface">99.4%</span>
+<div class="flex items-center text-tertiary text-xs font-semibold">
+<span class="material-symbols-outlined text-sm mr-1">trending_up</span>
+                            +0.2%
+                        </div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl transition-all border border-transparent hover:border-outline-variant/20">
+<p class="text-on-surface-variant text-xs font-bold uppercase tracking-widest mb-2">Data Migrated</p>
+<div class="flex items-end justify-between">
+<span class="text-4xl font-extrabold tracking-tight text-on-surface">4.2 <span class="text-xl font-medium text-on-surface-variant">TB</span></span>
+<span class="material-symbols-outlined text-on-surface-variant/40">database</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl transition-all border border-transparent hover:border-outline-variant/20">
+<p class="text-on-surface-variant text-xs font-bold uppercase tracking-widest mb-2">Failed Items</p>
+<div class="flex items-end justify-between">
+<span class="text-4xl font-extrabold tracking-tight text-on-surface">83</span>
+<button class="text-error bg-error-container/20 px-3 py-1 rounded-full text-[10px] font-bold hover:bg-error-container/40 transition-colors">VIEW ALL</button>
+</div>
+</div>
+</div>
+<!-- Bento Layout Content -->
+<div class="grid grid-cols-12 gap-8 items-start">
+<!-- Recent Activity Table (Left - 8 columns) -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest rounded-xl p-8 overflow-hidden">
+<div class="flex items-center justify-between mb-8">
+<div>
+<h2 class="text-2xl font-extrabold tracking-tight text-on-surface">Recent Activity</h2>
+<p class="text-on-surface-variant text-sm mt-1">Real-time status of current and past migration pipelines.</p>
+</div>
+<button class="flex items-center space-x-2 text-on-surface-variant hover:text-primary transition-colors py-2 px-4 rounded-lg bg-surface-container-low border border-outline-variant/10">
+<span class="material-symbols-outlined text-lg">filter_list</span>
+<span class="text-sm font-semibold">Filter</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-separate border-spacing-y-4">
+<thead>
+<tr class="text-on-surface-variant text-[11px] font-bold uppercase tracking-widest px-4">
+<th class="pb-2 font-bold px-4">Job Name</th>
+<th class="pb-2 font-bold">Status</th>
+<th class="pb-2 font-bold">Items</th>
+<th class="pb-2 font-bold">Timestamp</th>
+<th class="pb-2 font-bold text-right px-4">Action</th>
+</tr>
+</thead>
+<tbody class="text-sm">
+<!-- Table Row 1 -->
+<tr class="bg-surface-container-low group hover:bg-surface-container transition-colors">
+<td class="py-4 px-4 rounded-l-xl font-bold text-on-surface">Cloud_Infra_Sync_Q4</td>
+<td class="py-4">
+<div class="flex items-center space-x-2">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="font-medium">Success</span>
+</div>
+</td>
+<td class="py-4 text-on-surface-variant font-medium">1,240,112</td>
+<td class="py-4 text-on-surface-variant">2 mins ago</td>
+<td class="py-4 px-4 rounded-r-xl text-right">
+<button class="text-primary hover:bg-primary-container px-3 py-1.5 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-lg">arrow_forward</span>
+</button>
+</td>
+</tr>
+<!-- Table Row 2 -->
+<tr class="bg-surface-container-low group hover:bg-surface-container transition-colors">
+<td class="py-4 px-4 rounded-l-xl font-bold text-on-surface">User_Metadata_Production</td>
+<td class="py-4">
+<div class="flex items-center space-x-2">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="font-medium text-primary">In Progress</span>
+</div>
+</td>
+<td class="py-4 text-on-surface-variant font-medium">458,900</td>
+<td class="py-4 text-on-surface-variant">14 mins ago</td>
+<td class="py-4 px-4 rounded-r-xl text-right">
+<button class="text-primary hover:bg-primary-container px-3 py-1.5 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-lg">pause</span>
+</button>
+</td>
+</tr>
+<!-- Table Row 3 -->
+<tr class="bg-surface-container-low group hover:bg-surface-container transition-colors">
+<td class="py-4 px-4 rounded-l-xl font-bold text-on-surface">Legacy_Archive_Migration</td>
+<td class="py-4">
+<div class="flex items-center space-x-2">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="font-medium text-error">Failed</span>
+</div>
+</td>
+<td class="py-4 text-on-surface-variant font-medium">12,044</td>
+<td class="py-4 text-on-surface-variant">1 hour ago</td>
+<td class="py-4 px-4 rounded-r-xl text-right">
+<button class="text-primary hover:bg-primary-container px-3 py-1.5 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-lg">refresh</span>
+</button>
+</td>
+</tr>
+<!-- Table Row 4 -->
+<tr class="bg-surface-container-low group hover:bg-surface-container transition-colors">
+<td class="py-4 px-4 rounded-l-xl font-bold text-on-surface">Sales_Report_Batch_09</td>
+<td class="py-4">
+<div class="flex items-center space-x-2">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="font-medium">Success</span>
+</div>
+</td>
+<td class="py-4 text-on-surface-variant font-medium">89,233</td>
+<td class="py-4 text-on-surface-variant">3 hours ago</td>
+<td class="py-4 px-4 rounded-r-xl text-right">
+<button class="text-primary hover:bg-primary-container px-3 py-1.5 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-lg">arrow_forward</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Migration Progress Overview (Right - 4 columns) -->
+<div class="col-span-12 lg:col-span-4 space-y-8">
+<!-- Progress Card -->
+<div class="bg-surface-container-lowest rounded-xl p-8 border-l-4 border-primary">
+<h3 class="text-xl font-extrabold tracking-tight text-on-surface mb-6">Migration Progress Overview</h3>
+<div class="space-y-8">
+<!-- Overall Progress -->
+<div>
+<div class="flex justify-between items-end mb-3">
+<span class="text-sm font-bold text-on-surface">Total Cluster Relocation</span>
+<span class="text-2xl font-black text-primary">82%</span>
+</div>
+<div class="h-3 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-primary-dim rounded-full" style="width: 82%"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-low p-4 rounded-lg">
+<p class="text-on-surface-variant text-[10px] font-bold uppercase tracking-widest mb-1">Total Objects</p>
+<p class="text-lg font-extrabold text-on-surface">14.8M</p>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg">
+<p class="text-on-surface-variant text-[10px] font-bold uppercase tracking-widest mb-1">Transfer Rate</p>
+<p class="text-lg font-extrabold text-on-surface">450MB/s</p>
+</div>
+</div>
+<div class="pt-6 border-t border-surface-container-high">
+<p class="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-4">Pipeline Distribution</p>
+<div class="space-y-4">
+<div class="flex items-center space-x-3">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<div class="flex-1 text-xs font-semibold text-on-surface">AWS S3 West-2</div>
+<div class="text-xs font-bold text-on-surface-variant">64.2 GB</div>
+</div>
+<div class="flex items-center space-x-3">
+<div class="w-2 h-2 rounded-full bg-tertiary"></div>
+<div class="flex-1 text-xs font-semibold text-on-surface">GCP Cloud SQL</div>
+<div class="text-xs font-bold text-on-surface-variant">12.8 GB</div>
+</div>
+<div class="flex items-center space-x-3">
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+<div class="flex-1 text-xs font-semibold text-on-surface">Local Datacenter</div>
+<div class="text-xs font-bold text-on-surface-variant">4.2 GB</div>
+</div>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary py-4 rounded-xl font-bold tracking-tight shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-transform">
+                                Download Comprehensive Report
+                            </button>
+</div>
+</div>
+<!-- System Health Visual -->
+<div class="relative overflow-hidden rounded-xl h-48 group">
+<img alt="Infrastructure Visualization" class="absolute inset-0 w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" data-alt="abstract server room with blue neon light lines representing high-speed data flow and connectivity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIf_5kJpOwED9zfN9NdEhaM7nRHqJ-15N7DaGrHosGIfa3X_Z178wbaIHuWpoO4wNJynKaqfu1sr0JaEOIMqbyoWk5rUvhG78k1t3SN-nKjxxiOJ6u4abiWy7JSCKPMIoW4YgX8MgmeMwQ4vbEzEwaQmrT00653V4Whb5h3gshTwbJSAv2xsmh07AUBOikxEDJmirfaM5DiqgPw4U30xrzNbPfXgfTVoRm18xtf2A4hcn0dGoChQAHMY92w5xVLZPDjnOLtIMICXQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-surface to-transparent p-6 flex flex-col justify-end">
+<h4 class="text-white font-bold text-lg leading-tight">Infrastructure Health</h4>
+<p class="text-white/70 text-xs">All clusters operating within normal latency parameters.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Custom Migration Visualizer (Bottom Bento Piece) -->
+<div class="mt-8 grid grid-cols-12 gap-8">
+<div class="col-span-12 bg-surface-container-low rounded-xl p-8 flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
+<div class="flex items-center space-x-6">
+<div class="w-16 h-16 rounded-2xl bg-white flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-3xl text-primary" style="font-variation-settings: 'FILL' 1;">speed</span>
+</div>
+<div>
+<h4 class="text-xl font-extrabold tracking-tight text-on-surface">ZettaStream Engine v4.2</h4>
+<p class="text-on-surface-variant text-sm">Enhanced deduplication and compression enabled on all active nodes.</p>
+</div>
+</div>
+<div class="flex space-x-3">
+<div class="px-6 py-3 bg-white rounded-lg flex flex-col items-center">
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">Latency</span>
+<span class="text-lg font-black text-on-surface">14ms</span>
+</div>
+<div class="px-6 py-3 bg-white rounded-lg flex flex-col items-center">
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">Uptime</span>
+<span class="text-lg font-black text-on-surface">99.99%</span>
+</div>
+<div class="px-6 py-3 bg-white rounded-lg flex flex-col items-center">
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">IOPS</span>
+<span class="text-lg font-black text-on-surface">12k</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

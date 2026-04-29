@@ -1,0 +1,16 @@
+bin/
+obj/
+.vs/
+.idea/
+.vscode/
+.dotnet-home/
+node_modules/
+dist/
+coverage/
+*.user
+*.suo
+*.cache
+*.tsbuildinfo
+*.log
+ZMS.WebUI/vite.config.js
+ZMS.WebUI/vite.config.d.ts
