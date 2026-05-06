@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { ConnectionRecord, CreateJobInput } from "../../utils/models";
 import { formatConnectionType } from "../../utils/formatters";
 import styles from "./FormWizard.module.css";
@@ -17,7 +18,7 @@ const initialForm: CreateJobInput = {
   targetConnectionId: "",
   sourcePath: "",
   targetSite: "",
-  targetLibrary: "Shared Documents",
+  targetLibrary: "",
   preserveMetadata: true
 };
 
@@ -41,6 +42,7 @@ export default function FormWizard({
     () => connections.filter((connection) => connection.type === "SharePointOnline"),
     [connections]
   );
+  const selectedSourceConnection = connections.find((connection) => connection.id === form.sourceConnectionId);
 
   if (!isOpen) {
     return null;
@@ -54,6 +56,25 @@ export default function FormWizard({
         : step === 2
           ? Boolean(form.targetConnectionId && form.targetSite && form.targetLibrary)
           : true;
+
+  const selectSourceConnection = (connectionId: string) => {
+    const connection = connections.find((item) => item.id === connectionId);
+    setForm({
+      ...form,
+      sourceConnectionId: connectionId,
+      sourcePath: connection ? connection.rootPath || connection.url : ""
+    });
+  };
+
+  const selectTargetConnection = (connectionId: string) => {
+    const connection = connections.find((item) => item.id === connectionId);
+    setForm({
+      ...form,
+      targetConnectionId: connectionId,
+      targetSite: connection?.url ?? "",
+      targetLibrary: connection?.documentLibraryName ?? ""
+    });
+  };
 
   const submit = async () => {
     await onSubmit(form);
@@ -113,7 +134,7 @@ export default function FormWizard({
                   Source connection
                   <select
                     value={form.sourceConnectionId}
-                    onChange={(event) => setForm({ ...form, sourceConnectionId: event.target.value })}
+                    onChange={(event) => selectSourceConnection(event.target.value)}
                   >
                     <option value="">Select source</option>
                     {sourceConnections.map((connection) => (
@@ -124,13 +145,20 @@ export default function FormWizard({
                   </select>
                 </label>
                 <label className={styles.full}>
-                  Source path
+                  {selectedSourceConnection?.type === "GoogleDrive" ? "Google Drive Folder Link" : "Source path"}
                   <input
-                    placeholder="Example: /sites/hr/Documents, \\\\fileserver\\department, or a Google Drive folder URL"
+                    placeholder={
+                      selectedSourceConnection?.type === "GoogleDrive"
+                        ? "Saved Google Drive folder link"
+                        : "Selected connection folder, site, or file share path"
+                    }
                     value={form.sourcePath}
                     onChange={(event) => setForm({ ...form, sourcePath: event.target.value })}
                   />
                 </label>
+                {selectedSourceConnection?.type === "GoogleDrive" ? (
+                  <p className={styles.full}>This uses the folder link saved on the Google Drive source connection.</p>
+                ) : null}
                 <label className={styles.checkbox}>
                   <input
                     type="checkbox"
@@ -148,7 +176,7 @@ export default function FormWizard({
                   Target connection
                   <select
                     value={form.targetConnectionId}
-                    onChange={(event) => setForm({ ...form, targetConnectionId: event.target.value })}
+                    onChange={(event) => selectTargetConnection(event.target.value)}
                   >
                     <option value="">Select destination</option>
                     {destinationConnections.map((connection) => (
@@ -205,6 +233,10 @@ export default function FormWizard({
                 <li>Confirm the target SharePoint site and document library already exist.</li>
                 <li>Monitor retries for locked or denied items after start.</li>
               </ul>
+              <Link className={styles.helpLink} to="/help" onClick={onClose}>
+                <span className="material-symbols-outlined">help</span>
+                Open Help Center
+              </Link>
             </div>
           </aside>
         </div>

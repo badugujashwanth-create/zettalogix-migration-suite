@@ -28,8 +28,15 @@ public class ConnectionsController : ControllerBase
         [FromBody] CreateConnectionRequestDto request,
         CancellationToken cancellationToken)
     {
-        var connection = await _connectionService.CreateAsync(request.ToApplicationRequest(), cancellationToken);
-        return Created($"/api/connections/{connection.Id}", connection.ToResponse());
+        try
+        {
+            var connection = await _connectionService.CreateAsync(request.ToApplicationRequest(), cancellationToken);
+            return Created($"/api/connections/{connection.Id}", connection.ToResponse());
+        }
+        catch (InvalidOperationException exception)
+        {
+            return BadRequest(exception.Message);
+        }
     }
 
     [HttpPost("{connectionId:guid}/test")]

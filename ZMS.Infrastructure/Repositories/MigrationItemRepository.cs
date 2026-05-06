@@ -51,7 +51,14 @@ public class MigrationItemRepository : IMigrationItemRepository
 
     public async Task UpdateAsync(MigrationItem item, CancellationToken cancellationToken)
     {
+        var trackedItem = _dbContext.MigrationItems.Local.FirstOrDefault(localItem => localItem.Id == item.Id);
+        if (trackedItem is not null && !ReferenceEquals(trackedItem, item))
+        {
+            _dbContext.Entry(trackedItem).State = EntityState.Detached;
+        }
+
         _dbContext.MigrationItems.Update(item);
         await _dbContext.SaveChangesAsync(cancellationToken);
+        _dbContext.Entry(item).State = EntityState.Detached;
     }
 }

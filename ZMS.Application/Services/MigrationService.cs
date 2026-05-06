@@ -9,12 +9,15 @@ namespace ZMS.Application.Services;
 
 public class MigrationService : IMigrationService
 {
+    private const string SharePointDocumentLibraryNameKey = "DocumentLibraryName";
+
     private readonly IConnectionRepository _connectionRepository;
     private readonly IMigrationJobRepository _jobRepository;
     private readonly IMigrationItemRepository _itemRepository;
     private readonly ILogRepository _logRepository;
     private readonly IJobQueue _jobQueue;
     private readonly ConnectorResolver _connectorResolver;
+    private readonly ISecretProtector _secretProtector;
     private readonly MigrationEngineOptions _migrationEngineOptions;
 
     public MigrationService(
@@ -24,6 +27,7 @@ public class MigrationService : IMigrationService
         ILogRepository logRepository,
         IJobQueue jobQueue,
         ConnectorResolver connectorResolver,
+        ISecretProtector secretProtector,
         IOptions<MigrationEngineOptions> migrationEngineOptions)
     {
         _connectionRepository = connectionRepository;
@@ -32,6 +36,7 @@ public class MigrationService : IMigrationService
         _logRepository = logRepository;
         _jobQueue = jobQueue;
         _connectorResolver = connectorResolver;
+        _secretProtector = secretProtector;
         _migrationEngineOptions = migrationEngineOptions.Value;
     }
 
@@ -62,6 +67,9 @@ public class MigrationService : IMigrationService
             throw new InvalidOperationException("The selected target connection is not backed by a target connector.");
         }
 
+        var targetSiteUrl = ResolveTargetSiteUrl(targetConnection, request.TargetSiteUrl);
+        var targetLibraryName = ResolveTargetLibraryName(targetConnection, request.TargetLibraryName);
+
         var job = new MigrationJob
         {
             Name = request.Name.Trim(),
@@ -69,8 +77,8 @@ public class MigrationService : IMigrationService
             TargetConnectionId = request.TargetConnectionId,
             SourceLocation = ResolveSourceLocation(sourceConnection, request.SourceLocation),
             SourceLibraryName = string.IsNullOrWhiteSpace(request.SourceLibraryName) ? null : request.SourceLibraryName.Trim(),
-            TargetSiteUrl = request.TargetSiteUrl.Trim(),
-            TargetLibraryName = request.TargetLibraryName.Trim(),
+            TargetSiteUrl = targetSiteUrl,
+            TargetLibraryName = targetLibraryName,
             PreserveMetadata = request.PreserveMetadata,
             BatchSize = request.BatchSize > 0 ? request.BatchSize : _migrationEngineOptions.DefaultBatchSize,
             MaxRetryCount = request.MaxRetryCount >= 0 ? request.MaxRetryCount : _migrationEngineOptions.DefaultMaxRetryCount,
@@ -150,6 +158,7 @@ public class MigrationService : IMigrationService
 
         var sourceConnection = await _connectionRepository.GetByIdAsync(job.SourceConnectionId, cancellationToken)
             ?? throw new KeyNotFoundException($"Source connection '{job.SourceConnectionId}' was not found.");
+        sourceConnection = sourceConnection.WithUnprotectedSecrets(_secretProtector);
 
         var sourceConnector = _connectorResolver.ResolveSource(sourceConnection);
         var discoveredFiles = await sourceConnector.GetFilesAsync(
@@ -207,6 +216,36 @@ public class MigrationService : IMigrationService
             ConnectionType.FileShare => sourceConnection.RootPath ?? sourceConnection.Url,
             _ => sourceConnection.Url
         };
+    }
+
+    private static string ResolveTargetSiteUrl(ConnectionProfile targetConnection, string? requestedSiteUrl)
+    {
+        var targetSiteUrl = string.IsNullOrWhiteSpace(requestedSiteUrl)
+            ? targetConnection.Url
+            : requestedSiteUrl.Trim();
+
+        if (string.IsNullOrWhiteSpace(targetSiteUrl))
+        {
+            throw new InvalidOperationException("SharePoint target site URL is required.");
+        }
+
+        return targetSiteUrl;
+    }
+
+    private static string ResolveTargetLibraryName(ConnectionProfile targetConnection, string? requestedLibraryName)
+    {
+        if (!string.IsNullOrWhiteSpace(requestedLibraryName))
+        {
+            return requestedLibraryName.Trim();
+        }
+
+        if (targetConnection.AdditionalSettings.TryGetValue(SharePointDocumentLibraryNameKey, out var savedLibraryName)
+            && !string.IsNullOrWhiteSpace(savedLibraryName))
+        {
+            return savedLibraryName.Trim();
+        }
+
+        throw new InvalidOperationException("SharePoint target document library name is required.");
     }
 
     private Task WriteLogAsync(

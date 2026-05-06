@@ -2,6 +2,7 @@ export const navigationItems = [
   { label: "Command Center", path: "/dashboard", icon: "space_dashboard" },
   { label: "Migration Jobs", path: "/migrations", icon: "moving" },
   { label: "Connections", path: "/connections", icon: "hub" },
+  { label: "Help Center", path: "/help", icon: "help" },
   { label: "Settings", path: "/settings", icon: "tune" }
 ];
 
@@ -17,6 +18,10 @@ export const pageTitles: Record<string, { title: string; subtitle: string }> = {
   "/connections": {
     title: "Cloud Gateways",
     subtitle: "Register and validate source and destination endpoints before migration work enters the queue."
+  },
+  "/help": {
+    title: "Help Center",
+    subtitle: "Operator runbooks, provider setup links, error fixes, and deployment requirements in one place."
   },
   "/settings": {
     title: "Execution Defaults",

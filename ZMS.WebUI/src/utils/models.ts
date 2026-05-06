@@ -10,6 +10,9 @@ export interface ConnectionRecord {
   type: ConnectionType;
   url: string;
   rootPath?: string;
+  documentLibraryName?: string;
+  hasClientSecret: boolean;
+  hasRefreshToken: boolean;
   summary: string;
   status: ConnectionStatus;
   lastChecked: string;
@@ -21,6 +24,7 @@ export interface JobEvent {
   timestamp: string;
   level: JobEventLevel;
   message: string;
+  details?: string;
 }
 
 export interface MigrationJob {
@@ -40,6 +44,7 @@ export interface MigrationJob {
   createdAt: string;
   updatedAt: string;
   startedAt?: string;
+  lastError?: string;
   history: JobEvent[];
 }
 
@@ -65,12 +70,15 @@ export interface CreateConnectionInput {
   type: ConnectionType;
   url: string;
   rootPath: string;
+  folderId: string;
+  folderUrl: string;
+  folderName: string;
   username: string;
   password: string;
   clientId: string;
   clientSecret: string;
   tenantId: string;
-  refreshToken: string;
+  documentLibraryName: string;
 }
 
 export interface NotificationMessage {

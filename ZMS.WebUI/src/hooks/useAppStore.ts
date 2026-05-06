@@ -1,8 +1,10 @@
 import { create } from "zustand";
-import { api } from "../services/api";
+import { api, getApiBaseUrl } from "../services/api";
+import { formatErrorForToast } from "../utils/errorHelp";
 import {
   AppSettings,
   ConnectionRecord,
+  ConnectionTestResult,
   CreateConnectionInput,
   CreateJobInput,
   LoadingState,
@@ -59,10 +61,24 @@ export const useAppStore = create<AppState>((set, get) => ({
       ]);
 
       set({ jobs, connections, settings });
-    } catch {
+    } catch (error) {
       set((state) => ({
+        jobs: [],
+        connections: [],
+        settings: state.settings ?? {
+          concurrency: 4,
+          retryLimit: 3,
+          notifyOnFailure: true,
+          telemetryEnabled: false
+        },
         notifications: [
-          notification("error", "Bootstrap failed", "The application could not load the current API data."),
+          notification(
+            "error",
+            "API not running",
+            error instanceof Error
+              ? error.message
+              : `Start the backend API at ${getApiBaseUrl()} and refresh the page.`
+          ),
           ...state.notifications
         ]
       }));
@@ -106,10 +122,14 @@ export const useAppStore = create<AppState>((set, get) => ({
         ]
       }));
       return job;
-    } catch {
+    } catch (error) {
       set((state) => ({
         notifications: [
-          notification("error", "Job creation failed", "The migration job could not be created."),
+          notification(
+            "error",
+            "Job creation failed",
+            error instanceof Error ? error.message : "The migration job could not be created."
+          ),
           ...state.notifications
         ]
       }));
@@ -132,6 +152,17 @@ export const useAppStore = create<AppState>((set, get) => ({
           ...state.notifications
         ]
       }));
+    } catch (error) {
+      set((state) => ({
+        notifications: [
+          notification(
+            "error",
+            "Migration start failed",
+            error instanceof Error ? error.message : "The selected migration could not be started."
+          ),
+          ...state.notifications
+        ]
+      }));
     } finally {
       set((state) => ({ loading: { ...state.loading, jobsMutation: false } }));
     }
@@ -147,6 +178,17 @@ export const useAppStore = create<AppState>((set, get) => ({
         jobs,
         notifications: [
           notification("info", "Migration paused", "The selected migration has been paused."),
+          ...state.notifications
+        ]
+      }));
+    } catch (error) {
+      set((state) => ({
+        notifications: [
+          notification(
+            "error",
+            "Migration pause failed",
+            error instanceof Error ? error.message : "The selected migration could not be paused."
+          ),
           ...state.notifications
         ]
       }));
@@ -167,16 +209,44 @@ export const useAppStore = create<AppState>((set, get) => ({
           ...state.notifications
         ]
       }));
+    } catch (error) {
+      set((state) => ({
+        notifications: [
+          notification(
+            "error",
+            "Connection save failed",
+            error instanceof Error ? error.message : "The connection could not be saved."
+          ),
+          ...state.notifications
+        ]
+      }));
+      throw error;
     } finally {
       set((state) => ({ loading: { ...state.loading, connectionsMutation: false } }));
     }
   },
 
   testConnection: async (id) => {
-    const result = await api.testConnection(id);
     const connection = get().connections.find((item) => item.id === id);
 
     if (!connection) {
+      return;
+    }
+
+    let result: ConnectionTestResult;
+    try {
+      result = await api.testConnection(id);
+    } catch (error) {
+      set((state) => ({
+        notifications: [
+          notification(
+            "error",
+            "Connection test failed",
+            error instanceof Error ? error.message : "The selected connection could not be tested."
+          ),
+          ...state.notifications
+        ]
+      }));
       return;
     }
 
@@ -195,7 +265,9 @@ export const useAppStore = create<AppState>((set, get) => ({
         notification(
           result.isSuccess ? "success" : "info",
           "Connection tested",
-          `${connection.name}: ${result.message}`
+          result.isSuccess
+            ? `${connection.name}: ${result.message}`
+            : formatErrorForToast(`${connection.name}: ${result.message}`)
         ),
         ...state.notifications
       ]

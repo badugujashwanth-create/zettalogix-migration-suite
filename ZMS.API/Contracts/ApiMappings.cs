@@ -2,12 +2,16 @@ using ZMS.API.Contracts.Connections;
 using ZMS.API.Contracts.Jobs;
 using ZMS.API.Contracts.Reports;
 using ZMS.Application.Contracts;
+using ZMS.Core.Enums;
 using ZMS.Core.Models;
 
 namespace ZMS.API.Contracts;
 
 public static class ApiMappings
 {
+    private const string GoogleRefreshTokenKey = "RefreshToken";
+    private const string SharePointDocumentLibraryNameKey = "DocumentLibraryName";
+
     public static CreateConnectionRequest ToApplicationRequest(this CreateConnectionRequestDto dto)
     {
         return new CreateConnectionRequest
@@ -51,6 +55,14 @@ public static class ApiMappings
             Type = connection.Type,
             Url = connection.Url,
             RootPath = connection.RootPath,
+            DocumentLibraryName = connection.AdditionalSettings.TryGetValue(SharePointDocumentLibraryNameKey, out var documentLibraryName)
+                ? documentLibraryName
+                : null,
+            HasClientSecret = connection.Type != ConnectionType.GoogleDrive
+                && !string.IsNullOrWhiteSpace(connection.ClientSecret),
+            HasRefreshToken = connection.Type != ConnectionType.GoogleDrive
+                && connection.AdditionalSettings.TryGetValue(GoogleRefreshTokenKey, out var refreshToken)
+                && !string.IsNullOrWhiteSpace(refreshToken),
             IsEnabled = connection.IsEnabled,
             CreatedUtc = connection.CreatedUtc,
             UpdatedUtc = connection.UpdatedUtc

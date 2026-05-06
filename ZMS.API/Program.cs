@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.DataProtection;
 using System.Text.Json.Serialization;
 using ZMS.Application.DependencyInjection;
 using ZMS.Connectors.FileShare.DependencyInjection;
@@ -30,6 +31,16 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.Configure<MigrationEngineOptions>(builder.Configuration.GetSection(MigrationEngineOptions.SectionName));
+builder.Services.Configure<GoogleDriveOptions>(builder.Configuration.GetSection(GoogleDriveOptions.SectionName));
+
+var dataProtectionBuilder = builder.Services
+    .AddDataProtection()
+    .SetApplicationName("ZettalogixMigrationSuite");
+var dataProtectionKeyRingPath = builder.Configuration["DataProtection:KeyRingPath"];
+if (!string.IsNullOrWhiteSpace(dataProtectionKeyRingPath))
+{
+    dataProtectionBuilder.PersistKeysToFileSystem(new DirectoryInfo(dataProtectionKeyRingPath));
+}
 
 builder.Services
     .AddZmsApplication()

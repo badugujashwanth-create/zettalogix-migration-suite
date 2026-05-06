@@ -1,4 +1,5 @@
 import { formatConnectionType, formatDate } from "../../utils/formatters";
+import { getErrorGuidance } from "../../utils/errorHelp";
 import { ConnectionRecord } from "../../utils/models";
 import styles from "./ConnectionCard.module.css";
 
@@ -8,6 +9,14 @@ interface ConnectionCardProps {
 }
 
 export default function ConnectionCard({ connection, onTest }: ConnectionCardProps): JSX.Element {
+  const testLabel =
+    connection.type === "GoogleDrive"
+      ? "Test Google Drive Source"
+      : connection.type === "SharePointOnline"
+        ? "Test SharePoint Online Target"
+        : "Test connection";
+  const guidance = getErrorGuidance(connection.lastTestMessage);
+
   return (
     <article className={styles.card}>
       <div className={styles.header}>
@@ -29,15 +38,39 @@ export default function ConnectionCard({ connection, onTest }: ConnectionCardPro
           <dt>Scope</dt>
           <dd>{connection.rootPath || "Default root"}</dd>
         </div>
+        {connection.documentLibraryName ? (
+          <div>
+            <dt>Library</dt>
+            <dd>{connection.documentLibraryName}</dd>
+          </div>
+        ) : null}
+        {connection.hasClientSecret ? (
+          <div>
+            <dt>Saved secrets</dt>
+            <dd>Client secret: ********</dd>
+          </div>
+        ) : null}
         <div>
           <dt>Last checked</dt>
           <dd>{formatDate(connection.lastChecked)}</dd>
         </div>
       </dl>
 
+      {connection.lastTestMessage ? (
+        <div className={styles.testMessage}>
+          <strong>Last test message</strong>
+          <p>{connection.lastTestMessage}</p>
+          {guidance ? (
+            <ul>
+              {guidance.checks.slice(0, 2).map((check) => <li key={check}>{check}</li>)}
+            </ul>
+          ) : null}
+        </div>
+      ) : null}
+
       <button type="button" className="ghost-button" onClick={() => onTest(connection.id)}>
         <span className="material-symbols-outlined">bolt</span>
-        Test connection
+        {testLabel}
       </button>
     </article>
   );

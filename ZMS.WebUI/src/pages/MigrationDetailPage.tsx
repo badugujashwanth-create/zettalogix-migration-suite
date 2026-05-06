@@ -5,6 +5,7 @@ import EmptyState from "../components/EmptyState/EmptyState";
 import ProgressBar from "../components/ProgressBar/ProgressBar";
 import { useAppStore } from "../hooks/useAppStore";
 import { useJobsPolling } from "../hooks/useJobsPolling";
+import { getErrorGuidance } from "../utils/errorHelp";
 import { formatDate, formatJobStatus } from "../utils/formatters";
 
 export default function MigrationDetailPage(): JSX.Element {
@@ -87,6 +88,35 @@ export default function MigrationDetailPage(): JSX.Element {
           </div>
         </article>
 
+        {job.lastError ? (
+          <article className="error-panel">
+            <div>
+              <span className="eyebrow">Failure Analysis</span>
+              <h2>{getErrorGuidance(job.lastError)?.title ?? "Migration error requires review"}</h2>
+              <p>{job.lastError}</p>
+            </div>
+            {getErrorGuidance(job.lastError) ? (
+              <div className="guidance-list">
+                <strong>{getErrorGuidance(job.lastError)?.summary}</strong>
+                <ul>
+                  {getErrorGuidance(job.lastError)?.checks.map((check) => <li key={check}>{check}</li>)}
+                </ul>
+                {getErrorGuidance(job.lastError)?.docs ? (
+                  <a
+                    className="external-link"
+                    href={getErrorGuidance(job.lastError)?.docs?.href}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <span className="material-symbols-outlined">open_in_new</span>
+                    {getErrorGuidance(job.lastError)?.docs?.label}
+                  </a>
+                ) : null}
+              </div>
+            ) : null}
+          </article>
+        ) : null}
+
         <section className="detail-grid">
           <article className="surface-card">
             <div className="section-heading">
@@ -104,12 +134,26 @@ export default function MigrationDetailPage(): JSX.Element {
                   <span>The reporting API will show activity after the job starts writing logs.</span>
                 </div>
               ) : (
-                job.history.slice(0, 8).map((event) => (
-                  <div key={event.id} className="timeline-item">
-                    <strong>{event.message}</strong>
-                    <span>{formatDate(event.timestamp)}</span>
-                  </div>
-                ))
+                job.history.slice(0, 8).map((event) => {
+                  const guidance = getErrorGuidance(`${event.message} ${event.details ?? ""}`);
+
+                  return (
+                    <div key={event.id} className={`timeline-item ${event.level}`}>
+                      <strong>{event.message}</strong>
+                      <span>{formatDate(event.timestamp)}</span>
+                      {event.details ? <p className="timeline-detail">{event.details}</p> : null}
+                      {guidance && event.level !== "info" ? (
+                        <div className="timeline-guidance">
+                          <strong>{guidance.title}</strong>
+                          <p>{guidance.summary}</p>
+                          <ul>
+                            {guidance.checks.slice(0, 3).map((check) => <li key={check}>{check}</li>)}
+                          </ul>
+                        </div>
+                      ) : null}
+                    </div>
+                  );
+                })
               )}
             </div>
           </article>

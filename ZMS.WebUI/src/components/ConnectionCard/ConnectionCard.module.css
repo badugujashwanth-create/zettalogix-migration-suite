@@ -61,3 +61,28 @@
   color: var(--text-strong);
   word-break: break-word;
 }
+
+.testMessage {
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.62);
+  padding: 14px 16px;
+}
+
+.testMessage strong {
+  display: block;
+  color: var(--text-strong);
+}
+
+.testMessage p {
+  margin: 8px 0 0;
+  color: var(--text-muted);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.testMessage ul {
+  margin: 10px 0 0;
+  padding-left: 18px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}

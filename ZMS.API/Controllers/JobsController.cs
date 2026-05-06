@@ -47,8 +47,19 @@ public class JobsController : ControllerBase
         [FromBody] CreateMigrationJobRequestDto request,
         CancellationToken cancellationToken)
     {
-        var job = await _migrationService.CreateJobAsync(request.ToApplicationRequest(), cancellationToken);
-        return Created($"/api/jobs/{job.Id}", job.ToResponse());
+        try
+        {
+            var job = await _migrationService.CreateJobAsync(request.ToApplicationRequest(), cancellationToken);
+            return Created($"/api/jobs/{job.Id}", job.ToResponse());
+        }
+        catch (InvalidOperationException exception)
+        {
+            return BadRequest(exception.Message);
+        }
+        catch (KeyNotFoundException exception)
+        {
+            return NotFound(exception.Message);
+        }
     }
 
     [HttpPost("{jobId:guid}/start")]

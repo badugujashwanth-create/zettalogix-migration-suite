@@ -8,6 +8,7 @@ import {
   JobEvent,
   MigrationJob
 } from "../utils/models";
+import { formatErrorForToast } from "../utils/errorHelp";
 
 const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL ?? "http://localhost:5206").replace(/\/+$/, "");
 const settingsStorageKey = "zms-web-ui-settings";
@@ -20,6 +21,9 @@ interface ApiConnectionResponse {
   type: ConnectionRecord["type"];
   url: string;
   rootPath?: string;
+  documentLibraryName?: string;
+  hasClientSecret: boolean;
+  hasRefreshToken: boolean;
   isEnabled: boolean;
   createdUtc: string;
   updatedUtc: string;
@@ -67,6 +71,55 @@ interface ApiLogEntry {
   createdUtc: string;
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
+}
+
+function flattenProblemErrors(errors: unknown): string[] {
+  if (Array.isArray(errors)) {
+    return errors.filter((item): item is string => typeof item === "string");
+  }
+
+  if (!isRecord(errors)) {
+    return typeof errors === "string" ? [errors] : [];
+  }
+
+  return Object.entries(errors).flatMap(([field, fieldErrors]) => {
+    if (Array.isArray(fieldErrors)) {
+      return fieldErrors
+        .filter((item): item is string => typeof item === "string")
+        .map((item) => `${field}: ${item}`);
+    }
+
+    return typeof fieldErrors === "string" ? [`${field}: ${fieldErrors}`] : [];
+  });
+}
+
+async function readErrorMessage(response: Response, path: string): Promise<string> {
+  const fallback = `Request to '${path}' failed with status ${response.status}.`;
+  const payload = await response.text();
+  if (!payload) {
+    return fallback;
+  }
+
+  try {
+    const parsed = JSON.parse(payload) as unknown;
+    if (!isRecord(parsed)) {
+      return payload;
+    }
+
+    const title = typeof parsed.title === "string" ? parsed.title : "";
+    const detail = typeof parsed.detail === "string" ? parsed.detail : "";
+    const message = typeof parsed.message === "string" ? parsed.message : "";
+    const errors = flattenProblemErrors(parsed.errors);
+    const parts = [detail, message, title, ...errors].filter(Boolean);
+
+    return parts.length > 0 ? parts.join(" ") : fallback;
+  } catch {
+    return payload;
+  }
+}
+
 const defaultSettings: AppSettings = {
   concurrency: 4,
   retryLimit: 3,
@@ -74,18 +127,47 @@ const defaultSettings: AppSettings = {
   telemetryEnabled: false
 };
 
+export function getApiBaseUrl(): string {
+  return apiBaseUrl;
+}
+
+function extractGoogleDriveFolderId(candidate?: string): string {
+  const trimmed = candidate?.trim() ?? "";
+  if (!trimmed) {
+    return "";
+  }
+
+  const folderMatch = trimmed.match(/\/drive\/(?:u\/\d+\/)?folders\/([A-Za-z0-9_-]+)/i);
+  if (folderMatch?.[1]) {
+    return folderMatch[1];
+  }
+
+  return /^[A-Za-z0-9_-]{10,}$/.test(trimmed) ? trimmed : "";
+}
+
+function buildGoogleDriveFolderUrl(folderId: string): string {
+  return `https://drive.google.com/drive/folders/${folderId}`;
+}
+
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(`${apiBaseUrl}/api${path}`, {
-    headers: {
-      "Content-Type": "application/json",
-      ...(init?.headers ?? {})
-    },
-    ...init
-  });
+  let response: Response;
+  try {
+    response = await fetch(`${apiBaseUrl}/api${path}`, {
+      headers: {
+        "Content-Type": "application/json",
+        ...(init?.headers ?? {})
+      },
+      ...init
+    });
+  } catch {
+    throw new Error(
+      formatErrorForToast(`API is not reachable at ${apiBaseUrl}. Start the backend and refresh the page.`)
+    );
+  }
 
   if (!response.ok) {
-    const message = await response.text();
-    throw new Error(message || `Request to '${path}' failed with status ${response.status}.`);
+    const message = await readErrorMessage(response, path);
+    throw new Error(formatErrorForToast(message));
   }
 
   if (response.status === 204) {
@@ -105,7 +187,9 @@ function getConnectionSummary(connection: ApiConnectionResponse): string {
     case "SharePointOnPrem":
       return "Legacy SharePoint source connection.";
     case "SharePointOnline":
-      return "Target Microsoft 365 document library connection.";
+      return connection.documentLibraryName
+        ? `Targets SharePoint library '${connection.documentLibraryName}'.`
+        : "Target Microsoft 365 document library connection.";
     case "FileShare":
       return connection.rootPath
         ? `Reads files from '${connection.rootPath}'.`
@@ -142,6 +226,9 @@ function mapConnection(connection: ApiConnectionResponse): ConnectionRecord {
     type: connection.type,
     url: connection.url,
     rootPath: connection.rootPath,
+    documentLibraryName: connection.documentLibraryName,
+    hasClientSecret: Boolean(connection.hasClientSecret),
+    hasRefreshToken: Boolean(connection.hasRefreshToken),
     summary: getConnectionSummary(connection),
     ...getConnectionStatus(connection.id, connection.updatedUtc)
   };
@@ -182,12 +269,14 @@ function mapJob(job: ApiMigrationJobResponse, report?: ApiJobReportResponse | nu
     createdAt: job.createdUtc,
     updatedAt: job.updatedUtc,
     startedAt: job.startedUtc,
+    lastError: job.lastError,
     history:
       report?.recentLogs.map((log) => ({
         id: log.id,
         timestamp: log.createdUtc,
         level: mapEventLevel(log.severity),
-        message: log.message
+        message: log.message,
+        details: log.details
       })) ?? []
   };
 }
@@ -273,9 +362,46 @@ export const api = {
   },
 
   async createConnection(input: CreateConnectionInput): Promise<ConnectionRecord> {
+    const googleFolderId =
+      input.type === "GoogleDrive"
+        ? input.folderId || input.rootPath || extractGoogleDriveFolderId(input.folderUrl || input.url)
+        : "";
+    const rawGoogleFolderValue = input.type === "GoogleDrive" ? (input.folderUrl || input.url).trim() : "";
+    const googleFolderUrl =
+      input.type === "GoogleDrive"
+        ? rawGoogleFolderValue === googleFolderId && googleFolderId
+          ? buildGoogleDriveFolderUrl(googleFolderId)
+          : rawGoogleFolderValue || (googleFolderId ? buildGoogleDriveFolderUrl(googleFolderId) : "")
+        : input.url;
+    const additionalSettings: Record<string, string> = {};
+
+    if (input.type === "GoogleDrive") {
+      if (googleFolderId) {
+        additionalSettings.FolderId = googleFolderId;
+      }
+
+      if (googleFolderUrl) {
+        additionalSettings.FolderUrl = googleFolderUrl;
+      }
+
+      if (input.folderName) {
+        additionalSettings.FolderName = input.folderName;
+      }
+    }
+
+    if (input.type === "SharePointOnline" && input.documentLibraryName) {
+      additionalSettings.DocumentLibraryName = input.documentLibraryName.trim();
+    }
+
     const connection = await request<ApiConnectionResponse>("/connections", {
       method: "POST",
-      body: JSON.stringify({
+      body: JSON.stringify(input.type === "GoogleDrive" ? {
+        name: input.name,
+        type: input.type,
+        url: googleFolderUrl,
+        rootPath: googleFolderId || null,
+        additionalSettings
+      } : {
         name: input.name,
         type: input.type,
         url: input.url,
@@ -285,11 +411,7 @@ export const api = {
         clientSecret: input.clientSecret || null,
         tenantId: input.tenantId || null,
         rootPath: input.rootPath || null,
-        additionalSettings: input.refreshToken
-          ? {
-              RefreshToken: input.refreshToken
-            }
-          : {}
+        additionalSettings
       })
     });
 

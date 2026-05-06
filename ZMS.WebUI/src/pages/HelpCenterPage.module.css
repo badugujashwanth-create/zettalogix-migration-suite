@@ -1,0 +1,211 @@
+.page {
+  display: grid;
+  gap: 20px;
+}
+
+.heroGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+  gap: 20px;
+}
+
+.heroGrid h2,
+.deploymentBand h2 {
+  margin: 0;
+  color: var(--text-strong);
+  font-size: 28px;
+  letter-spacing: 0;
+}
+
+.flowList {
+  display: grid;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.flowItem {
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr);
+  gap: 14px;
+  align-items: flex-start;
+  border-radius: 18px;
+  background: var(--surface-low);
+  padding: 16px;
+}
+
+.flowItem > span {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: var(--surface-white);
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.flowItem strong {
+  display: block;
+  color: var(--text-strong);
+}
+
+.flowItem p,
+.quickPanel p,
+.deploymentBand p {
+  margin: 8px 0 0;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.quickPanel {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  border-radius: var(--radius-lg);
+  background: var(--surface-low);
+  padding: 24px;
+}
+
+.quickPanel strong {
+  color: var(--text-strong);
+  font-size: 22px;
+}
+
+.requirementsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.requirementCard {
+  border-radius: var(--radius-lg);
+  background: var(--surface-white);
+  padding: 22px;
+  box-shadow: var(--shadow-soft);
+}
+
+.requirementHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.requirementHeader span {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.requirementHeader h3 {
+  margin: 0;
+  color: var(--text-strong);
+  font-size: 18px;
+  letter-spacing: 0;
+}
+
+.requirementCard ul {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.resourceGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.resourceLink {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  min-height: 92px;
+  border-radius: 18px;
+  background: var(--surface-low);
+  padding: 16px;
+  color: var(--text-default);
+  text-decoration: none;
+}
+
+.resourceLink > span:first-child {
+  color: var(--accent);
+  margin-top: 2px;
+}
+
+.resourceLink strong,
+.errorCard strong {
+  display: block;
+  color: var(--text-strong);
+}
+
+.resourceLink small {
+  display: block;
+  margin-top: 6px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.errorGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.errorCard {
+  border-radius: 18px;
+  background: var(--surface-low);
+  padding: 16px;
+}
+
+.errorCard span {
+  display: block;
+  margin-top: 8px;
+  color: var(--text-soft);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.errorCard p {
+  margin: 10px 0 0;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.deploymentBand {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.8fr);
+  gap: 20px;
+  border-radius: var(--radius-lg);
+  background: var(--surface-low);
+  padding: 24px;
+}
+
+.commandList {
+  display: grid;
+  gap: 10px;
+}
+
+.commandList code {
+  display: block;
+  border-radius: 14px;
+  background: var(--surface-white);
+  color: var(--text-strong);
+  padding: 12px 14px;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 1120px) {
+  .heroGrid,
+  .requirementsGrid,
+  .resourceGrid,
+  .errorGrid,
+  .deploymentBand {
+    grid-template-columns: 1fr;
+  }
+}

@@ -59,6 +59,7 @@ public class MigrationJobProcessor : BackgroundService
         var connectionRepository = services.GetRequiredService<IConnectionRepository>();
         var logRepository = services.GetRequiredService<ILogRepository>();
         var connectorResolver = services.GetRequiredService<ConnectorResolver>();
+        var secretProtector = services.GetRequiredService<ISecretProtector>();
 
         var job = await jobRepository.GetByIdAsync(jobId, cancellationToken);
         if (job is null || job.Status == JobStatus.Paused)
@@ -70,9 +71,11 @@ public class MigrationJobProcessor : BackgroundService
         {
             var sourceConnection = await connectionRepository.GetByIdAsync(job.SourceConnectionId, cancellationToken)
                 ?? throw new InvalidOperationException("The source connection could not be found.");
+            sourceConnection = sourceConnection.WithUnprotectedSecrets(secretProtector);
 
             var targetConnection = await connectionRepository.GetByIdAsync(job.TargetConnectionId, cancellationToken)
                 ?? throw new InvalidOperationException("The target connection could not be found.");
+            targetConnection = targetConnection.WithUnprotectedSecrets(secretProtector);
 
             var sourceConnector = connectorResolver.ResolveSource(sourceConnection);
             var targetConnector = connectorResolver.ResolveTarget(targetConnection);

@@ -13,6 +13,7 @@ public class SharePointGraphClient
 {
     private const long SmallFileUploadLimitInBytes = 250L * 1024 * 1024;
     private const int UploadChunkSizeInBytes = 320 * 1024 * 20;
+    private const string SharePointDocumentLibraryNameKey = "DocumentLibraryName";
     private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web);
 
     private readonly IHttpClientFactory _httpClientFactory;
@@ -51,13 +52,24 @@ public class SharePointGraphClient
             };
         }
 
+        if (!connection.AdditionalSettings.TryGetValue(SharePointDocumentLibraryNameKey, out var documentLibraryName)
+            || string.IsNullOrWhiteSpace(documentLibraryName))
+        {
+            return new ConnectionTestResult
+            {
+                IsSuccess = false,
+                Message = "SharePoint Online requires a target document library name."
+            };
+        }
+
         try
         {
             var site = await ResolveSiteAsync(connection, connection.Url, cancellationToken);
+            var drive = await ResolveDriveAsync(connection, site.WebUrl, documentLibraryName, cancellationToken);
             return new ConnectionTestResult
             {
                 IsSuccess = true,
-                Message = $"SharePoint Online connection verified for '{site.WebUrl}'."
+                Message = $"SharePoint Online connection verified for '{site.WebUrl}' library '{drive.Name}'."
             };
         }
         catch (Exception exception)

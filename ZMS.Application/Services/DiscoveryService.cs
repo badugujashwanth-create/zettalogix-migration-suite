@@ -8,11 +8,16 @@ public class DiscoveryService : IDiscoveryService
 {
     private readonly IConnectionRepository _connectionRepository;
     private readonly ConnectorResolver _connectorResolver;
+    private readonly ISecretProtector _secretProtector;
 
-    public DiscoveryService(IConnectionRepository connectionRepository, ConnectorResolver connectorResolver)
+    public DiscoveryService(
+        IConnectionRepository connectionRepository,
+        ConnectorResolver connectorResolver,
+        ISecretProtector secretProtector)
     {
         _connectionRepository = connectionRepository;
         _connectorResolver = connectorResolver;
+        _secretProtector = secretProtector;
     }
 
     public async Task<IReadOnlyCollection<SiteInfo>> GetSitesAsync(Guid sourceConnectionId, CancellationToken cancellationToken)
@@ -63,6 +68,6 @@ public class DiscoveryService : IDiscoveryService
             throw new InvalidOperationException($"Connection '{connection.Name}' is not configured as a source connector.");
         }
 
-        return connection;
+        return connection.WithUnprotectedSecrets(_secretProtector);
     }
 }

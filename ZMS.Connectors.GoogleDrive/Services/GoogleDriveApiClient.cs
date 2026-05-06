@@ -4,40 +4,45 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using ZMS.Core.Models;
+using ZMS.Core.Options;
 
 namespace ZMS.Connectors.GoogleDrive.Services;
 
 public class GoogleDriveApiClient
 {
     private const string GoogleDriveFolderMimeType = "application/vnd.google-apps.folder";
+    private const string GoogleDriveFolderIdKey = "FolderId";
+    private const string GoogleDriveFolderUrlKey = "FolderUrl";
     private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web);
 
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly ILogger<GoogleDriveApiClient> _logger;
+    private readonly GoogleDriveOptions _options;
     private readonly ConcurrentDictionary<Guid, CachedToken> _tokenCache = new();
 
     public GoogleDriveApiClient(
         IHttpClientFactory httpClientFactory,
-        ILogger<GoogleDriveApiClient> logger)
+        ILogger<GoogleDriveApiClient> logger,
+        IOptions<GoogleDriveOptions> options)
     {
         _httpClientFactory = httpClientFactory;
         _logger = logger;
+        _options = options.Value;
     }
 
     public async Task<ConnectionTestResult> TestConnectionAsync(
         ConnectionProfile connection,
         CancellationToken cancellationToken)
     {
-        if (string.IsNullOrWhiteSpace(connection.ClientId)
-            || string.IsNullOrWhiteSpace(connection.ClientSecret)
-            || !connection.AdditionalSettings.TryGetValue("RefreshToken", out var refreshToken)
-            || string.IsNullOrWhiteSpace(refreshToken))
+        var credentials = ResolveCredentials();
+        if (!credentials.IsConfigured)
         {
             return new ConnectionTestResult
             {
                 IsSuccess = false,
-                Message = "Google Drive requires client ID, client secret, and a refresh token for direct transfers."
+                Message = "Google Drive backend credentials are not configured. Set GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, and GOOGLE_REFRESH_TOKEN before testing."
             };
         }
 
@@ -47,6 +52,17 @@ public class GoogleDriveApiClient
                 connection,
                 ResolveFolderId(connection, connection.RootPath ?? connection.Url),
                 cancellationToken);
+
+            if (!string.Equals(rootFolder.MimeType, GoogleDriveFolderMimeType, StringComparison.OrdinalIgnoreCase))
+            {
+                return new ConnectionTestResult
+                {
+                    IsSuccess = false,
+                    Message = "Google Drive folder is not accessible because the configured ID does not point to a folder."
+                };
+            }
+
+            _ = await ListChildrenAsync(connection, rootFolder.Id, cancellationToken);
 
             return new ConnectionTestResult
             {
@@ -71,9 +87,21 @@ public class GoogleDriveApiClient
             ? connection.RootPath ?? connection.Url
             : candidate;
 
+        if (string.IsNullOrWhiteSpace(rawValue)
+            && connection.AdditionalSettings.TryGetValue(GoogleDriveFolderIdKey, out var configuredFolderId))
+        {
+            rawValue = configuredFolderId;
+        }
+
+        if (string.IsNullOrWhiteSpace(rawValue)
+            && connection.AdditionalSettings.TryGetValue(GoogleDriveFolderUrlKey, out var configuredFolderUrl))
+        {
+            rawValue = configuredFolderUrl;
+        }
+
         if (string.IsNullOrWhiteSpace(rawValue))
         {
-            return "root";
+            throw new InvalidOperationException("Google Drive folder ID is missing.");
         }
 
         rawValue = rawValue.Trim();
@@ -258,20 +286,18 @@ public class GoogleDriveApiClient
             return cachedToken.AccessToken;
         }
 
-        if (string.IsNullOrWhiteSpace(connection.ClientId)
-            || string.IsNullOrWhiteSpace(connection.ClientSecret)
-            || !connection.AdditionalSettings.TryGetValue("RefreshToken", out var refreshToken)
-            || string.IsNullOrWhiteSpace(refreshToken))
+        var credentials = ResolveCredentials();
+        if (!credentials.IsConfigured)
         {
             throw new InvalidOperationException(
-                "Google Drive direct transfer requires client ID, client secret, and a refresh token.");
+                "Google Drive backend credentials are not configured. Set GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, and GOOGLE_REFRESH_TOKEN.");
         }
 
         var requestBody = new FormUrlEncodedContent(new Dictionary<string, string>
         {
-            ["client_id"] = connection.ClientId,
-            ["client_secret"] = connection.ClientSecret,
-            ["refresh_token"] = refreshToken,
+            ["client_id"] = credentials.ClientId!,
+            ["client_secret"] = credentials.ClientSecret!,
+            ["refresh_token"] = credentials.RefreshToken!,
             ["grant_type"] = "refresh_token"
         });
 
@@ -283,9 +309,8 @@ public class GoogleDriveApiClient
 
         if (!response.IsSuccessStatusCode)
         {
-            var error = await response.Content.ReadAsStringAsync(cancellationToken);
             throw new InvalidOperationException(
-                $"Failed to acquire a Google Drive access token: {error}");
+                "Google Drive credentials are invalid or expired. Update backend Google configuration.");
         }
 
         var token = await ReadRequiredAsync<GoogleTokenResponse>(response, cancellationToken);
@@ -324,6 +349,26 @@ public class GoogleDriveApiClient
         }
 
         return values;
+    }
+
+    private GoogleDriveCredentials ResolveCredentials()
+    {
+        var clientId = FirstConfiguredValue(_options.ClientId, Environment.GetEnvironmentVariable("GOOGLE_CLIENT_ID"));
+        var clientSecret = FirstConfiguredValue(_options.ClientSecret, Environment.GetEnvironmentVariable("GOOGLE_CLIENT_SECRET"));
+        var refreshToken = FirstConfiguredValue(_options.RefreshToken, Environment.GetEnvironmentVariable("GOOGLE_REFRESH_TOKEN"));
+
+        return new GoogleDriveCredentials(clientId, clientSecret, refreshToken);
+    }
+
+    private static string? FirstConfiguredValue(params string?[] values)
+        => values.Select(value => value?.Trim()).FirstOrDefault(value => !string.IsNullOrWhiteSpace(value));
+
+    private sealed record GoogleDriveCredentials(string? ClientId, string? ClientSecret, string? RefreshToken)
+    {
+        public bool IsConfigured =>
+            !string.IsNullOrWhiteSpace(ClientId)
+            && !string.IsNullOrWhiteSpace(ClientSecret)
+            && !string.IsNullOrWhiteSpace(RefreshToken);
     }
 
     private sealed record CachedToken(string AccessToken, DateTimeOffset ExpiresUtc);

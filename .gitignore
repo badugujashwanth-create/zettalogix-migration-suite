@@ -7,10 +7,13 @@ obj/
 node_modules/
 dist/
 coverage/
+artifacts/
 *.user
 *.suo
 *.cache
 *.tsbuildinfo
 *.log
+data-protection-keys/
+ZMS.WebUI/.env
 ZMS.WebUI/vite.config.js
 ZMS.WebUI/vite.config.d.ts

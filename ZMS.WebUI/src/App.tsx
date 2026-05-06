@@ -4,6 +4,7 @@ import DashboardPage from "./pages/DashboardPage";
 import MigrationsPage from "./pages/MigrationsPage";
 import MigrationDetailPage from "./pages/MigrationDetailPage";
 import ConnectionsPage from "./pages/ConnectionsPage";
+import HelpCenterPage from "./pages/HelpCenterPage";
 import SettingsPage from "./pages/SettingsPage";
 
 export default function App(): JSX.Element {
@@ -15,6 +16,7 @@ export default function App(): JSX.Element {
         <Route path="/migrations" element={<MigrationsPage />} />
         <Route path="/migrations/:id" element={<MigrationDetailPage />} />
         <Route path="/connections" element={<ConnectionsPage />} />
+        <Route path="/help" element={<HelpCenterPage />} />
         <Route path="/settings" element={<SettingsPage />} />
       </Routes>
     </AppLayout>

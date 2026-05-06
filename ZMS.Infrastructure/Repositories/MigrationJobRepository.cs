@@ -37,7 +37,14 @@ public class MigrationJobRepository : IMigrationJobRepository
 
     public async Task UpdateAsync(MigrationJob job, CancellationToken cancellationToken)
     {
+        var trackedJob = _dbContext.MigrationJobs.Local.FirstOrDefault(localJob => localJob.Id == job.Id);
+        if (trackedJob is not null && !ReferenceEquals(trackedJob, job))
+        {
+            _dbContext.Entry(trackedJob).State = EntityState.Detached;
+        }
+
         _dbContext.MigrationJobs.Update(job);
         await _dbContext.SaveChangesAsync(cancellationToken);
+        _dbContext.Entry(job).State = EntityState.Detached;
     }
 }

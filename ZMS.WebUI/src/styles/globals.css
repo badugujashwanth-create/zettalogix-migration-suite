@@ -275,6 +275,14 @@ textarea:focus {
   padding: 16px 18px;
 }
 
+.timeline-item.error {
+  background: var(--danger-soft);
+}
+
+.timeline-item.warning {
+  background: var(--warning-soft);
+}
+
 .timeline-item strong {
   display: block;
   margin-bottom: 6px;
@@ -284,6 +292,74 @@ textarea:focus {
 .timeline-item span {
   color: var(--text-soft);
   font-size: 13px;
+}
+
+.timeline-detail,
+.timeline-guidance p {
+  margin: 10px 0 0;
+  color: var(--text-muted);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.timeline-guidance {
+  margin-top: 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.58);
+  padding: 14px;
+}
+
+.timeline-guidance ul,
+.guidance-list ul {
+  margin: 10px 0 0;
+  padding-left: 18px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.error-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.8fr);
+  gap: 20px;
+  border-radius: var(--radius-lg);
+  background: var(--danger-soft);
+  padding: 24px;
+  box-shadow: var(--shadow-soft);
+}
+
+.error-panel h2 {
+  margin: 0;
+  color: var(--text-strong);
+  font-size: 24px;
+}
+
+.error-panel p {
+  margin: 10px 0 0;
+  color: var(--text-muted);
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.guidance-list {
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.68);
+  padding: 18px;
+}
+
+.guidance-list > strong {
+  display: block;
+  color: var(--text-strong);
+  line-height: 1.4;
+}
+
+.external-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
 }
 
 .form-grid {
@@ -310,6 +386,60 @@ textarea:focus {
   width: 18px;
   height: 18px;
   min-height: 18px;
+}
+
+.form-note,
+.selected-folder {
+  border-radius: 18px;
+  background: var(--surface-low);
+  padding: 16px 18px;
+}
+
+.form-note strong,
+.selected-folder strong {
+  color: var(--text-strong);
+}
+
+.form-note p,
+.selected-folder p,
+.inline-message {
+  margin: 8px 0 0;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.picker-panel {
+  display: grid;
+  gap: 10px;
+}
+
+.inline-message {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.inline-message.success {
+  color: var(--success);
+}
+
+.inline-message.error {
+  color: var(--danger);
+}
+
+.selected-folder {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+}
+
+.selected-folder .material-symbols-outlined {
+  color: var(--accent);
+  margin-top: 2px;
+}
+
+.selected-folder p {
+  overflow-wrap: anywhere;
 }
 
 .form-actions,
@@ -390,6 +520,7 @@ textarea:focus {
 
 @media (max-width: 1120px) {
   .detail-grid,
+  .error-panel,
   .split-panel,
   .two-column,
   .form-grid,
