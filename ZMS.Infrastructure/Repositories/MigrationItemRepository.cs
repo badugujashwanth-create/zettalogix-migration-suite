@@ -17,11 +17,14 @@ public class MigrationItemRepository : IMigrationItemRepository
 
     public async Task<IReadOnlyCollection<MigrationItem>> GetByJobIdAsync(Guid jobId, CancellationToken cancellationToken)
     {
-        return await _dbContext.MigrationItems
+        var items = await _dbContext.MigrationItems
             .AsNoTracking()
             .Where(item => item.JobId == jobId)
-            .OrderBy(item => item.CreatedUtc)
             .ToListAsync(cancellationToken);
+
+        return items
+            .OrderBy(item => item.CreatedUtc)
+            .ToArray();
     }
 
     public async Task<IReadOnlyCollection<MigrationItem>> GetNextBatchAsync(
@@ -29,13 +32,16 @@ public class MigrationItemRepository : IMigrationItemRepository
         int batchSize,
         CancellationToken cancellationToken)
     {
-        return await _dbContext.MigrationItems
+        var items = await _dbContext.MigrationItems
             .AsNoTracking()
             .Where(item => item.JobId == jobId
                 && (item.Status == MigrationItemStatus.Pending || item.Status == MigrationItemStatus.RetryQueued))
+            .ToListAsync(cancellationToken);
+
+        return items
             .OrderBy(item => item.CreatedUtc)
             .Take(batchSize)
-            .ToListAsync(cancellationToken);
+            .ToArray();
     }
 
     public Task<int> CountByStatusAsync(MigrationItemStatus status, CancellationToken cancellationToken)

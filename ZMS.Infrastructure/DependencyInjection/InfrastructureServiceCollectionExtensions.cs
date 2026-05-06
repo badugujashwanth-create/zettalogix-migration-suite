@@ -11,11 +11,20 @@ public static class InfrastructureServiceCollectionExtensions
 {
     public static IServiceCollection AddZmsInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        var databaseProvider = configuration["Database:Provider"];
         var connectionString = configuration.GetConnectionString("ZmsDatabase")
             ?? "Server=(localdb)\\MSSQLLocalDB;Database=ZMS;Trusted_Connection=True;TrustServerCertificate=True;";
 
         services.AddDbContext<ZmsDbContext>(options =>
-            options.UseSqlServer(connectionString, sqlOptions => sqlOptions.EnableRetryOnFailure()));
+        {
+            if (string.Equals(databaseProvider, "Sqlite", StringComparison.OrdinalIgnoreCase))
+            {
+                options.UseSqlite(connectionString);
+                return;
+            }
+
+            options.UseSqlServer(connectionString, sqlOptions => sqlOptions.EnableRetryOnFailure());
+        });
 
         services.AddScoped<IConnectionRepository, ConnectionRepository>();
         services.AddScoped<IMigrationJobRepository, MigrationJobRepository>();

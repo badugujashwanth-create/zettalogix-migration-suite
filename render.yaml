@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: zms-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile.api
+    dockerContext: .
+    plan: free
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: Database__Provider
+        value: Sqlite
+      - key: ConnectionStrings__ZmsDatabase
+        value: Data Source=/tmp/zms.db
+      - key: DataProtection__KeyRingPath
+        value: /tmp/dataprotection-keys
+      - key: Cors__AllowedOrigins__0
+        value: https://your-frontend-service.onrender.com
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: GOOGLE_REFRESH_TOKEN
+        sync: false

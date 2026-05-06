@@ -16,10 +16,13 @@ public class MigrationJobRepository : IMigrationJobRepository
 
     public async Task<IReadOnlyCollection<MigrationJob>> ListAsync(CancellationToken cancellationToken)
     {
-        return await _dbContext.MigrationJobs
+        var jobs = await _dbContext.MigrationJobs
             .AsNoTracking()
-            .OrderByDescending(job => job.CreatedUtc)
             .ToListAsync(cancellationToken);
+
+        return jobs
+            .OrderByDescending(job => job.CreatedUtc)
+            .ToArray();
     }
 
     public Task<MigrationJob?> GetByIdAsync(Guid id, CancellationToken cancellationToken)

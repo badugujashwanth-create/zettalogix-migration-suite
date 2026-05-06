@@ -22,20 +22,26 @@ public class LogRepository : ILogRepository
 
     public async Task<IReadOnlyCollection<LogEntry>> ListByJobIdAsync(Guid jobId, int take, CancellationToken cancellationToken)
     {
-        return await _dbContext.Logs
+        var logs = await _dbContext.Logs
             .AsNoTracking()
             .Where(log => log.JobId == jobId)
+            .ToListAsync(cancellationToken);
+
+        return logs
             .OrderByDescending(log => log.CreatedUtc)
             .Take(take)
-            .ToListAsync(cancellationToken);
+            .ToArray();
     }
 
     public async Task<IReadOnlyCollection<LogEntry>> ListRecentAsync(int take, CancellationToken cancellationToken)
     {
-        return await _dbContext.Logs
+        var logs = await _dbContext.Logs
             .AsNoTracking()
+            .ToListAsync(cancellationToken);
+
+        return logs
             .OrderByDescending(log => log.CreatedUtc)
             .Take(take)
-            .ToListAsync(cancellationToken);
+            .ToArray();
     }
 }

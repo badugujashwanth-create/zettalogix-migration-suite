@@ -177,6 +177,49 @@ Invoke-RestMethod https://your-api-host/api/health
 
 Example production templates are included at `ZMS.API/appsettings.Production.example.json` and `ZMS.WebUI/.env.production.example`. Prefer host environment variables or a secret manager for real secrets.
 
+## Render Deployment
+
+Deploy the API as a separate Render web service. The frontend service that runs `npm run preview` only serves React files; it does not start `ZMS.API`.
+
+### Backend API service
+
+Use the included `Dockerfile.api` from the repository root:
+
+- Runtime: `Docker`
+- Dockerfile path: `./Dockerfile.api`
+- Docker context: `.`
+
+Set these Render environment variables:
+
+```text
+ASPNETCORE_ENVIRONMENT=Production
+Database__Provider=Sqlite
+ConnectionStrings__ZmsDatabase=Data Source=/tmp/zms.db
+DataProtection__KeyRingPath=/tmp/dataprotection-keys
+Cors__AllowedOrigins__0=https://your-frontend-service.onrender.com
+GOOGLE_CLIENT_ID=your-google-oauth-client-id.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+GOOGLE_REFRESH_TOKEN=your-google-refresh-token
+```
+
+The free Render plan uses an ephemeral filesystem, so the SQLite database and Data Protection keys can be lost when the service restarts or redeploys. For durable saved connections and job history, use a paid persistent disk or switch `Database__Provider` back to SQL Server with a hosted SQL Server/Azure SQL connection string.
+
+After the API deploys, verify:
+
+```powershell
+Invoke-RestMethod https://your-api-service.onrender.com/api/health
+```
+
+### Frontend service
+
+Set this Render environment variable on the web UI service and redeploy:
+
+```text
+VITE_API_BASE_URL=https://your-api-service.onrender.com
+```
+
+Do not use `http://localhost:5206` in Render. In the browser, `localhost` means the visitor's machine, not the Render backend.
+
 ## Run Instructions
 
 ### 1. Restore and build the backend
