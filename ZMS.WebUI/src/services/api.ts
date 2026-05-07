@@ -44,6 +44,8 @@ interface ApiMigrationJobResponse {
   sourceLibraryName?: string;
   targetSiteUrl: string;
   targetLibraryName: string;
+  targetLibraryUrlSegment?: string;
+  targetRootPath?: string;
   preserveMetadata: boolean;
   batchSize: number;
   maxRetryCount: number;
@@ -129,6 +131,10 @@ const defaultSettings: AppSettings = {
 
 export function getApiBaseUrl(): string {
   return apiBaseUrl;
+}
+
+export function getReportDownloadUrl(path: string): string {
+  return `${apiBaseUrl}/api/reports${path}`;
 }
 
 function extractGoogleDriveFolderId(candidate?: string): string {
@@ -258,8 +264,11 @@ function mapJob(job: ApiMigrationJobResponse, report?: ApiJobReportResponse | nu
     sourceConnectionId: job.sourceConnectionId,
     targetConnectionId: job.targetConnectionId,
     sourcePath: job.sourceLocation,
+    sourceLibraryName: job.sourceLibraryName,
     targetSite: job.targetSiteUrl,
     targetLibrary: job.targetLibraryName,
+    targetLibraryUrlSegment: job.targetLibraryUrlSegment,
+    targetRootPath: job.targetRootPath,
     preserveMetadata: job.preserveMetadata,
     totalFiles,
     migratedFiles,
@@ -337,8 +346,11 @@ export const api = {
         sourceConnectionId: input.sourceConnectionId,
         targetConnectionId: input.targetConnectionId,
         sourceLocation: input.sourcePath,
+        sourceLibraryName: input.sourceLibraryName || null,
         targetSiteUrl: input.targetSite,
         targetLibraryName: input.targetLibrary,
+        targetLibraryUrlSegment: input.targetLibraryUrlSegment || null,
+        targetRootPath: input.targetRootPath || null,
         preserveMetadata: input.preserveMetadata,
         batchSize: 20,
         maxRetryCount: 3

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { getReportDownloadUrl } from "../../services/api";
 import { formatDate, formatJobStatus } from "../../utils/formatters";
 import { MigrationJob } from "../../utils/models";
 import ProgressBar from "../ProgressBar/ProgressBar";
@@ -35,7 +36,7 @@ export default function JobTable({ jobs, onStart, onPause }: JobTableProps): JSX
               <td>
                 <strong>{job.name}</strong>
                 <span className={styles.subtle}>
-                  {job.sourcePath} to {job.targetLibrary}
+                  {job.sourceLibraryName ? `${job.sourcePath} / ${job.sourceLibraryName}` : job.sourcePath} to {job.targetLibrary}
                 </span>
               </td>
               <td>
@@ -49,7 +50,9 @@ export default function JobTable({ jobs, onStart, onPause }: JobTableProps): JSX
               </td>
               <td>
                 <span>{job.targetSite}</span>
-                <span className={styles.subtle}>{job.targetLibrary}</span>
+                <span className={styles.subtle}>
+                  {job.targetRootPath ? `${job.targetLibrary} / ${job.targetRootPath}` : job.targetLibrary}
+                </span>
               </td>
               <td>{formatDate(job.updatedAt)}</td>
               <td className={styles.actions}>
@@ -63,6 +66,7 @@ export default function JobTable({ jobs, onStart, onPause }: JobTableProps): JSX
                     Start
                   </button>
                 )}
+                <a href={getReportDownloadUrl(`/jobs/${job.id}/summary.csv`)}>Report</a>
               </td>
             </tr>
           ))}

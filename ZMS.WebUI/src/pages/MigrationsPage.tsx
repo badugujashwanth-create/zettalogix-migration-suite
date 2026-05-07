@@ -4,6 +4,7 @@ import FormWizard from "../components/FormWizard/FormWizard";
 import JobTable from "../components/JobTable/JobTable";
 import { useAppStore } from "../hooks/useAppStore";
 import { useJobsPolling } from "../hooks/useJobsPolling";
+import { getReportDownloadUrl } from "../services/api";
 
 export default function MigrationsPage(): JSX.Element {
   const jobs = useAppStore((state) => state.jobs);
@@ -65,6 +66,10 @@ export default function MigrationsPage(): JSX.Element {
               <span className="material-symbols-outlined">add</span>
               New migration
             </button>
+            <a className="ghost-button" href={getReportDownloadUrl("/jobs.csv")}>
+              <span className="material-symbols-outlined">download</span>
+              Download all runs
+            </a>
           </div>
         </article>
       </section>

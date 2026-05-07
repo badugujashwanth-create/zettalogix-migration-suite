@@ -17,8 +17,11 @@ const initialForm: CreateJobInput = {
   sourceConnectionId: "",
   targetConnectionId: "",
   sourcePath: "",
+  sourceLibraryName: "",
   targetSite: "",
   targetLibrary: "",
+  targetLibraryUrlSegment: "",
+  targetRootPath: "",
   preserveMetadata: true
 };
 
@@ -34,10 +37,7 @@ export default function FormWizard({
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<CreateJobInput>(initialForm);
 
-  const sourceConnections = useMemo(
-    () => connections.filter((connection) => connection.type !== "SharePointOnline"),
-    [connections]
-  );
+  const sourceConnections = useMemo(() => connections, [connections]);
   const destinationConnections = useMemo(
     () => connections.filter((connection) => connection.type === "SharePointOnline"),
     [connections]
@@ -62,7 +62,8 @@ export default function FormWizard({
     setForm({
       ...form,
       sourceConnectionId: connectionId,
-      sourcePath: connection ? connection.rootPath || connection.url : ""
+      sourcePath: connection ? connection.rootPath || connection.url : "",
+      sourceLibraryName: connection?.documentLibraryName ?? ""
     });
   };
 
@@ -72,7 +73,9 @@ export default function FormWizard({
       ...form,
       targetConnectionId: connectionId,
       targetSite: connection?.url ?? "",
-      targetLibrary: connection?.documentLibraryName ?? ""
+      targetLibrary: connection?.documentLibraryName ?? "",
+      targetLibraryUrlSegment: "",
+      targetRootPath: ""
     });
   };
 
@@ -156,6 +159,16 @@ export default function FormWizard({
                     onChange={(event) => setForm({ ...form, sourcePath: event.target.value })}
                   />
                 </label>
+                {selectedSourceConnection?.type === "SharePointOnline" ? (
+                  <label>
+                    Source library
+                    <input
+                      placeholder="Leave blank or use * to copy every document library"
+                      value={form.sourceLibraryName}
+                      onChange={(event) => setForm({ ...form, sourceLibraryName: event.target.value })}
+                    />
+                  </label>
+                ) : null}
                 {selectedSourceConnection?.type === "GoogleDrive" ? (
                   <p className={styles.full}>This uses the folder link saved on the Google Drive source connection.</p>
                 ) : null}
@@ -189,13 +202,30 @@ export default function FormWizard({
                 <label>
                   Target library
                   <input
+                    placeholder="Existing or new document library name"
                     value={form.targetLibrary}
                     onChange={(event) => setForm({ ...form, targetLibrary: event.target.value })}
+                  />
+                </label>
+                <label>
+                  New library URL path
+                  <input
+                    placeholder="Optional, e.g. finance-archive"
+                    value={form.targetLibraryUrlSegment}
+                    onChange={(event) => setForm({ ...form, targetLibraryUrlSegment: event.target.value })}
                   />
                 </label>
                 <label className={styles.full}>
                   Target site URL
                   <input value={form.targetSite} onChange={(event) => setForm({ ...form, targetSite: event.target.value })} />
+                </label>
+                <label className={styles.full}>
+                  Target folder path
+                  <input
+                    placeholder="Optional, e.g. migrated-content/phase-1"
+                    value={form.targetRootPath}
+                    onChange={(event) => setForm({ ...form, targetRootPath: event.target.value })}
+                  />
                 </label>
               </div>
             ) : null}
@@ -208,12 +238,13 @@ export default function FormWizard({
                 </div>
                 <div>
                   <span>Source</span>
-                  <strong>{form.sourcePath}</strong>
+                  <strong>{form.sourceLibraryName ? `${form.sourcePath} / ${form.sourceLibraryName}` : form.sourcePath}</strong>
                 </div>
                 <div>
                   <span>Destination</span>
                   <strong>
                     {form.targetSite} / {form.targetLibrary}
+                    {form.targetRootPath ? ` / ${form.targetRootPath}` : ""}
                   </strong>
                 </div>
                 <div>

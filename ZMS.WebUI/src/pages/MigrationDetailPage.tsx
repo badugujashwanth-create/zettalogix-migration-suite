@@ -5,6 +5,7 @@ import EmptyState from "../components/EmptyState/EmptyState";
 import ProgressBar from "../components/ProgressBar/ProgressBar";
 import { useAppStore } from "../hooks/useAppStore";
 import { useJobsPolling } from "../hooks/useJobsPolling";
+import { getReportDownloadUrl } from "../services/api";
 import { getErrorGuidance } from "../utils/errorHelp";
 import { formatDate, formatJobStatus } from "../utils/formatters";
 
@@ -51,6 +52,15 @@ export default function MigrationDetailPage(): JSX.Element {
               <button type="button" className="ghost-button" onClick={() => setConfirmOpen(true)} disabled={job.status !== "Running"}>
                 Pause
               </button>
+              <a className="ghost-button" href={getReportDownloadUrl(`/jobs/${job.id}/summary.csv`)}>
+                Summary CSV
+              </a>
+              <a className="ghost-button" href={getReportDownloadUrl(`/jobs/${job.id}/items.csv`)}>
+                Items CSV
+              </a>
+              <a className="ghost-button" href={getReportDownloadUrl(`/jobs/${job.id}/logs.csv`)}>
+                Logs CSV
+              </a>
             </div>
           </div>
 
@@ -76,12 +86,13 @@ export default function MigrationDetailPage(): JSX.Element {
               </div>
               <div>
                 <span>Source</span>
-                <strong>{job.sourcePath}</strong>
+                <strong>{job.sourceLibraryName ? `${job.sourcePath} / ${job.sourceLibraryName}` : job.sourcePath}</strong>
               </div>
               <div>
                 <span>Destination</span>
                 <strong>
                   {job.targetSite} / {job.targetLibrary}
+                  {job.targetRootPath ? ` / ${job.targetRootPath}` : ""}
                 </strong>
               </div>
             </div>

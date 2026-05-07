@@ -1,24 +1,22 @@
 services:
   - type: web
-    name: zms-api
-    runtime: docker
-    dockerfilePath: ./Dockerfile.api
-    dockerContext: .
-    plan: free
+    name: zms-web
+    runtime: static
+    rootDir: ./ZMS.WebUI
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
     envVars:
-      - key: ASPNETCORE_ENVIRONMENT
-        value: Production
-      - key: Database__Provider
-        value: Sqlite
-      - key: ConnectionStrings__ZmsDatabase
-        value: Data Source=/tmp/zms.db
-      - key: DataProtection__KeyRingPath
-        value: /tmp/dataprotection-keys
-      - key: Cors__AllowedOrigins__0
-        value: https://your-frontend-service.onrender.com
-      - key: GOOGLE_CLIENT_ID
+      - key: VITE_API_BASE_URL
         sync: false
-      - key: GOOGLE_CLIENT_SECRET
+      - key: VITE_GOOGLE_CLIENT_ID
         sync: false
-      - key: GOOGLE_REFRESH_TOKEN
+      - key: VITE_GOOGLE_API_KEY
         sync: false
+      - key: VITE_GOOGLE_APP_ID
+        sync: false
+      - key: VITE_GOOGLE_DRIVE_SCOPE
+        value: https://www.googleapis.com/auth/drive.readonly

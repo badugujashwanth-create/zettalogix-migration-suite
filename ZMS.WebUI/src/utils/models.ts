@@ -33,8 +33,11 @@ export interface MigrationJob {
   sourceConnectionId: string;
   targetConnectionId: string;
   sourcePath: string;
+  sourceLibraryName?: string;
   targetSite: string;
   targetLibrary: string;
+  targetLibraryUrlSegment?: string;
+  targetRootPath?: string;
   preserveMetadata: boolean;
   totalFiles: number;
   migratedFiles: number;
@@ -60,8 +63,11 @@ export interface CreateJobInput {
   sourceConnectionId: string;
   targetConnectionId: string;
   sourcePath: string;
+  sourceLibraryName: string;
   targetSite: string;
   targetLibrary: string;
+  targetLibraryUrlSegment: string;
+  targetRootPath: string;
   preserveMetadata: boolean;
 }
 
