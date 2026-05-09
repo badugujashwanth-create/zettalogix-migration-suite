@@ -1,0 +1,138 @@
+.authShell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+  background:
+    linear-gradient(120deg, rgba(84, 79, 192, 0.08), rgba(48, 97, 151, 0.06)),
+    var(--page-bg);
+}
+
+.authPanel,
+.statusPanel {
+  width: min(460px, 100%);
+  border-radius: 24px;
+  background: var(--surface-white);
+  box-shadow: var(--shadow-soft);
+  padding: 32px;
+}
+
+.statusPanel {
+  text-align: center;
+}
+
+.statusPanel > span {
+  width: 48px;
+  height: 48px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 16px;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.brandMark {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: #fff;
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.authPanel h1,
+.statusPanel h1 {
+  margin: 0;
+  color: var(--text-strong);
+  font-size: 30px;
+  line-height: 1.15;
+}
+
+.authPanel p,
+.statusPanel p {
+  margin: 12px 0 0;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.providerStack {
+  display: grid;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.providerButton {
+  min-height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: none;
+  border-radius: 16px;
+  background: var(--surface-low);
+  color: var(--text-strong);
+  font-weight: 800;
+}
+
+.providerButton:hover {
+  background: var(--surface-mid);
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 24px 0;
+  color: var(--text-soft);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--surface-mid);
+}
+
+.emailForm {
+  display: grid;
+  gap: 14px;
+}
+
+.emailButton {
+  min-height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(95deg, var(--accent), var(--accent-strong));
+  color: #fff;
+  font-weight: 800;
+}
+
+.authSuccess,
+.authError {
+  border-radius: 16px;
+  padding: 12px 14px;
+  font-weight: 700;
+}
+
+.authSuccess {
+  background: var(--success-soft);
+  color: var(--success) !important;
+}
+
+.authError {
+  background: var(--danger-soft);
+  color: var(--danger) !important;
+}

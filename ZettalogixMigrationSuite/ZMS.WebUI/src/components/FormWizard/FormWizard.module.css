@@ -1,0 +1,191 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(0, 52, 94, 0.28);
+  backdrop-filter: blur(14px);
+}
+
+.panel {
+  width: min(1080px, 100%);
+  background: var(--surface);
+  border-radius: 32px;
+  box-shadow: var(--shadow-float);
+  padding: 28px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.header h3 {
+  margin: 0;
+  color: var(--text-strong);
+  font-size: 30px;
+  letter-spacing: -0.03em;
+}
+
+.header p {
+  margin: 8px 0 0;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.step,
+.activeStep {
+  border-radius: 20px;
+  padding: 14px 16px;
+  background: var(--surface-low);
+}
+
+.activeStep {
+  background: linear-gradient(145deg, rgba(84, 79, 192, 0.12), rgba(84, 79, 192, 0.2));
+}
+
+.step span,
+.activeStep span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text-soft);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.step strong,
+.activeStep strong {
+  color: var(--text-strong);
+}
+
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) 280px;
+  gap: 20px;
+}
+
+.workspace,
+.sideCard {
+  background: var(--surface-white);
+  border-radius: 24px;
+  padding: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.full {
+  grid-column: 1 / -1;
+}
+
+.callout {
+  grid-column: 1 / -1;
+  background: var(--surface-low);
+  border-radius: 20px;
+  padding: 18px;
+}
+
+.callout strong {
+  display: block;
+  color: var(--text-strong);
+}
+
+.callout p {
+  margin: 8px 0 0;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: var(--surface-low);
+  color: var(--text-strong);
+}
+
+.checkbox input {
+  width: 18px;
+  min-height: 18px;
+}
+
+.review {
+  display: grid;
+  gap: 14px;
+}
+
+.review > div {
+  background: var(--surface-low);
+  border-radius: 18px;
+  padding: 16px 18px;
+}
+
+.review span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text-soft);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.review strong {
+  color: var(--text-strong);
+}
+
+.sideCard strong {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--text-strong);
+  font-size: 18px;
+}
+
+.sideCard ul {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.helpLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+@media (max-width: 920px) {
+  .steps,
+  .body,
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
