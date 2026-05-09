@@ -1,6 +1,7 @@
 import { ChangeEvent, KeyboardEvent, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { pageTitles } from "../../utils/constants";
+import { useAuth } from "../../hooks/useAuth";
 import { useAppStore } from "../../hooks/useAppStore";
 import { formatConnectionType, formatJobStatus } from "../../utils/formatters";
 import styles from "./TopNavbar.module.css";
@@ -58,6 +59,7 @@ function matchesSearch(query: string, values: Array<string | undefined>): boolea
 export default function TopNavbar(): JSX.Element {
   const location = useLocation();
   const navigate = useNavigate();
+  const { user, signOut } = useAuth();
   const jobs = useAppStore((state) => state.jobs);
   const connections = useAppStore((state) => state.connections);
   const [searchTerm, setSearchTerm] = useState("");
@@ -72,6 +74,15 @@ export default function TopNavbar(): JSX.Element {
 
   const activeCount = jobs.filter((job) => job.status === "Running").length;
   const failedCount = jobs.filter((job) => job.status === "Failed").length;
+  const fullName = typeof user?.user_metadata?.full_name === "string" ? user.user_metadata.full_name : "";
+  const displayName = fullName || user?.email || "ZMS User";
+  const userEmail = user?.email ?? "Authenticated user";
+  const initials = displayName
+    .split(/\s|@/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part: string) => part[0]?.toUpperCase())
+    .join("") || "ZU";
   const normalizedSearch = searchTerm.trim().toLowerCase();
   const searchResults = useMemo<SearchResult[]>(() => {
     if (normalizedSearch.length < 2) {
@@ -203,13 +214,18 @@ export default function TopNavbar(): JSX.Element {
           <span className="material-symbols-outlined">notifications</span>
         </button>
 
-        <div className={styles.profile}>
-          <div className={styles.avatar}>ZA</div>
+        <button
+          type="button"
+          className={styles.profile}
+          title="Sign out"
+          onClick={() => void signOut().then(() => navigate("/login", { replace: true }))}
+        >
+          <div className={styles.avatar}>{initials}</div>
           <div>
-            <strong>ZMS Admin</strong>
-            <span>Operations Lead</span>
+            <strong>{displayName}</strong>
+            <span>{userEmail}</span>
           </div>
-        </div>
+        </button>
       </div>
     </header>
   );

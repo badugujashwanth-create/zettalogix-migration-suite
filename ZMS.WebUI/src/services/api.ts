@@ -9,6 +9,7 @@ import {
   MigrationJob
 } from "../utils/models";
 import { formatErrorForToast } from "../utils/errorHelp";
+import { createClient } from "../lib/client";
 
 const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL ?? "http://localhost:5206").replace(/\/+$/, "");
 const settingsStorageKey = "zms-web-ui-settings";
@@ -137,6 +138,13 @@ export function getReportDownloadUrl(path: string): string {
   return `${apiBaseUrl}/api/reports${path}`;
 }
 
+async function getAuthorizationHeaders(): Promise<Record<string, string>> {
+  const { data } = await createClient().auth.getSession();
+  const accessToken = data.session?.access_token;
+
+  return accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
+}
+
 function extractGoogleDriveFolderId(candidate?: string): string {
   const trimmed = candidate?.trim() ?? "";
   if (!trimmed) {
@@ -156,11 +164,13 @@ function buildGoogleDriveFolderUrl(folderId: string): string {
 }
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
+  const authHeaders = await getAuthorizationHeaders();
   let response: Response;
   try {
     response = await fetch(`${apiBaseUrl}/api${path}`, {
       headers: {
         "Content-Type": "application/json",
+        ...authHeaders,
         ...(init?.headers ?? {})
       },
       ...init
@@ -186,6 +196,40 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   }
 
   return JSON.parse(payload) as T;
+}
+
+async function downloadReportFile(path: string): Promise<void> {
+  const authHeaders = await getAuthorizationHeaders();
+  let response: Response;
+
+  try {
+    response = await fetch(getReportDownloadUrl(path), {
+      headers: authHeaders
+    });
+  } catch {
+    throw new Error(
+      formatErrorForToast(`API is not reachable at ${apiBaseUrl}. Start the backend and refresh the page.`)
+    );
+  }
+
+  if (!response.ok) {
+    const message = await readErrorMessage(response, `/reports${path}`);
+    throw new Error(formatErrorForToast(message));
+  }
+
+  const blob = await response.blob();
+  const disposition = response.headers.get("content-disposition") ?? "";
+  const fileNameMatch = disposition.match(/filename\*?=(?:UTF-8'')?"?([^";]+)"?/i);
+  const fileName = fileNameMatch?.[1] ? decodeURIComponent(fileNameMatch[1]) : "zms-report.csv";
+  const objectUrl = window.URL.createObjectURL(blob);
+  const link = document.createElement("a");
+
+  link.href = objectUrl;
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.URL.revokeObjectURL(objectUrl);
 }
 
 function getConnectionSummary(connection: ApiConnectionResponse): string {
@@ -453,5 +497,13 @@ export const api = {
   async saveSettings(input: AppSettings): Promise<AppSettings> {
     saveSettingsToStorage(input);
     return input;
+  },
+
+  async downloadReport(path: string): Promise<void> {
+    try {
+      await downloadReportFile(path);
+    } catch (error) {
+      window.alert(error instanceof Error ? error.message : "Report download failed.");
+    }
   }
 };

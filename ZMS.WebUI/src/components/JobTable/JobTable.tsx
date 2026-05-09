@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { getReportDownloadUrl } from "../../services/api";
+import { api } from "../../services/api";
 import { formatDate, formatJobStatus } from "../../utils/formatters";
 import { MigrationJob } from "../../utils/models";
 import ProgressBar from "../ProgressBar/ProgressBar";
@@ -66,7 +66,9 @@ export default function JobTable({ jobs, onStart, onPause }: JobTableProps): JSX
                     Start
                   </button>
                 )}
-                <a href={getReportDownloadUrl(`/jobs/${job.id}/summary.csv`)}>Report</a>
+                <button type="button" onClick={() => void api.downloadReport(`/jobs/${job.id}/summary.csv`)}>
+                  Report
+                </button>
               </td>
             </tr>
           ))}

@@ -5,7 +5,7 @@ import EmptyState from "../components/EmptyState/EmptyState";
 import ProgressBar from "../components/ProgressBar/ProgressBar";
 import { useAppStore } from "../hooks/useAppStore";
 import { useJobsPolling } from "../hooks/useJobsPolling";
-import { getReportDownloadUrl } from "../services/api";
+import { api } from "../services/api";
 import { getErrorGuidance } from "../utils/errorHelp";
 import { formatDate, formatJobStatus } from "../utils/formatters";
 
@@ -52,15 +52,15 @@ export default function MigrationDetailPage(): JSX.Element {
               <button type="button" className="ghost-button" onClick={() => setConfirmOpen(true)} disabled={job.status !== "Running"}>
                 Pause
               </button>
-              <a className="ghost-button" href={getReportDownloadUrl(`/jobs/${job.id}/summary.csv`)}>
+              <button type="button" className="ghost-button" onClick={() => void api.downloadReport(`/jobs/${job.id}/summary.csv`)}>
                 Summary CSV
-              </a>
-              <a className="ghost-button" href={getReportDownloadUrl(`/jobs/${job.id}/items.csv`)}>
+              </button>
+              <button type="button" className="ghost-button" onClick={() => void api.downloadReport(`/jobs/${job.id}/items.csv`)}>
                 Items CSV
-              </a>
-              <a className="ghost-button" href={getReportDownloadUrl(`/jobs/${job.id}/logs.csv`)}>
+              </button>
+              <button type="button" className="ghost-button" onClick={() => void api.downloadReport(`/jobs/${job.id}/logs.csv`)}>
                 Logs CSV
-              </a>
+              </button>
             </div>
           </div>
 

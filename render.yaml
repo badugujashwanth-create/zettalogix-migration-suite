@@ -20,3 +20,7 @@ services:
         sync: false
       - key: VITE_GOOGLE_DRIVE_SCOPE
         value: https://www.googleapis.com/auth/drive.readonly
+      - key: VITE_SUPABASE_URL
+        sync: false
+      - key: VITE_SUPABASE_PUBLISHABLE_KEY
+        sync: false
