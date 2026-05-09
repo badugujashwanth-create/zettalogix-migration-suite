@@ -1,0 +1,295 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - complementary "Skip links" [ref=e5]:
+        - link "Skip to main content" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]: Skip to main content
+        - button "Keyboard shortcuts" [ref=e8]:
+          - generic [ref=e9]: Keyboard shortcuts
+        - link "Accessibility help external, opens in a new window" [ref=e10] [cursor=pointer]:
+          - /url: https://cloud.google.com/docs/accessibility?hl=en_GB
+          - generic [ref=e11]:
+            - text: Accessibility help
+            - generic "external, opens in a new window" [ref=e12]:
+              - img "external, opens in a new window" [ref=e13]:
+                - img [ref=e14]
+        - link "Accessibility feedback external, opens in a new window" [ref=e16] [cursor=pointer]:
+          - /url: https://support.google.com/accessibility/contact/feedback?hl=en_GB
+          - generic [ref=e17]:
+            - text: Accessibility feedback
+            - generic "external, opens in a new window" [ref=e18]:
+              - img "external, opens in a new window" [ref=e19]:
+                - img [ref=e20]
+      - banner [ref=e23]:
+        - generic [ref=e24]:
+          - navigation [ref=e27]:
+            - button "Navigation menu (.)" [ref=e28] [cursor=pointer]:
+              - img [ref=e30]
+          - link "Google Cloud Platform Home" [ref=e32] [cursor=pointer]:
+            - /url: /
+            - generic:
+              - img
+          - button "You're currently working in Zettalogix Migration. Hit enter to switch projects, folders or organisations" [ref=e248]:
+            - generic [ref=e249]:
+              - img [ref=e251]
+              - generic [ref=e254]: Zettalogix Migration
+        - search "Google Cloud Platform" [ref=e46]:
+          - combobox [ref=e47]:
+            - searchbox "Enter query to search for resources, docs, products and more" [ref=e48]
+          - button "See all search results" [disabled]:
+            - generic:
+              - img
+            - generic: Search
+        - generic [ref=e49]:
+          - generic [ref=e50]:
+            - button "Open or close Gemini Cloud Assist chat (Alt G)" [ref=e258] [cursor=pointer]:
+              - img [ref=e260]
+            - button "Free trial status" [ref=e510] [cursor=pointer]:
+              - img [ref=e512]
+            - button "Activate Cloud Shell (G then S)" [ref=e262] [cursor=pointer]:
+              - img [ref=e264]
+            - button "1 unread notifications. Open notifications" [ref=e57] [cursor=pointer]:
+              - generic [ref=e60]: "1"
+            - button "Settings and utilities" [ref=e65] [cursor=pointer]:
+              - img [ref=e67]
+          - 'button "Account: Jashwanth Badugu (badugujashwanth@gmail.com)" [ref=e268]':
+            - img [ref=e269]
+    - generic [ref=e80]:
+      - navigation "Breadcrumb" [ref=e539]:
+        - link "Google Auth Platform" [ref=e542] [cursor=pointer]:
+          - /url: /auth?project=zettalogix-migration
+          - img [ref=e545]
+          - generic [ref=e549]: Google Auth Platform
+        - list [ref=e550]:
+          - listitem [ref=e551]:
+            - generic [ref=e552]: /
+            - link "Clients" [ref=e555] [cursor=pointer]:
+              - /url: /auth/clients?project=zettalogix-migration
+              - generic [ref=e557]: Clients
+          - listitem [ref=e558]:
+            - generic [ref=e559]: /
+            - 'link "Client: 233215699309-f34ndmnlqalafnp5mq2et3jg2n9m6q60.apps.googleusercontent.com" [ref=e562] [cursor=pointer]':
+              - /url: /auth/clients/233215699309-f34ndmnlqalafnp5mq2et3jg2n9m6q60.apps.googleusercontent.com?project=zettalogix-migration
+              - generic [ref=e564]: "Client: 233215699309-f34ndmnlqalafnp5mq2et3jg2n9m6q60.apps.googleusercontent.com"
+      - generic [ref=e91]:
+        - navigation "Google Auth Platform" [ref=e565]:
+          - generic [ref=e99]:
+            - list "Overview, 1 of 7 More options Branding, 2 of 7 More options Audience, 3 of 7 More options Clients, 4 of 7 More options Data access, 5 of 7 More options Verification centre, 6 of 7 More options Settings, 7 of 7 More options" [ref=e567]:
+              - listitem [ref=e568]:
+                - generic [ref=e571]:
+                  - link "Overview, 1 of 7" [ref=e572] [cursor=pointer]:
+                    - /url: /auth/overview?project=zettalogix-migration
+                    - generic [ref=e573]:
+                      - img [ref=e576]
+                      - generic [ref=e578]: Overview
+                  - button "More options" [ref=e580] [cursor=pointer]:
+                    - img [ref=e582]
+              - listitem [ref=e584]:
+                - generic [ref=e587]:
+                  - link "Branding, 2 of 7" [ref=e588] [cursor=pointer]:
+                    - /url: /auth/branding?project=zettalogix-migration
+                    - generic [ref=e589]:
+                      - img [ref=e592]
+                      - generic [ref=e598]: Branding
+                  - button "More options" [ref=e600] [cursor=pointer]:
+                    - img [ref=e602]
+              - listitem [ref=e604]:
+                - generic [ref=e607]:
+                  - link "Audience, 3 of 7" [ref=e608] [cursor=pointer]:
+                    - /url: /auth/audience?project=zettalogix-migration
+                    - generic [ref=e609]:
+                      - img [ref=e612]
+                      - generic [ref=e614]: Audience
+                  - button "More options" [ref=e616] [cursor=pointer]:
+                    - img [ref=e618]
+              - listitem [ref=e620]:
+                - generic [ref=e623]:
+                  - link "Clients, 4 of 7" [ref=e624] [cursor=pointer]:
+                    - /url: /auth/clients?project=zettalogix-migration
+                    - generic [ref=e625]:
+                      - img [ref=e628]
+                      - generic [ref=e630]: Clients
+                  - button "More options" [ref=e632] [cursor=pointer]:
+                    - img [ref=e634]
+              - listitem [ref=e636]:
+                - generic [ref=e639]:
+                  - link "Data access, 5 of 7" [ref=e640] [cursor=pointer]:
+                    - /url: /auth/scopes?project=zettalogix-migration
+                    - generic [ref=e641]:
+                      - img [ref=e644]
+                      - generic [ref=e647]: Data access
+                  - button "More options" [ref=e649] [cursor=pointer]:
+                    - img [ref=e651]
+              - listitem [ref=e653]:
+                - generic [ref=e656]:
+                  - link "Verification centre, 6 of 7" [ref=e657] [cursor=pointer]:
+                    - /url: /auth/verification?project=zettalogix-migration
+                    - generic [ref=e658]:
+                      - img [ref=e661]
+                      - generic [ref=e664]: Verification centre
+                  - button "More options" [ref=e666] [cursor=pointer]:
+                    - img [ref=e668]
+              - listitem [ref=e670]:
+                - generic [ref=e673]:
+                  - link "Settings, 7 of 7" [ref=e674] [cursor=pointer]:
+                    - /url: /auth/settings?project=zettalogix-migration
+                    - generic [ref=e675]:
+                      - img [ref=e678]
+                      - generic [ref=e680]: Settings
+                  - button "More options" [ref=e682] [cursor=pointer]:
+                    - img [ref=e684]
+            - button "Toggle Google Auth Platform navigation menu" [pressed] [ref=e686] [cursor=pointer]:
+              - img [ref=e199]
+        - main [ref=e202]:
+          - generic [ref=e696]:
+            - generic [ref=e699]:
+              - button "Back to previous page" [ref=e703] [cursor=pointer]:
+                - img [ref=e705]
+              - heading "Client ID for Web application" [level=1] [ref=e709]:
+                - generic [ref=e710]: Client ID for Web application
+              - generic [ref=e712]:
+                - button "Delete" [ref=e717]:
+                  - img [ref=e719]
+                  - generic [ref=e721]: Delete
+                - button "Information and summary" [ref=e725] [cursor=pointer]:
+                  - img [ref=e727]
+            - generic [ref=e737]:
+              - generic [ref=e739]:
+                - generic [ref=e740]:
+                  - generic [ref=e742] [cursor=pointer]:
+                    - generic [ref=e743]:
+                      - text: Name
+                      - generic [ref=e744]: "*"
+                    - textbox "Name" [ref=e746]: Web client 1
+                  - generic [ref=e749]: The name of your OAuth 2.0 client. This name is only used to identify the client in the console and will not be shown to end users.
+                - generic [ref=e751]:
+                  - generic [ref=e753]:
+                    - img "Information" [ref=e754]:
+                      - img [ref=e755]
+                    - generic [ref=e759]:
+                      - text: The domains of the URIs you add below will be automatically added to your
+                      - link "OAuth consent screen" [ref=e760] [cursor=pointer]:
+                        - /url: /auth/branding?project=zettalogix-migration
+                      - text: as
+                      - link "authorised domains external, opens new window" [ref=e761] [cursor=pointer]:
+                        - /url: https://support.google.com/cloud/answer/6158849?hl=en_GB#authorized-domains
+                        - text: authorised domains
+                        - img "external, opens new window" [ref=e762]:
+                          - img [ref=e763]
+                      - text: .
+                  - group "Authorised JavaScript origins" [ref=e766]:
+                    - generic "Authorised JavaScript origins" [ref=e768]:
+                      - heading "Authorised JavaScript origins" [level=2] [ref=e770]
+                      - button "Help with Javascript origins" [ref=e772] [cursor=pointer]:
+                        - img [ref=e774]
+                    - generic [ref=e777]: For use with requests from a browser
+                    - group "Authorised JavaScript origins" [ref=e779]:
+                      - generic [ref=e780]:
+                        - group "Item 1" [ref=e781]:
+                          - generic [ref=e785] [cursor=pointer]:
+                            - generic [ref=e786]:
+                              - generic [ref=e787]: URIs 1
+                              - generic [ref=e788]: "*"
+                            - textbox "URIs 1" [ref=e790]:
+                              - /placeholder: https://www.example.com
+                              - text: http://localhost:5173
+                          - button "Delete item. Item 1" [ref=e792] [cursor=pointer]:
+                            - img [ref=e794]
+                        - group "Item 2" [ref=e911]:
+                          - generic [ref=e915] [cursor=pointer]:
+                            - generic [ref=e916]:
+                              - generic [ref=e917]: URIs 2
+                              - generic [ref=e918]: "*"
+                            - textbox "URIs 2" [ref=e920]:
+                              - /placeholder: https://www.example.com
+                              - text: https://sharepoint-one.vercel.app
+                          - button "Delete item. Item 2" [ref=e922] [cursor=pointer]:
+                            - img [ref=e924]
+                      - button "Add URI" [ref=e797]:
+                        - generic [ref=e799]:
+                          - img [ref=e801]
+                          - text: Add URI
+                  - group "Authorised redirect URIs" [ref=e804]:
+                    - generic "Authorised redirect URIs" [ref=e806]:
+                      - heading "Authorised redirect URIs" [level=2] [ref=e808]
+                      - button "Help with redirect URIs" [ref=e810] [cursor=pointer]:
+                        - img [ref=e812]
+                    - generic [ref=e815]: For use with requests from a web server
+                    - group "Authorised redirect URIs" [ref=e817]:
+                      - generic [ref=e818]:
+                        - group "Item 1" [ref=e819]:
+                          - generic [ref=e823] [cursor=pointer]:
+                            - generic [ref=e824]:
+                              - generic [ref=e825]: URIs 1
+                              - generic [ref=e826]: "*"
+                            - textbox "URIs 1" [ref=e828]:
+                              - /placeholder: https://www.example.com
+                              - text: http://localhost:5266/api/google/auth/callback
+                          - button "Delete item. Item 1" [ref=e830] [cursor=pointer]:
+                            - img [ref=e832]
+                        - group "Item 2" [ref=e834]:
+                          - generic [ref=e838] [cursor=pointer]:
+                            - generic [ref=e839]:
+                              - generic [ref=e840]: URIs 2
+                              - generic [ref=e841]: "*"
+                            - textbox "URIs 2" [ref=e843]:
+                              - /placeholder: https://www.example.com
+                              - text: https://developers.google.com/oauthplayground
+                          - button "Delete item. Item 2" [ref=e845] [cursor=pointer]:
+                            - img [ref=e847]
+                        - group "Item 3" [ref=e849]:
+                          - generic [ref=e853] [cursor=pointer]:
+                            - generic [ref=e854]:
+                              - generic [ref=e855]: URIs 3
+                              - generic [ref=e856]: "*"
+                            - textbox "URIs 3" [ref=e858]:
+                              - /placeholder: https://www.example.com
+                              - text: https://hxptmbphcdyzhmwnimwh.supabase.co/auth/v1/callback
+                          - button "Delete item. Item 3" [ref=e860] [cursor=pointer]:
+                            - img [ref=e862]
+                        - group "Item 4" [ref=e864]:
+                          - generic [ref=e868] [cursor=pointer]:
+                            - generic [ref=e869]:
+                              - generic [ref=e870]: URIs 4
+                              - generic [ref=e871]: "*"
+                            - textbox "URIs 4" [ref=e873]:
+                              - /placeholder: https://www.example.com
+                              - text: http://localhost:5173
+                          - button "Delete item. Item 4" [ref=e875] [cursor=pointer]:
+                            - img [ref=e877]
+                        - group "Item 5" [ref=e879]:
+                          - generic [ref=e883] [cursor=pointer]:
+                            - generic [ref=e884]:
+                              - generic [ref=e885]: URIs 5
+                              - generic [ref=e886]: "*"
+                            - textbox "URIs 5" [ref=e888]:
+                              - /placeholder: https://www.example.com
+                              - text: http://localhost:5173/auth/callback
+                          - button "Delete item. Item 5" [ref=e890] [cursor=pointer]:
+                            - img [ref=e892]
+                        - group "Item 6" [ref=e926]:
+                          - generic [ref=e930] [cursor=pointer]:
+                            - generic [ref=e931]:
+                              - generic [ref=e932]: URIs 6
+                              - generic [ref=e933]: "*"
+                            - textbox "URIs 6" [active] [ref=e935]:
+                              - /placeholder: https://www.example.com
+                          - button "Delete item. Item 6" [ref=e937] [cursor=pointer]:
+                            - img [ref=e939]
+                      - button "Add URI" [ref=e895]:
+                        - generic [ref=e897]:
+                          - img [ref=e899]
+                          - text: Add URI
+              - paragraph [ref=e901]: "Note: It may take five minutes to a few hours for settings to take effect"
+              - button "Save" [disabled] [ref=e904]:
+                - generic [ref=e905]: Save
+              - button "Cancel" [ref=e906]:
+                - generic [ref=e907]: Cancel
+  - iframe [ref=e226]:
+    
+  - iframe [ref=e505]:
+    
+  - iframe [ref=e506]:
+    
+  - paragraph [ref=e941]: Item added.

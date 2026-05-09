@@ -1,0 +1,4 @@
+[     736ms] [LOG] Supabase Studio is running commit 978fa7bdfb5d364285ce1c4bacc836440f0d10bc deployed at 2026-05-09 03:19:25 +05:30. @ https://frontend-assets.supabase.com/studio/978fa7bdfb5d/_next/static/chunks/0wz~f2pxngvlu.js?dpl=dpl_5Wb1wiZjZeoMgWCQyEoEtCMP3jUX:12
+[    2025ms] [WARNING] [Warning] Please install/enable Redux devtools extension @ https://frontend-assets.supabase.com/studio/978fa7bdfb5d/_next/static/chunks/0wz~f2pxngvlu.js?dpl=dpl_5Wb1wiZjZeoMgWCQyEoEtCMP3jUX:12
+[    2114ms] [ERROR] Flag key "headerUpgradeCta" does not exist in PostHog flag store @ https://frontend-assets.supabase.com/studio/978fa7bdfb5d/_next/static/chunks/0wz~f2pxngvlu.js?dpl=dpl_5Wb1wiZjZeoMgWCQyEoEtCMP3jUX:12
+[    2637ms] [ERROR] Flag key "headerUpgradeCta" does not exist in PostHog flag store @ https://frontend-assets.supabase.com/studio/978fa7bdfb5d/_next/static/chunks/0wz~f2pxngvlu.js?dpl=dpl_5Wb1wiZjZeoMgWCQyEoEtCMP3jUX:12

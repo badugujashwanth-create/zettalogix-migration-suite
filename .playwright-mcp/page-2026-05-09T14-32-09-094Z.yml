@@ -1,0 +1,255 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - complementary "Skip links" [ref=e5]:
+        - link "Skip to main content" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]: Skip to main content
+        - button "Keyboard shortcuts" [ref=e8]:
+          - generic [ref=e9]: Keyboard shortcuts
+        - link "Accessibility help external, opens in a new window" [ref=e10] [cursor=pointer]:
+          - /url: https://cloud.google.com/docs/accessibility?hl=en_GB
+          - generic [ref=e11]:
+            - text: Accessibility help
+            - generic "external, opens in a new window" [ref=e12]:
+              - img "external, opens in a new window" [ref=e13]:
+                - img [ref=e14]
+        - link "Accessibility feedback external, opens in a new window" [ref=e16] [cursor=pointer]:
+          - /url: https://support.google.com/accessibility/contact/feedback?hl=en_GB
+          - generic [ref=e17]:
+            - text: Accessibility feedback
+            - generic "external, opens in a new window" [ref=e18]:
+              - img "external, opens in a new window" [ref=e19]:
+                - img [ref=e20]
+      - banner [ref=e23]:
+        - generic [ref=e24]:
+          - navigation [ref=e27]:
+            - button "Navigation menu (.)" [ref=e28] [cursor=pointer]:
+              - img [ref=e30]
+          - link "Google Cloud Platform Home" [ref=e32] [cursor=pointer]:
+            - /url: /
+            - generic:
+              - img
+          - button "You're currently working in Zettalogix Migration. Hit enter to switch projects, folders or organisations" [ref=e248]:
+            - generic [ref=e249]:
+              - img [ref=e251]
+              - generic [ref=e254]: Zettalogix Migration
+        - search "Google Cloud Platform" [ref=e46]:
+          - combobox [ref=e47]:
+            - searchbox "Enter query to search for resources, docs, products and more" [ref=e48]
+          - button "See all search results" [disabled]:
+            - generic:
+              - img
+            - generic: Search
+        - generic [ref=e49]:
+          - generic [ref=e50]:
+            - button "Open or close Gemini Cloud Assist chat (Alt G)" [ref=e258] [cursor=pointer]:
+              - img [ref=e260]
+            - button "Free trial status" [active] [ref=e510] [cursor=pointer]:
+              - img [ref=e512]
+            - button "Activate Cloud Shell (G then S)" [ref=e262] [cursor=pointer]:
+              - img [ref=e264]
+            - button "1 unread notifications. Open notifications" [ref=e57] [cursor=pointer]:
+              - generic [ref=e60]: "1"
+            - button "Settings and utilities" [ref=e65] [cursor=pointer]:
+              - img [ref=e67]
+          - 'button "Account: Jashwanth Badugu (badugujashwanth@gmail.com)" [ref=e268]':
+            - img [ref=e269]
+    - generic [ref=e91]:
+      - navigation "APIs and services" [ref=e98]:
+        - generic [ref=e99]:
+          - heading "APIs and services" [level=2] [ref=e101]:
+            - link "APIs and services" [ref=e102] [cursor=pointer]:
+              - /url: /apis
+              - img [ref=e105]
+              - generic [ref=e109]: APIs and services
+          - list "Enabled APIs and services, 1 of 5 More options Library, 2 of 5 More options Credentials, 3 of 5 More options OAuth consent screen, 4 of 5 More options Page usage agreements, 5 of 5 More options" [ref=e113]:
+            - listitem [ref=e114]:
+              - generic [ref=e117]:
+                - link "Enabled APIs and services, 1 of 5" [ref=e118] [cursor=pointer]:
+                  - /url: /apis/dashboard
+                  - generic [ref=e119]:
+                    - img [ref=e122]
+                    - generic [ref=e124]: Enabled APIs and services
+                - button "More options" [ref=e126] [cursor=pointer]:
+                  - img [ref=e128]
+            - listitem [ref=e130]:
+              - generic [ref=e133]:
+                - link "Library, 2 of 5" [ref=e134] [cursor=pointer]:
+                  - /url: /apis/library
+                  - generic [ref=e135]:
+                    - img [ref=e138]
+                    - generic [ref=e140]: Library
+                - button "More options" [ref=e142] [cursor=pointer]:
+                  - img [ref=e144]
+            - listitem [ref=e146]:
+              - generic [ref=e149]:
+                - link "Credentials, 3 of 5" [ref=e150] [cursor=pointer]:
+                  - /url: /apis/credentials
+                  - generic [ref=e151]:
+                    - img [ref=e154]
+                    - generic [ref=e156]: Credentials
+                - button "More options" [ref=e158] [cursor=pointer]:
+                  - img [ref=e160]
+            - listitem [ref=e162]:
+              - generic [ref=e165]:
+                - link "OAuth consent screen, 4 of 5" [ref=e166] [cursor=pointer]:
+                  - /url: /apis/credentials/consent
+                  - generic [ref=e167]:
+                    - img [ref=e170]
+                    - generic [ref=e172]: OAuth consent screen
+                - button "More options" [ref=e174] [cursor=pointer]:
+                  - img [ref=e176]
+            - listitem [ref=e178]:
+              - generic [ref=e181]:
+                - link "Page usage agreements, 5 of 5" [ref=e182] [cursor=pointer]:
+                  - /url: /apis/agreements
+                  - generic [ref=e183]:
+                    - img [ref=e186]
+                    - generic [ref=e189]: Page usage agreements
+                - button "More options" [ref=e191] [cursor=pointer]:
+                  - img [ref=e193]
+          - button "Toggle APIs and services navigation menu" [pressed] [ref=e196] [cursor=pointer]:
+            - img [ref=e199]
+      - main [ref=e202]:
+        - generic [ref=e275]:
+          - generic [ref=e278]:
+            - heading "Credentials" [level=1] [ref=e281]:
+              - generic [ref=e282]: Credentials
+            - generic [ref=e286]:
+              - generic [ref=e287]:
+                - button "Create credential" [ref=e289]:
+                  - generic [ref=e290]:
+                    - img [ref=e292]:
+                      - img [ref=e293]
+                    - text: Create credentials
+                  - img [ref=e296]
+                - button "Delete credential" [disabled] [ref=e300]:
+                  - img [ref=e302]:
+                    - img [ref=e303]
+                  - generic [ref=e305]: Delete
+              - button "Restore deleted credentials" [ref=e306] [cursor=pointer]:
+                - generic [ref=e307]:
+                  - img [ref=e309]:
+                    - img [ref=e310]
+                  - text: Restore deleted credentials
+          - generic [ref=e319]:
+            - paragraph [ref=e321]:
+              - text: Create credentials to access your enabled APIs.
+              - link "Learn more about this feature external, opens new window" [ref=e322] [cursor=pointer]:
+                - /url: https://cloud.google.com/docs/authentication?hl=en_GB
+                - text: Learn more
+                - img "external, opens new window" [ref=e323]:
+                  - img [ref=e324]
+            - generic [ref=e326]:
+              - heading "API keys" [level=2] [ref=e328]
+              - grid "API keys , Navigate table with arrow keys. Enter key to interact with cell. Tab to navigate inside cell. Escape to exit cell." [ref=e332]:
+                - rowgroup [ref=e340]:
+                  - row "Row selection Status Name Creation date Restrictions Actions" [ref=e341] [cursor=pointer]:
+                    - gridcell "Row selection" [ref=e342]:
+                      - checkbox "Select all rows" [disabled] [ref=e343]
+                    - columnheader "Status" [ref=e344]:
+                      - img [ref=e348]
+                    - columnheader "Name" [ref=e350]:
+                      - generic [ref=e352]:
+                        - generic [ref=e353]: Name
+                        - button "Sort by Name" [ref=e354]:
+                          - img [ref=e356]
+                    - columnheader "Creation date" [ref=e358]:
+                      - generic [ref=e360]:
+                        - generic [ref=e361]: Creation date
+                        - button "Sort by Creation date" [ref=e362]:
+                          - img [ref=e364]
+                    - columnheader "Restrictions" [ref=e366]:
+                      - generic [ref=e368]:
+                        - generic [ref=e369]: Restrictions
+                        - button "Sort by Restrictions" [ref=e370]:
+                          - img [ref=e372]
+                    - columnheader "Actions" [ref=e374]:
+                      - generic [ref=e376]: Actions
+                - rowgroup [ref=e377]:
+                  - row "No API keys to display" [ref=e378] [cursor=pointer]:
+                    - gridcell "No API keys to display" [ref=e379]
+            - generic [ref=e380]:
+              - heading "OAuth 2.0 Client IDs" [level=2] [ref=e382]
+              - grid "OAuth 2.0 Client IDs , Navigate table with arrow keys. Enter key to interact with cell. Tab to navigate inside cell. Escape to exit cell." [ref=e386]:
+                - rowgroup [ref=e394]:
+                  - row "Row selection Name Creation date Type Client ID Actions" [ref=e395] [cursor=pointer]:
+                    - gridcell "Row selection" [ref=e396]:
+                      - checkbox "Select all rows" [ref=e397]
+                    - columnheader "Name" [ref=e398]:
+                      - generic [ref=e400]:
+                        - generic [ref=e401]: Name
+                        - button "Sort by Name" [ref=e402]:
+                          - img [ref=e404]
+                    - columnheader "Creation date" [ref=e406]:
+                      - generic [ref=e408]:
+                        - generic [ref=e409]: Creation date
+                        - button "Sort by Creation date" [ref=e410]:
+                          - img [ref=e412]
+                    - columnheader "Type" [ref=e414]:
+                      - generic [ref=e416]:
+                        - generic [ref=e417]: Type
+                        - button "Sort by Type" [ref=e418]:
+                          - img [ref=e420]
+                    - columnheader "Client ID" [ref=e422]:
+                      - generic [ref=e424]:
+                        - generic [ref=e425]: Client ID
+                        - button "Sort by Client ID" [ref=e426]:
+                          - img [ref=e428]
+                    - columnheader "Actions" [ref=e430]:
+                      - generic [ref=e432]: Actions
+                - rowgroup [ref=e433]:
+                  - row "Web client 1 Web client 1 20 Apr 2026 Web application 233215699309-f34n... Click to copy the OAuth client Click to edit the OAuth client Click to delete the OAuth client" [ref=e434] [cursor=pointer]:
+                    - gridcell "Web client 1" [ref=e435]:
+                      - checkbox "Web client 1" [ref=e437]
+                    - rowheader "Web client 1" [ref=e438]:
+                      - link "Web client 1" [ref=e439]:
+                        - /url: /apis/credentials/oauthclient/233215699309-f34ndmnlqalafnp5mq2et3jg2n9m6q60.apps.googleusercontent.com?project=zettalogix-migration
+                    - gridcell "20 Apr 2026" [ref=e440]
+                    - gridcell "Web application" [ref=e441]
+                    - gridcell "233215699309-f34n... Click to copy the OAuth client" [ref=e442]:
+                      - code [ref=e443]: 233215699309-f34n...
+                      - button "Click to copy the OAuth client" [ref=e444]:
+                        - img [ref=e446]:
+                          - img [ref=e447]
+                    - gridcell "Click to edit the OAuth client Click to delete the OAuth client" [ref=e449]:
+                      - link "Click to edit the OAuth client" [ref=e450]:
+                        - /url: /apis/credentials/oauthclient/233215699309-f34ndmnlqalafnp5mq2et3jg2n9m6q60.apps.googleusercontent.com?project=zettalogix-migration
+                        - img [ref=e452]:
+                          - img [ref=e453]
+                      - button "Click to delete the OAuth client" [ref=e457]:
+                        - img [ref=e459]:
+                          - img [ref=e460]
+            - generic [ref=e462]:
+              - generic [ref=e463]:
+                - heading "Service Accounts" [level=2] [ref=e464]
+                - link "Manage service accounts" [ref=e468] [cursor=pointer]:
+                  - /url: /iam-admin/serviceaccounts?project=zettalogix-migration
+              - grid "Service Accounts , Navigate table with arrow keys. Enter key to interact with cell. Tab to navigate inside cell. Escape to exit cell." [ref=e472]:
+                - rowgroup [ref=e478]:
+                  - row "Row selection Email Name Actions" [ref=e479] [cursor=pointer]:
+                    - gridcell "Row selection" [ref=e480]:
+                      - checkbox "Select all rows" [disabled] [ref=e481]
+                    - columnheader "Email" [ref=e482]:
+                      - generic [ref=e484]:
+                        - generic [ref=e485]: Email
+                        - button "Sort by Email" [ref=e486]:
+                          - img [ref=e488]
+                    - columnheader "Name" [ref=e490]:
+                      - generic [ref=e492]:
+                        - generic [ref=e493]: Name
+                        - button "Sort by Name" [ref=e494]:
+                          - img [ref=e496]
+                    - columnheader "Actions" [ref=e498]:
+                      - generic [ref=e500]: Actions
+                - rowgroup [ref=e501]:
+                  - row "No service accounts to display" [ref=e502] [cursor=pointer]:
+                    - gridcell "No service accounts to display" [ref=e503]
+  - iframe [ref=e226]:
+    
+  - iframe [ref=e505]:
+    
+  - iframe [ref=e506]:
+    
+  - generic [ref=e516]: Activate Cloud Shell (G then S)

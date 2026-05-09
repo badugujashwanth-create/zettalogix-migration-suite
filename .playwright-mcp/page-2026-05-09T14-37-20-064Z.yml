@@ -1,0 +1,18 @@
+- main [ref=e3]:
+  - generic [ref=e4]:
+    - generic [ref=e5]: Z
+    - generic [ref=e6]: Secure Access
+    - heading "Zettalogix Migration Suite" [level=1] [ref=e7]
+    - paragraph [ref=e8]: Sign in with Google or request an email link to open the migration control plane.
+    - button "account_circle Continue with Google" [ref=e10] [cursor=pointer]:
+      - generic [ref=e11]: account_circle
+      - text: Continue with Google
+    - generic [ref=e13]: or
+    - generic [ref=e14]:
+      - generic [ref=e15]:
+        - text: Email address
+        - textbox "Email address" [ref=e16]:
+          - /placeholder: you@example.com
+      - button "mail Send sign-in link" [ref=e17] [cursor=pointer]:
+        - generic [ref=e18]: mail
+        - text: Send sign-in link
