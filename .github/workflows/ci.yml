@@ -22,5 +22,5 @@ jobs:
           cache: npm
           cache-dependency-path: ZMS.WebUI/package-lock.json
       - run: npm ci
+      - run: npm test
       - run: npm run build
-

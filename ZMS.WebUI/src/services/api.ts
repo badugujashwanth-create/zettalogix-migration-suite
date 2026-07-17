@@ -10,6 +10,8 @@ import {
 } from "../utils/models";
 import { formatErrorForToast } from "../utils/errorHelp";
 import { createClient } from "../lib/client";
+import { demoApi } from "./demoApi";
+import { isDemoMode } from "./demoMode";
 
 const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL ?? "http://localhost:5206").replace(/\/+$/, "");
 const settingsStorageKey = "zms-web-ui-settings";
@@ -361,6 +363,7 @@ function saveSettingsToStorage(settings: AppSettings): void {
 
 export const api = {
   async getJobs(): Promise<MigrationJob[]> {
+    if (isDemoMode()) return demoApi.getJobs();
     const jobs = await request<ApiMigrationJobResponse[]>("/jobs");
     const reports = await Promise.all(jobs.map((job) => getJobReport(job.id)));
 
@@ -370,6 +373,7 @@ export const api = {
   },
 
   async getJob(id: string): Promise<MigrationJob | undefined> {
+    if (isDemoMode()) return demoApi.getJob(id);
     try {
       const [job, report] = await Promise.all([
         request<ApiMigrationJobResponse>(`/jobs/${id}`),
@@ -383,6 +387,7 @@ export const api = {
   },
 
   async createJob(input: CreateJobInput): Promise<MigrationJob> {
+    if (isDemoMode()) return demoApi.createJob(input);
     const job = await request<ApiMigrationJobResponse>("/jobs", {
       method: "POST",
       body: JSON.stringify({
@@ -405,19 +410,23 @@ export const api = {
   },
 
   async startMigration(id: string): Promise<void> {
+    if (isDemoMode()) return demoApi.startMigration(id);
     await request<void>(`/jobs/${id}/start`, { method: "POST", body: "{}" });
   },
 
   async pauseMigration(id: string): Promise<void> {
+    if (isDemoMode()) return demoApi.pauseMigration(id);
     await request<void>(`/jobs/${id}/pause`, { method: "POST", body: "{}" });
   },
 
   async getConnections(): Promise<ConnectionRecord[]> {
+    if (isDemoMode()) return demoApi.getConnections();
     const connections = await request<ApiConnectionResponse[]>("/connections");
     return connections.map(mapConnection);
   },
 
   async createConnection(input: CreateConnectionInput): Promise<ConnectionRecord> {
+    if (isDemoMode()) return demoApi.createConnection(input);
     const googleFolderId =
       input.type === "GoogleDrive"
         ? input.folderId || input.rootPath || extractGoogleDriveFolderId(input.folderUrl || input.url)
@@ -475,6 +484,7 @@ export const api = {
   },
 
   async testConnection(id: string): Promise<ConnectionTestResult> {
+    if (isDemoMode()) return demoApi.testConnection(id);
     const result = await request<ApiConnectionTestResponse>(`/connections/${id}/test`, {
       method: "POST",
       body: "{}"
@@ -500,6 +510,7 @@ export const api = {
   },
 
   async downloadReport(path: string): Promise<void> {
+    if (isDemoMode()) return demoApi.downloadReport();
     try {
       await downloadReportFile(path);
     } catch (error) {

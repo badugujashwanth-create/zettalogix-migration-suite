@@ -5,6 +5,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { useAppStore } from "../../hooks/useAppStore";
 import { formatConnectionType, formatJobStatus } from "../../utils/formatters";
 import styles from "./TopNavbar.module.css";
+import { isDemoMode } from "../../services/demoMode";
 
 interface SearchResult {
   id: string;
@@ -75,8 +76,9 @@ export default function TopNavbar(): JSX.Element {
   const activeCount = jobs.filter((job) => job.status === "Running").length;
   const failedCount = jobs.filter((job) => job.status === "Failed").length;
   const fullName = typeof user?.user_metadata?.full_name === "string" ? user.user_metadata.full_name : "";
-  const displayName = fullName || user?.email || "ZMS User";
-  const userEmail = user?.email ?? "Authenticated user";
+  const demoMode = isDemoMode();
+  const displayName = demoMode ? "Synthetic Demo" : fullName || user?.email || "ZMS User";
+  const userEmail = demoMode ? "No live services connected" : user?.email ?? "Authenticated user";
   const initials = displayName
     .split(/\s|@/)
     .filter(Boolean)

@@ -1,12 +1,13 @@
 import type { AuthChangeEvent, Provider, Session, SupabaseClient, User } from "@supabase/supabase-js";
 import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from "react";
-import { createClient } from "../lib/client";
+import { createClient, isSupabaseConfigured } from "../lib/client";
+import { disableDemoMode, isDemoMode } from "../services/demoMode";
 
 interface AuthContextValue {
   loading: boolean;
   session: Session | null;
   user: User | null;
-  supabase: SupabaseClient;
+  supabase: SupabaseClient | null;
   signInWithOAuth: (provider: Provider) => Promise<void>;
   signInWithEmail: (email: string) => Promise<void>;
   signOut: () => Promise<void>;
@@ -19,11 +20,16 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
-  const supabase = useMemo(() => createClient(), []);
+  const supabase = useMemo(() => isSupabaseConfigured() ? createClient() : null, []);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!supabase) {
+      setLoading(false);
+      return;
+    }
+
     let active = true;
 
     supabase.auth.getSession().then(({ data }: { data: { session: Session | null } }) => {
@@ -52,6 +58,7 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
     user: session?.user ?? null,
     supabase,
     async signInWithOAuth(provider) {
+      if (!supabase) throw new Error("Supabase sign-in is not configured for this deployment.");
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
@@ -64,6 +71,7 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
       }
     },
     async signInWithEmail(email) {
+      if (!supabase) throw new Error("Supabase sign-in is not configured for this deployment.");
       const { error } = await supabase.auth.signInWithOtp({
         email,
         options: {
@@ -76,6 +84,11 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
       }
     },
     async signOut() {
+      if (isDemoMode()) {
+        disableDemoMode();
+        return;
+      }
+      if (!supabase) return;
       const { error } = await supabase.auth.signOut();
       if (error) {
         throw error;

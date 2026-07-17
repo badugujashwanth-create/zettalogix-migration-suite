@@ -1,8 +1,9 @@
 import type { Provider } from "@supabase/supabase-js";
 import type { FormEvent } from "react";
 import { useState } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { enableDemoMode } from "../services/demoMode";
 import styles from "./AuthPage.module.css";
 
 interface LocationState {
@@ -17,6 +18,7 @@ const providerLabels: Array<{ provider: Provider; icon: string; label: string }>
 
 export default function AuthPage(): JSX.Element {
   const location = useLocation();
+  const navigate = useNavigate();
   const { loading, session, signInWithOAuth, signInWithEmail } = useAuth();
   const [pendingProvider, setPendingProvider] = useState<Provider | null>(null);
   const [pendingEmail, setPendingEmail] = useState(false);
@@ -74,6 +76,19 @@ export default function AuthPage(): JSX.Element {
         <span className="eyebrow">Secure Access</span>
         <h1>Zettalogix Migration Suite</h1>
         <p>Sign in with Google or request an email link to open the migration control plane.</p>
+
+        <button
+          type="button"
+          className={styles.providerButton}
+          onClick={() => {
+            enableDemoMode();
+            navigate("/dashboard", { replace: true });
+          }}
+        >
+          <span className="material-symbols-outlined">science</span>
+          Explore the synthetic demo
+        </button>
+        <p>Demo mode uses only fictional data and never calls migration or identity services.</p>
 
         <div className={styles.providerStack}>
           {providerLabels.map((item) => (
