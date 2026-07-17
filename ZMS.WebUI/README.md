@@ -13,7 +13,7 @@ It owns:
 Run locally:
 
 ```powershell
-Set-Location "d:\projects\Shearpoint to google\ZettalogixMigrationSuite\ZMS.WebUI"
+Set-Location "sharepoint\ZMS.WebUI"
 Copy-Item .env.example .env -Force
 npm install
 npm run dev

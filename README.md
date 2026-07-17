@@ -1,5 +1,11 @@
 # Zettalogix Migration Suite Frontend
 
+> **Status: Prototype** — The web UI builds successfully. This repository does not contain or claim the external migration backend.
+
+[![Watch the Zettalogix Migration Suite demo](docs/demo/demo-thumbnail.png)](docs/demo/demo.webm)
+
+> Watch the verified public frontend overview. The external backend is outside this repository and was not modified.
+
 This repository contains the frontend web UI for Zettalogix Migration Suite.
 
 The backend API and migration worker were split into:
@@ -24,7 +30,7 @@ Start the backend API from the backend repository first, usually on `http://loca
 Then run the frontend:
 
 ```powershell
-Set-Location "d:\projects\Shearpoint to google\ZettalogixMigrationSuite\ZMS.WebUI"
+Set-Location "sharepoint\ZMS.WebUI"
 Copy-Item .env.example .env -Force
 npm install
 npm run dev
@@ -61,3 +67,15 @@ VITE_API_BASE_URL=https://your-backend-api-host
 ```
 
 Because Vite bakes env vars at build time, redeploy the frontend after changing `VITE_API_BASE_URL`.
+
+## Related repositories
+
+- **Web frontend:** `ZMS.WebUI` in this repository.
+- **Desktop shell:** `ZMS.DesktopApp` in this repository.
+- **Backend/API/workers:** [machander-byte/sharepoint_backend](https://github.com/machander-byte/sharepoint_backend) is referenced by the existing project documentation but is not present locally and was not modified or verified in this audit.
+
+See [docs/TEST_REPORT.md](docs/TEST_REPORT.md) and [docs/demo/DEMO_SCRIPT.md](docs/demo/DEMO_SCRIPT.md).
+
+## License status
+
+No license file is currently present. All rights remain with the copyright holder unless a license is added manually.
