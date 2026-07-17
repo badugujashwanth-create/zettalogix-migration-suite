@@ -6,6 +6,8 @@ obj/
 .dotnet-home/
 .codex-run/
 node_modules/
+test-results/
+playwright-report/
 dist/
 coverage/
 artifacts/
