@@ -1,10 +1,15 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import AuthStatusPage from "../../pages/AuthStatusPage";
+import { isDemoMode } from "../../services/demoMode";
 
 export default function RequireAuth(): JSX.Element {
   const location = useLocation();
   const { loading, session } = useAuth();
+
+  if (isDemoMode()) {
+    return <Outlet />;
+  }
 
   if (loading) {
     return <AuthStatusPage title="Checking session" message="Validating your Supabase login." />;

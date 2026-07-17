@@ -2,6 +2,10 @@ import { createBrowserClient } from '@supabase/ssr'
 
 let browserClient: ReturnType<typeof createBrowserClient> | null = null
 
+export function isSupabaseConfigured(): boolean {
+  return Boolean(import.meta.env.VITE_SUPABASE_URL && import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY)
+}
+
 export function createClient() {
   if (!browserClient) {
     browserClient = createBrowserClient(
