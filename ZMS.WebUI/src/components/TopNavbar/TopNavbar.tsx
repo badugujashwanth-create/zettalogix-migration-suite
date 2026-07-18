@@ -1,5 +1,6 @@
 import { ChangeEvent, KeyboardEvent, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import AppIcon from "../AppIcon/AppIcon";
 import { pageTitles } from "../../utils/constants";
 import { useAuth } from "../../hooks/useAuth";
 import { useAppStore } from "../../hooks/useAppStore";
@@ -169,7 +170,7 @@ export default function TopNavbar(): JSX.Element {
 
       <div className={styles.utilityArea}>
         <label className={styles.search}>
-          <span className="material-symbols-outlined">search</span>
+          <AppIcon name="search" />
           <input
             type="text"
             placeholder="Search jobs, sites, libraries"
@@ -187,7 +188,7 @@ export default function TopNavbar(): JSX.Element {
               onMouseDown={(event) => event.preventDefault()}
               onClick={() => setSearchTerm("")}
             >
-              <span className="material-symbols-outlined">close</span>
+              <AppIcon name="close" />
             </button>
           ) : null}
           {searchOpen && normalizedSearch.length >= 2 ? (
@@ -195,7 +196,7 @@ export default function TopNavbar(): JSX.Element {
               {searchResults.length > 0 ? (
                 searchResults.map((result) => (
                   <button key={result.id} type="button" onMouseDown={() => goToResult(result)}>
-                    <span className="material-symbols-outlined">{result.icon}</span>
+                    <AppIcon name={result.icon} />
                     <span>
                       <strong>{result.label}</strong>
                       <small>{result.meta}</small>
@@ -212,9 +213,7 @@ export default function TopNavbar(): JSX.Element {
         <div className={styles.pill}>Running {activeCount}</div>
         <div className={styles.pill}>At Risk {failedCount}</div>
 
-        <button type="button" className={styles.iconButton} aria-label="Notifications">
-          <span className="material-symbols-outlined">notifications</span>
-        </button>
+        <div className={styles.modePill}>{demoMode ? "Network off" : "External API"}</div>
 
         <button
           type="button"

@@ -1,3 +1,4 @@
+import AppIcon from "../components/AppIcon/AppIcon";
 import styles from "./HelpCenterPage.module.css";
 
 interface ResourceLink {
@@ -163,7 +164,7 @@ const errorGuide = [
 function ExternalLink({ link }: { link: ResourceLink }): JSX.Element {
   return (
     <a className={styles.resourceLink} href={link.href} target="_blank" rel="noreferrer">
-      <span className="material-symbols-outlined">open_in_new</span>
+      <AppIcon name="open_in_new" />
       <span>
         <strong>{link.label}</strong>
         <small>{link.description}</small>
@@ -197,7 +198,7 @@ export default function HelpCenterPage(): JSX.Element {
           <strong>Minimum ready state</strong>
           <p>One healthy source connection, one healthy SharePoint Online target, a reachable SQL database, and backend secrets supplied by environment variables.</p>
           <a className="primary-button" href="#external-resources">
-            <span className="material-symbols-outlined">link</span>
+            <AppIcon name="link" />
             Open setup links
           </a>
         </aside>
@@ -207,7 +208,7 @@ export default function HelpCenterPage(): JSX.Element {
         {requirementGroups.map((group) => (
           <article key={group.title} className={styles.requirementCard}>
             <div className={styles.requirementHeader}>
-              <span className="material-symbols-outlined">{group.icon}</span>
+              <AppIcon name={group.icon} />
               <h3>{group.title}</h3>
             </div>
             <ul>

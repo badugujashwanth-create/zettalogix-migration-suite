@@ -1,12 +1,15 @@
 import { useMemo, useState } from "react";
+import AppIcon from "../components/AppIcon/AppIcon";
 import ConfirmDialog from "../components/ConfirmDialog/ConfirmDialog";
 import FormWizard from "../components/FormWizard/FormWizard";
 import JobTable from "../components/JobTable/JobTable";
 import { useAppStore } from "../hooks/useAppStore";
 import { useJobsPolling } from "../hooks/useJobsPolling";
 import { api } from "../services/api";
+import { isDemoMode } from "../services/demoMode";
 
 export default function MigrationsPage(): JSX.Element {
+  const demoMode = isDemoMode();
   const jobs = useAppStore((state) => state.jobs);
   const connections = useAppStore((state) => state.connections);
   const createJob = useAppStore((state) => state.createJob);
@@ -53,7 +56,11 @@ export default function MigrationsPage(): JSX.Element {
             <div>
               <span className="eyebrow">Intervention Panel</span>
               <h2>Operator actions</h2>
-              <p>Launch a new migration wave or review jobs that have entered failed state.</p>
+              <p>
+                {demoMode
+                  ? "Exercise a fictional migration wave or review the supplied failure evidence without contacting a worker."
+                  : "Launch a migration wave or review jobs that have entered failed state."}
+              </p>
             </div>
           </div>
           <div className="page-stack">
@@ -63,11 +70,11 @@ export default function MigrationsPage(): JSX.Element {
               <p>Use the detail view to inspect log entries and decide whether to resume, retry, or reconfigure.</p>
             </div>
             <button type="button" className="primary-button" onClick={() => setWizardOpen(true)}>
-              <span className="material-symbols-outlined">add</span>
+              <AppIcon name="add" />
               New migration
             </button>
             <button type="button" className="ghost-button" onClick={() => void api.downloadReport("/jobs.csv")}>
-              <span className="material-symbols-outlined">download</span>
+              <AppIcon name="download" />
               Download all runs
             </button>
           </div>
@@ -79,7 +86,11 @@ export default function MigrationsPage(): JSX.Element {
           <div>
             <span className="eyebrow">Job Monitor</span>
             <h2>Migration ledger</h2>
-            <p>The queue reflects the current API state and stays in sync through the polling store.</p>
+            <p>
+              {demoMode
+                ? "The queue polls deterministic in-memory demo state; all changes end with this browser session."
+                : "The queue reflects the configured external API and stays in sync through the polling store."}
+            </p>
           </div>
         </div>
         <JobTable jobs={jobs} onStart={(id) => void startJob(id)} onPause={(id) => setPauseTarget(id)} />

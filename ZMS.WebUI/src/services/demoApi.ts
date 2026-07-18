@@ -102,6 +102,14 @@ let jobs: MigrationJob[] = [
   }
 ];
 
+const initialConnections = cloned(connections);
+const initialJobs = cloned(jobs);
+
+export function resetDemoState(): void {
+  connections = cloned(initialConnections);
+  jobs = cloned(initialJobs);
+}
+
 export const demoApi = {
   getJobs: () => Promise.resolve(cloned(jobs)),
   getJob: (id: string) => Promise.resolve(cloned(jobs.find((job) => job.id === id))),

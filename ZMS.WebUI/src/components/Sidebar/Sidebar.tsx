@@ -1,8 +1,12 @@
 import { NavLink } from "react-router-dom";
+import AppIcon from "../AppIcon/AppIcon";
 import { navigationItems } from "../../utils/constants";
+import { isDemoMode } from "../../services/demoMode";
 import styles from "./Sidebar.module.css";
 
 export default function Sidebar(): JSX.Element {
+  const demoMode = isDemoMode();
+
   return (
     <aside className={styles.sidebar}>
       <div className={styles.brandBlock}>
@@ -14,8 +18,7 @@ export default function Sidebar(): JSX.Element {
           </div>
         </div>
         <p className={styles.copy}>
-          Relocate digital infrastructure from SharePoint farms and file shares into Microsoft 365 with operational
-          discipline.
+          Plan, inspect, and demonstrate migration-control workflows. Execution requires the separately owned backend.
         </p>
       </div>
 
@@ -26,16 +29,20 @@ export default function Sidebar(): JSX.Element {
             to={item.path}
             className={({ isActive }) => (isActive ? `${styles.link} ${styles.active}` : styles.link)}
           >
-            <span className="material-symbols-outlined">{item.icon}</span>
+            <AppIcon name={item.icon} />
             <span>{item.label}</span>
           </NavLink>
         ))}
       </nav>
 
       <div className={styles.engineCard}>
-        <span className={styles.eyebrow}>Engine Status</span>
-        <strong>ZettaStream Engine v4.2</strong>
-        <p>Batch orchestration, retry queues, and metadata handling are all surfaced through one controlled workspace.</p>
+        <span className={styles.eyebrow}>Runtime boundary</span>
+        <strong>{demoMode ? "Synthetic state active" : "External backend required"}</strong>
+        <p>
+          {demoMode
+            ? "Actions update fictional in-memory records only. No migration worker is connected."
+            : "This frontend observes configured API state; the migration worker is not included in this repository."}
+        </p>
       </div>
     </aside>
   );

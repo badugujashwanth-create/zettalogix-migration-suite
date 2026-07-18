@@ -1,10 +1,12 @@
 import { FormEvent, useMemo, useState } from "react";
+import AppIcon from "../components/AppIcon/AppIcon";
 import ConnectionCard from "../components/ConnectionCard/ConnectionCard";
 import EmptyState from "../components/EmptyState/EmptyState";
 import GoogleDriveFolderPicker, { GoogleDriveFolderSelection } from "../components/google/GoogleDriveFolderPicker";
 import { useAppStore } from "../hooks/useAppStore";
 import { formatConnectionType } from "../utils/formatters";
 import { ConnectionType, CreateConnectionInput } from "../utils/models";
+import { isDemoMode } from "../services/demoMode";
 
 const initialForm: CreateConnectionInput = {
   name: "",
@@ -103,6 +105,7 @@ function validateConnection(form: CreateConnectionInput): string | null {
 }
 
 export default function ConnectionsPage(): JSX.Element {
+  const demoMode = isDemoMode();
   const connections = useAppStore((state) => state.connections);
   const createConnection = useAppStore((state) => state.createConnection);
   const testConnection = useAppStore((state) => state.testConnection);
@@ -157,6 +160,10 @@ export default function ConnectionsPage(): JSX.Element {
   };
 
   const typeSummary = useMemo(() => {
+    if (demoMode) {
+      return "Demo values are fictional, remain in memory, and are never sent to Google, Microsoft, or a migration API.";
+    }
+
     switch (form.type) {
       case "GoogleDrive":
         return "Paste a Google Drive folder link. The backend uses configured Google credentials for migration.";
@@ -169,7 +176,7 @@ export default function ConnectionsPage(): JSX.Element {
       default:
         return "Register a reusable migration endpoint.";
     }
-  }, [form.type]);
+  }, [demoMode, form.type]);
 
   return (
     <div className="page-stack">
@@ -179,7 +186,11 @@ export default function ConnectionsPage(): JSX.Element {
             <div>
               <span className="eyebrow">Register Gateway</span>
               <h2>Add source or destination connection</h2>
-              <p>Store reusable endpoints with the credentials needed for real discovery, validation, and direct transfer.</p>
+              <p>
+                {demoMode
+                  ? "Create fictional endpoints to exercise validation and job setup. Values are not transmitted or persisted."
+                  : "Register reusable endpoints for the separately operated migration backend."}
+              </p>
             </div>
           </div>
 
@@ -223,7 +234,7 @@ export default function ConnectionsPage(): JSX.Element {
                 </label>
                 {form.folderName ? (
                   <div className="selected-folder full-width">
-                    <span className="material-symbols-outlined">folder</span>
+                    <AppIcon name="folder" />
                     <div>
                       <strong>{form.folderName}</strong>
                       <p>{form.folderUrl}</p>
@@ -301,7 +312,9 @@ export default function ConnectionsPage(): JSX.Element {
 
             {form.type === "GoogleDrive" ? (
               <p className="inline-message full-width">
-                Google authentication is configured on the backend. This screen only needs the source folder link.
+                {demoMode
+                  ? "Synthetic mode does not load Google Picker or contact Google Drive. Use a fictional folder link."
+                  : "Google authentication is configured on the backend. This screen only needs the source folder link."}
               </p>
             ) : null}
 

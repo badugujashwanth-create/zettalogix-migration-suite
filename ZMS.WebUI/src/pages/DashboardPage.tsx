@@ -4,8 +4,10 @@ import LoadingBlock from "../components/LoadingBlock/LoadingBlock";
 import { useAppStore } from "../hooks/useAppStore";
 import { useJobsPolling } from "../hooks/useJobsPolling";
 import { getDashboardSummary } from "../utils/formatters";
+import { isDemoMode } from "../services/demoMode";
 
 export default function DashboardPage(): JSX.Element {
+  const demoMode = isDemoMode();
   const jobs = useAppStore((state) => state.jobs);
   const connections = useAppStore((state) => state.connections);
   const loading = useAppStore((state) => state.loading.bootstrap || state.loading.jobs);
@@ -33,7 +35,11 @@ export default function DashboardPage(): JSX.Element {
         <article className="surface-card hero-stat">
           <span className="eyebrow">Migration Throughput</span>
           <strong>{summary.runningJobs}</strong>
-          <p>Jobs are currently running across the suite, with state refreshed from the live migration API.</p>
+          <p>
+            {demoMode
+              ? "Fictional jobs are running in local browser state; no migration worker is connected."
+              : "Jobs are refreshed from the configured external migration API."}
+          </p>
         </article>
 
         <article className="tonal-card">
@@ -41,14 +47,18 @@ export default function DashboardPage(): JSX.Element {
             <div>
               <span className="eyebrow">System Health</span>
               <h2>Operational confidence</h2>
-              <p>Connection quality, failure pressure, and completion rates stay visible without switching workspaces.</p>
+              <p>
+                {demoMode
+                  ? "Readiness is derived from the inspectable synthetic connections, jobs, and failure counts below."
+                  : "Connection quality, failure pressure, and completion rates reflect the configured API state."}
+              </p>
             </div>
           </div>
           <div className="meta-grid">
             <div className="metric-box">
               <span>Healthy gateways</span>
               <strong>{summary.connectedSources}</strong>
-              <p>Endpoints ready for source or destination traffic.</p>
+              <p>Endpoints reported healthy in the current dataset.</p>
             </div>
             <div className="metric-box">
               <span>At risk</span>
@@ -58,7 +68,7 @@ export default function DashboardPage(): JSX.Element {
             <div className="metric-box">
               <span>Completed waves</span>
               <strong>{summary.completedJobs}</strong>
-              <p>Migrations closed without operator escalation.</p>
+              <p>{demoMode ? "Synthetic waves marked complete in local state." : "Migrations closed without operator escalation."}</p>
             </div>
           </div>
         </article>

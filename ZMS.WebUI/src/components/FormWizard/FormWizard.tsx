@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import AppIcon from "../AppIcon/AppIcon";
 import { ConnectionRecord, CreateJobInput } from "../../utils/models";
 import { formatConnectionType } from "../../utils/formatters";
 import styles from "./FormWizard.module.css";
@@ -265,7 +266,7 @@ export default function FormWizard({
                 <li>Monitor retries for locked or denied items after start.</li>
               </ul>
               <Link className={styles.helpLink} to="/help" onClick={onClose}>
-                <span className="material-symbols-outlined">help</span>
+                <AppIcon name="help" />
                 Open Help Center
               </Link>
             </div>

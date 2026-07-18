@@ -1,4 +1,5 @@
 import { formatConnectionType, formatDate } from "../../utils/formatters";
+import AppIcon from "../AppIcon/AppIcon";
 import { getErrorGuidance } from "../../utils/errorHelp";
 import { ConnectionRecord } from "../../utils/models";
 import styles from "./ConnectionCard.module.css";
@@ -69,7 +70,7 @@ export default function ConnectionCard({ connection, onTest }: ConnectionCardPro
       ) : null}
 
       <button type="button" className="ghost-button" onClick={() => onTest(connection.id)}>
-        <span className="material-symbols-outlined">bolt</span>
+        <AppIcon name="bolt" />
         {testLabel}
       </button>
     </article>

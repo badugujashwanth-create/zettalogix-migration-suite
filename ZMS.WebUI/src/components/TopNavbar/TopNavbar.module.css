@@ -131,6 +131,15 @@
   font-weight: 700;
 }
 
+.modePill {
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: var(--warning-soft);
+  color: var(--warning);
+  font-size: 13px;
+  font-weight: 800;
+}
+
 .iconButton {
   width: 48px;
   height: 48px;

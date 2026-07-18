@@ -9,7 +9,7 @@ export const navigationItems = [
 export const pageTitles: Record<string, { title: string; subtitle: string }> = {
   "/dashboard": {
     title: "Operational Ledger",
-    subtitle: "A premium control surface for pipeline velocity, migration health, and endpoint readiness."
+    subtitle: "Inspect pipeline state, migration health, and endpoint readiness with the runtime boundary always visible."
   },
   "/migrations": {
     title: "Migration Monitor",
@@ -25,6 +25,6 @@ export const pageTitles: Record<string, { title: string; subtitle: string }> = {
   },
   "/settings": {
     title: "Execution Defaults",
-    subtitle: "Tune worker concurrency, retries, and operational signals for the migration control plane."
+    subtitle: "Review client-side concurrency, retry, notification, and telemetry defaults."
   }
 };
