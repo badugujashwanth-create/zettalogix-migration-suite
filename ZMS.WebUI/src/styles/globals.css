@@ -235,11 +235,13 @@ textarea:focus {
 
 .page-grid,
 .page-stack {
+  min-width: 0;
   display: grid;
   gap: 20px;
 }
 
 .detail-grid {
+  min-width: 0;
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.8fr);
   gap: 20px;
@@ -480,6 +482,7 @@ textarea:focus {
 }
 
 .meta-grid {
+  min-width: 0;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
@@ -521,6 +524,7 @@ textarea:focus {
 }
 
 .split-panel {
+  min-width: 0;
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
   align-items: start;
@@ -528,12 +532,23 @@ textarea:focus {
 }
 
 .two-column {
+  min-width: 0;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
 }
 
-@media (max-width: 1120px) {
+.detail-grid > *,
+.meta-grid > *,
+.split-panel > *,
+.two-column > * {
+  min-width: 0;
+}
+
+/* Account for the persistent 292px sidebar when deciding whether multi-column
+   content has enough room. The previous viewport-only breakpoint let the main
+   grid exceed its content column in the desktop shell. */
+@media (max-width: 1600px) {
   .detail-grid,
   .error-panel,
   .split-panel,

@@ -75,6 +75,44 @@ function createWindow() {
       setTimeout(async () => {
         try {
           await fs.mkdir(path.dirname(capturePath), { recursive: true });
+          const overflow = await mainWindow.webContents.executeJavaScript(`(() => {
+            const viewportWidth = document.documentElement.clientWidth;
+            const documentWidth = document.documentElement.scrollWidth;
+            const offenders = [...document.querySelectorAll("body *")]
+              .map((element) => {
+                const rect = element.getBoundingClientRect();
+                return {
+                  tag: element.tagName.toLowerCase(),
+                  className: typeof element.className === "string" ? element.className : "",
+                  left: Math.round(rect.left),
+                  right: Math.round(rect.right),
+                  width: Math.round(rect.width)
+                };
+              })
+              .filter((item) => item.left < -1 || item.right > viewportWidth + 1)
+              .slice(0, 12);
+            const splitPanel = document.querySelector(".split-panel");
+            const ancestors = [];
+            for (let element = splitPanel; element; element = element.parentElement) {
+              const rect = element.getBoundingClientRect();
+              const style = getComputedStyle(element);
+              ancestors.push({
+                tag: element.tagName.toLowerCase(),
+                className: typeof element.className === "string" ? element.className : "",
+                left: Math.round(rect.left),
+                right: Math.round(rect.right),
+                width: Math.round(rect.width),
+                cssWidth: style.width,
+                minWidth: style.minWidth,
+                display: style.display,
+                gridTemplateColumns: style.gridTemplateColumns
+              });
+            }
+            return { viewportWidth, documentWidth, offenders, ancestors };
+          })()`);
+          if (overflow.documentWidth > overflow.viewportWidth + 1) {
+            console.error(`Renderer horizontal overflow: ${JSON.stringify(overflow)}`);
+          }
           const image = await mainWindow.webContents.capturePage();
           await fs.writeFile(capturePath, image.toPNG());
         } catch (error) {

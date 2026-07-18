@@ -6,6 +6,7 @@
 }
 
 .contentWrap {
+  min-width: 0;
   padding: 24px 24px 32px;
 }
 
@@ -68,6 +69,7 @@
 
 .main {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 20px;
 }
 
