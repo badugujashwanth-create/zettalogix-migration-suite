@@ -219,7 +219,7 @@ export default function ConnectionsPage(): JSX.Element {
               <>
                 <div className="form-note full-width">
                   <strong>Google Drive Folder Link</strong>
-                  <p>Paste the Google Drive folder link you want to migrate.</p>
+                  <p>{demoMode ? "Use a fictional folder link to exercise validation." : "Paste the Google Drive folder link you want to migrate."}</p>
                 </div>
                 <div className="full-width">
                   <GoogleDriveFolderPicker onFolderSelected={selectGoogleFolder} disabled={loading} />
@@ -340,7 +340,11 @@ export default function ConnectionsPage(): JSX.Element {
             <div className="metric-box">
               <span>Registered gateways</span>
               <strong>{connections.length}</strong>
-              <p>Available for discovery, target validation, and job creation from the migration wizard.</p>
+              <p>
+                {demoMode
+                  ? "Available to the local synthetic job wizard only."
+                  : "Available for discovery, target validation, and job creation from the migration wizard."}
+              </p>
             </div>
           </div>
         </article>

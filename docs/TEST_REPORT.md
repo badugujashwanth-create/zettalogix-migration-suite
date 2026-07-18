@@ -1,20 +1,22 @@
 # Test report
 
-Audited on 2026-07-18 using the checked-out `portfolio-polish` branch on Windows.
+Last local verification: 19 July 2026, Windows, Node 24, branch `product-completion-v0.3`.
 
-| Command | Result | Evidence / notes |
+| Command | Result | Scope |
 |---|---|---|
-| `ZMS.WebUI: npm ci` | Pass | 480 packages installed |
-| `ZMS.WebUI: npm run build` | Pass | TypeScript and Vite production build completed after the recruiter-safe synthetic demo was added |
-| `ZMS.WebUI: npm test` | Pass | 2 synthetic workflow tests verify job state transitions, connection health mutation, and zero live `fetch` calls |
-| `ZMS.WebUI: npm audit --omit=dev` | Pass | 0 production dependency vulnerabilities after `npm audit fix` |
-| `ZMS.DesktopApp: npm ci` | Pass | 70 packages installed |
-| `https://sharepoint-one.vercel.app` | Pass | HTTP 200 and the Zettalogix Migration Suite title verified on 2026-07-17 |
+| `ZMS.WebUI: npm test` | **7 passed** | demo state transitions, reset, zero-fetch boundary, and evidence-derived readiness |
+| `ZMS.WebUI: npm run build` | Pass | TypeScript and Vite 8 production build |
+| `ZMS.WebUI: npm run build:desktop` | Pass | relative-asset renderer build for packaged Electron hosting |
+| `ZMS.WebUI: npm audit` | Pass | 0 vulnerabilities across production and development dependencies |
+| `ZMS.DesktopApp: npm test` | **2 passed** | HTTPS-only external-link allowlist and unsafe-target rejection |
+| `ZMS.DesktopApp: npm audit` | Pass | 0 vulnerabilities |
+| renderer visual audit | Pass | dashboard, readiness, connections, settings, and accelerated final-tour state captured from Electron |
+| 5:40 walkthrough | Pending | full-duration capture, audio, 13 frames, checksum, and manual inspection required before release |
 
-## Overall status
+## Regression boundaries
 
-Verified for the commands listed above. Unlisted platforms, deployments, external providers, and optional integrations were not inferred to work.
+Demo API calls must not reach `fetch`; demo auth must not initialize Supabase; Google Picker must remain unloaded; external-backend ownership must stay visible; readiness must use only inspectable fields; running jobs cannot be started twice; unsafe Electron popups must be denied.
 
-Warnings and missing checks remain limitations, even when another check passes.
+## Not covered
 
-The development toolchain still reports audit findings through Vite 5/esbuild. The affected development server is not part of the deployed static bundle; upgrading to Vite 8 is a breaking change and was not forced into this release.
+No real migration worker, production content move, live Supabase tenant, provider credential, OAuth redirect, SharePoint or Google Drive tenant, staging API contract, packaged installer, macOS/Linux Electron behavior, or enterprise accessibility review is claimed. The existing public Vercel URL remains the v0.2 baseline until a separately authorized deployment is verified.

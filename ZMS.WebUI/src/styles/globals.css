@@ -36,6 +36,10 @@ textarea {
   font: inherit;
 }
 
+input[type="checkbox"] {
+  accent-color: var(--accent);
+}
+
 button {
   cursor: pointer;
 }
@@ -519,6 +523,7 @@ textarea:focus {
 .split-panel {
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+  align-items: start;
   gap: 20px;
 }
 

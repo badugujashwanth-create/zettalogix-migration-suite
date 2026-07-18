@@ -1,6 +1,7 @@
 import { PropsWithChildren } from "react";
 import NotificationCenter from "../components/NotificationCenter/NotificationCenter";
 import AppIcon from "../components/AppIcon/AppIcon";
+import DemoTour from "../components/DemoTour/DemoTour";
 import Sidebar from "../components/Sidebar/Sidebar";
 import TopNavbar from "../components/TopNavbar/TopNavbar";
 import { useAppBootstrap } from "../hooks/useAppBootstrap";
@@ -45,6 +46,7 @@ export default function AppLayout({ children }: PropsWithChildren): JSX.Element 
         <main className={styles.main}>{children}</main>
       </div>
       <NotificationCenter />
+      <DemoTour />
     </div>
   );
 }

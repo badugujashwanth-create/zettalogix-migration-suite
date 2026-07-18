@@ -59,21 +59,34 @@ export default function MigrationDetailPage(): JSX.Element {
               </p>
             </div>
             <div className="action-group">
-              <button type="button" className="primary-button" onClick={() => void startJob(job.id)} disabled={job.status === "Completed"}>
+              <button
+                type="button"
+                className="primary-button"
+                onClick={() => void startJob(job.id)}
+                disabled={job.status === "Running" || job.status === "Completed"}
+              >
                 Start
               </button>
               <button type="button" className="ghost-button" onClick={() => setConfirmOpen(true)} disabled={job.status !== "Running"}>
                 Pause
               </button>
-              <button type="button" className="ghost-button" onClick={() => void api.downloadReport(`/jobs/${job.id}/summary.csv`)}>
-                Summary CSV
-              </button>
-              <button type="button" className="ghost-button" onClick={() => void api.downloadReport(`/jobs/${job.id}/items.csv`)}>
-                Items CSV
-              </button>
-              <button type="button" className="ghost-button" onClick={() => void api.downloadReport(`/jobs/${job.id}/logs.csv`)}>
-                Logs CSV
-              </button>
+              {demoMode ? (
+                <button type="button" className="ghost-button" onClick={() => void api.downloadReport("/jobs.csv")}>
+                  Synthetic report CSV
+                </button>
+              ) : (
+                <>
+                  <button type="button" className="ghost-button" onClick={() => void api.downloadReport(`/jobs/${job.id}/summary.csv`)}>
+                    Summary CSV
+                  </button>
+                  <button type="button" className="ghost-button" onClick={() => void api.downloadReport(`/jobs/${job.id}/items.csv`)}>
+                    Items CSV
+                  </button>
+                  <button type="button" className="ghost-button" onClick={() => void api.downloadReport(`/jobs/${job.id}/logs.csv`)}>
+                    Logs CSV
+                  </button>
+                </>
+              )}
             </div>
           </div>
 
@@ -113,7 +126,7 @@ export default function MigrationDetailPage(): JSX.Element {
         </article>
 
         {readiness ? (
-          <article className="surface-card">
+          <article className="surface-card" data-demo-id="migration-readiness">
             <div className="section-heading">
               <div>
                 <span className="eyebrow">Evidence-derived preflight</span>

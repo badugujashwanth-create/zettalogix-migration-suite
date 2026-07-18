@@ -69,7 +69,7 @@ export default function MigrationsPage(): JSX.Element {
               <strong>{failedJobs.length}</strong>
               <p>Use the detail view to inspect log entries and decide whether to resume, retry, or reconfigure.</p>
             </div>
-            <button type="button" className="primary-button" onClick={() => setWizardOpen(true)}>
+            <button data-demo-id="new-migration" type="button" className="primary-button" onClick={() => setWizardOpen(true)}>
               <AppIcon name="add" />
               New migration
             </button>

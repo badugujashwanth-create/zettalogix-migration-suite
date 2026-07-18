@@ -172,6 +172,7 @@ export default function TopNavbar(): JSX.Element {
         <label className={styles.search}>
           <AppIcon name="search" />
           <input
+            data-demo-id="global-search"
             type="text"
             placeholder="Search jobs, sites, libraries"
             value={searchTerm}

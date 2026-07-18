@@ -1,41 +1,25 @@
-# Zettalogix Migration Suite interview guide
+# Interview guide
 
-## Tell me about this project.
+## What is Zettalogix?
 
-This repository contains React and Electron client surfaces for authenticating, configuring, monitoring, and reviewing content-migration jobs handled by an external backend.
+A React/Electron migration-control prototype that makes job setup, state, connection evidence, and operational guidance inspectable while keeping the separately owned backend boundary explicit.
 
-## Why did you build it?
+## What did you implement here?
 
-Migration operators need a clear control plane for complex jobs, status, and evidence without dealing directly with backend worker internals.
+The owned work is the web client, synthetic state machine, search, job and connection workflows, evidence-derived readiness, local settings, failure guidance, Electron security boundary, CI, documentation, and authentic demo. Do not imply authorship or verification of the referenced external worker.
 
-## What was your contribution?
+## What was technically difficult?
 
-Discuss the frontend/Electron client architecture, authentication surface, UI behavior, build verification, deployment, portable documentation, and demo. State clearly that the backend is external and owned in another repository.
+The main challenge was making a useful evaluator path without fake integration claims. Demo mode now bypasses Supabase, provider SDKs, and API fetches; all copy changes with runtime mode; readiness is a pure function over visible state; and Electron captures only its own renderer for repeatable evidence.
 
-## What was the hardest technical problem?
+## How was it tested?
 
-Designing useful client states around an external API/auth boundary that is not available in every local environment.
+Seven web tests cover the synthetic workflow and readiness, two Node tests cover desktop external-link enforcement, TypeScript/Vite builds pass for web and relative-asset desktop output, both dependency trees audit clean, and current Electron renderer captures are manually inspected.
 
-## How does the architecture work?
+## What does v0.3 not prove?
 
-The React/Vite web client and Electron shell call external API/auth services through environment configuration. Vercel hosts the verified public frontend; migration workers are not in this repository.
+It does not prove production migrations, an owned worker, live provider credentials, OAuth redirect correctness, tenant permissions, installer signing, staging API compatibility, or enterprise accessibility.
 
-## What would you improve?
+## What comes next?
 
-Add an authorized mock/contract server, API schema validation, client tests, Electron packaging checks, and end-to-end tests against a sanctioned staging backend.
-
-## How did you test it?
-
-The WebUI TypeScript/Vite production build and CI pass, and the public frontend returns HTTP 200. No automated test script or external migration execution is claimed.
-
-## What are its security limitations?
-
-OAuth redirects, Supabase/auth configuration, external API origins, tokens, and desktop storage require environment-specific review. No backend security claim is made here.
-
-## How would you scale it?
-
-The client is mostly static; scale concerns live in external APIs/workers. The UI should paginate job evidence, stream status carefully, and avoid polling overload.
-
-## What did you learn?
-
-Ownership and service boundaries must be explicit. A polished client is not evidence that an external migration engine was authored or production-verified here.
+With authority over a backend or sanctioned contract server, add schema validation, discovery inventory, dry-run manifests, checkpoint/retry evidence, paginated history, signed packaging, and end-to-end tests against a controlled staging tenant.

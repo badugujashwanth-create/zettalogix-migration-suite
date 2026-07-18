@@ -1,16 +1,40 @@
 WEBVTT
 
-00:00.000 --> 00:05.000
-Zettalogix Migration Suite
+00:00.000 --> 00:25.000
+Zettalogix v0.3 begins in a visibly bounded synthetic workspace. Fictional local state is separated from external migration, identity, and provider services.
 
-00:05.000 --> 00:15.000
-The problem, intended user, and starting point.
+00:25.000 --> 00:50.000
+Cross-workspace search resolves jobs, connections, and help topics from the current in-memory dataset.
 
-00:15.000 --> 00:35.000
-A walkthrough of the primary workflow using safe demonstration data.
+00:50.000 --> 01:15.000
+The migration ledger shows running and completed synthetic work without claiming a connected worker.
 
-00:35.000 --> 00:46.000
-Architecture, technology boundaries, and verified behavior.
+01:15.000 --> 01:40.000
+The four-step blueprint covers discovery, source, destination, and review while preserving the external-backend boundary.
 
-00:46.000 --> 00:55.500
-Current status, known limitation, and repository owner badugujashwanth-create.
+01:40.000 --> 02:10.000
+A legal-records draft is created in local state with inspectable source, destination, and metadata fields.
+
+02:10.000 --> 02:40.000
+Starting the draft adds deterministic progress and event evidence without a network request.
+
+02:40.000 --> 03:10.000
+Pausing the job records another local operator event. Reset restores the repeatable baseline.
+
+03:10.000 --> 03:35.000
+Readiness is derived only from connection health, mapping fields, failure count, and event history. It is not predictive AI.
+
+03:35.000 --> 04:00.000
+The connection inventory uses fictional values and does not load provider SDKs in demo mode.
+
+04:00.000 --> 04:25.000
+A synthetic connection check updates local state and produces visible confirmation.
+
+04:25.000 --> 04:50.000
+Concurrency, retries, notifications, and telemetry are browser-only planning defaults here.
+
+04:50.000 --> 05:15.000
+The help center documents setup, errors, official resources, and external ownership boundaries.
+
+05:15.000 --> 05:40.000
+The full synthetic workflow is complete. Production migrations and the external backend remain outside the verified claim.

@@ -2,7 +2,9 @@
 
 ## Supported status
 
-Zettalogix Migration Suite is maintained as a portfolio project and Only frontend and desktop-shell code are present. The backend is external and was not modified or claimed as included.
+Zettalogix Migration Suite is maintained as a portfolio project. Only frontend and desktop-shell code are present; the backend is external and was not modified or claimed as included.
+
+The Electron renderer uses context isolation, sandboxing, no Node integration, a content security policy, and HTTPS-only external window handling. Demo mode bypasses Supabase, provider SDK loading, and migration API fetches.
 
 ## Reporting a vulnerability
 
