@@ -17,5 +17,7 @@ Use GitHub's private vulnerability reporting feature when it is enabled. Otherwi
 - Rotate any credential that was previously committed; deleting it from the current branch does not remove Git history.
 - Use synthetic or public sample data for tests, screenshots, and recordings.
 
+The secret-scan configuration has one narrow historical exception: Gitleaks classified a public Supabase browser publishable key in two exact `.env.example` commits as a generic API key. The current example contains placeholders, and the exception requires both an exact commit and exact example-file path. No service-role key, database credential, private token, or current-tree value is allowlisted.
+
 No response-time or production support commitment is implied.
 
