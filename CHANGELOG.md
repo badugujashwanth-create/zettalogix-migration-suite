@@ -23,4 +23,4 @@
 - demo mode does not initialize Supabase, Google Picker, or migration API fetches; and
 - Electron denies unsafe popup targets.
 
-[0.3.0]: https://github.com/badugujashwanth-create/zettalogix-migration-suite/compare/pre-rename-20260718...HEAD
+[0.3.0]: https://github.com/badugujashwanth-create/zettalogix-migration-suite/releases/tag/v0.3.0

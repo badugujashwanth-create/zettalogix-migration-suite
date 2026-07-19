@@ -1,10 +1,10 @@
 # Zettalogix Migration Suite
 
-> **Status: v0.3.0 release candidate** — a verified React/Electron migration-control prototype with a network-free synthetic workflow. The migration API and worker are external and are not contained or claimed here.
+> **Status: v0.3.0** — a verified React/Electron migration-control prototype with a network-free synthetic workflow. The migration API and worker are external and are not contained or claimed here.
 
 [![Watch the 5:40 Zettalogix walkthrough](docs/demo/demo-thumbnail.png)](docs/demo/demo.webm)
 
-[Live v0.2 frontend](https://sharepoint-one.vercel.app) · [Synthetic demo](https://sharepoint-one.vercel.app/login?demo=1) · [Architecture](docs/ARCHITECTURE.md) · [Test evidence](docs/TEST_REPORT.md) · [Maturity gaps](docs/MATURITY_GAP_MATRIX.md)
+[Live v0.3 frontend](https://sharepoint-one.vercel.app) · [Synthetic demo](https://sharepoint-one.vercel.app/dashboard?demo=1) · [Architecture](docs/ARCHITECTURE.md) · [Test evidence](docs/TEST_REPORT.md) · [Maturity gaps](docs/MATURITY_GAP_MATRIX.md)
 
 Zettalogix gives migration operators one client surface for job setup, monitoring, connection inventory, evidence review, settings, and guidance. In v0.3, the local demo visibly separates inspectable UI behavior from external execution authority.
 
@@ -56,7 +56,7 @@ See [TEST_REPORT.md](docs/TEST_REPORT.md) for current results and explicit non-c
 
 ## Deployment
 
-The v0.2 public baseline is hosted on Vercel. `render.yaml` also describes a static frontend. The v0.3 release should be deployed only after merge and provider authorization; the separately owned backend is not provisioned by this repository.
+The merged v0.3 frontend is hosted on Vercel and was verified against the canonical URL and immutable deployment asset bundle. `render.yaml` also describes a static frontend. This deployment proves the client build only; the separately owned backend is not provisioned or claimed by this repository.
 
 ## License status
 
