@@ -11,7 +11,9 @@ Last local verification: 19 July 2026, Windows, Node 24, branch `product-complet
 | `ZMS.DesktopApp: npm test` | **2 passed** | HTTPS-only external-link allowlist and unsafe-target rejection |
 | `ZMS.DesktopApp: npm audit` | Pass | 0 vulnerabilities |
 | renderer visual audit | Pass | dashboard, readiness, connections, settings, and accelerated final-tour state captured from Electron |
-| 5:40 walkthrough | Pending | full-duration capture, audio, 13 frames, checksum, and manual inspection required before release |
+| 5:40 walkthrough | Pass | 340.008 seconds, 1280x720 VP9/Opus, non-silent narration, captions, 13 inspected frames, and SHA-256 manifest |
+
+The first full capture exposed horizontal overflow in the desktop shell. The main grid track and responsive breakpoints were corrected, the affected migration and wizard states were recaptured without overflow, and the entire walkthrough was then rerun. The accepted artifact is 8,043,809 bytes with SHA-256 `a72e0dc52f1e63b84f7f474a95d89f4d070a26953b82165024a5332418d77936`; narration measures -22.9 dB mean and -2.7 dB peak.
 
 ## Regression boundaries
 

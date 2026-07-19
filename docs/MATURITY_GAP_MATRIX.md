@@ -10,4 +10,4 @@
 | Testing | 7 web tests, 2 desktop tests, CI build and audits | no browser E2E or sanctioned backend contract test | credible client baseline |
 | Accessibility | semantic controls, focus states, responsive captures | no NVDA/Narrator or keyboard journey report | manual verification pending |
 | Deployment | public v0.2 Vercel baseline and static Render definition | v0.3 URL not yet deployed | release checkpoint |
-| Demo | timed 13-scene network-free tour and local recorder | final 5:40 artifact must be inspected | release gate pending |
+| Demo | accepted 5:40 network-free tour, narration, captions, checksum, and 13 inspected frames | no authorized live-worker recording is claimed | release evidence complete |
