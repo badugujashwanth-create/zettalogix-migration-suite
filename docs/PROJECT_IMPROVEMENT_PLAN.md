@@ -1,35 +1,21 @@
-# Project Improvement Plan
+# Project improvement plan
 
-## Current state
+## Completed in v0.3
 
-Zettalogix is a strong migration-control prototype whose external API/worker is not contained here. The baseline frontend built and deployed but lacked automated tests and required configured services to demonstrate its workflow.
+- Removed critical/high development dependency findings by upgrading Vite, Vitest, and the React plugin.
+- Made synthetic mode visibly and technically network-free for auth, migration API, Google Picker, fonts, and icons.
+- Removed the invented engine-version claim and made live/demo copy boundary-aware.
+- Added deterministic reset, a 13-scene tour, evidence-derived readiness, state-aware controls, and honest demo export.
+- Hardened Electron with sandboxing, CSP, external-window enforcement, desktop routing/build support, and boundary tests.
+- Expanded tests from 2 to 9 across web and desktop surfaces.
 
-## Findings
+## P1 after v0.3
 
-- **Works:** job/connection domain UI, search, dashboards, state-aware controls, settings, Electron shell, production build, and video.
-- **Does not / missing:** owned migration worker, proven production migrations, automated tests, checkpoint/retry execution evidence, and local Ollama behavior.
-- **UX / architecture:** frontend/backend boundary is clear, but the public evaluator path was gated by auth. External ownership must stay explicit.
-- **Testing / security:** browser values are separated from server secrets; live Supabase/provider configurations are external and not comprehensively verified.
-- **Performance / docs / demo:** bundle is reasonable. Credential/backend dependence was the primary demo blocker.
+- Add an authorized API contract fixture and schema validation without copying the external backend.
+- Add keyboard and screen-reader journey evidence.
+- Add signed Electron packaging and Windows/macOS/Linux smoke coverage.
+- Add discovery inventory, dry-run manifest, checkpoint, and retry views only after an owned worker contract exists.
 
-## Recommendations
+## Release acceptance
 
-### Critical
-
-- Provide a clearly labeled, deterministic synthetic workflow that exercises job creation, start/pause state, history, connection tests, settings, and export without network calls.
-- Preserve fail-closed live authentication and accurate external-backend attribution.
-
-### High value
-
-- Add unit tests for the demo state machine and browser smoke coverage for the main demo path.
-- Add readiness/risk modeling only if it derives from inspectable inputs.
-
-### Optional
-
-- Add checkpoint/retry visualizations after an owned worker contract exists.
-
-## Delivery constraints
-
-- **Priority:** recruiter-safe demo; **complexity:** medium; **dependencies:** frontend only for demo, external services for live mode.
-- **Acceptance:** production build passes; demo uses fictional data, makes no provider/API calls, supports real local state transitions, and downloads a report.
-- **Excluded:** claiming production migrations, copying the external backend, and fake AI recommendations.
+Web and desktop checks, full dependency audits, secret scans, Markdown links, renderer screenshots, the 5:40 narrated walkthrough, 13 extracted frames, CI, PR review, backup tag, merge, and GitHub release must all agree with public claims.

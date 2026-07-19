@@ -1,11 +1,12 @@
 {
   "name": "zms-desktop-app",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "private": true,
   "main": "electron/main.cjs",
   "scripts": {
     "start": "electron .",
-    "dev": "electron ."
+    "dev": "electron .",
+    "test": "node --test electron/*.test.cjs"
   },
   "devDependencies": {
     "electron": "^41.5.0"

@@ -24,3 +24,13 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
+      - run: npm audit
+      - name: Install desktop shell dependencies
+        run: npm ci
+        working-directory: ZMS.DesktopApp
+      - name: Test desktop shell boundaries
+        run: npm test
+        working-directory: ZMS.DesktopApp
+      - name: Audit desktop shell dependencies
+        run: npm audit
+        working-directory: ZMS.DesktopApp

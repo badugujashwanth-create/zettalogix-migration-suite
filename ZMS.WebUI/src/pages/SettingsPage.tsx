@@ -1,7 +1,9 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { useAppStore } from "../hooks/useAppStore";
+import { isDemoMode } from "../services/demoMode";
 
 export default function SettingsPage(): JSX.Element {
+  const demoMode = isDemoMode();
   const settings = useAppStore((state) => state.settings);
   const saveSettings = useAppStore((state) => state.saveSettings);
   const loading = useAppStore((state) => state.loading.settings);
@@ -35,7 +37,11 @@ export default function SettingsPage(): JSX.Element {
           <div>
             <span className="eyebrow">Runtime Controls</span>
             <h2>Execution defaults</h2>
-            <p>These values drive worker behavior, retries, and notifications for the starter migration control plane.</p>
+            <p>
+              {demoMode
+                ? "These fictional defaults are stored in this browser only; no worker or telemetry service receives them."
+                : "These client defaults are stored locally and require backend support to affect worker execution."}
+            </p>
           </div>
         </div>
 
@@ -85,12 +91,20 @@ export default function SettingsPage(): JSX.Element {
           <div className="metric-box">
             <span>Concurrency</span>
             <strong>{form.concurrency}</strong>
-            <p>Higher values increase parallel batch processing pressure in the migration engine.</p>
+            <p>
+              {demoMode
+                ? "Displayed for planning only; no migration engine is connected."
+                : "Higher values request more parallel processing from a compatible external worker."}
+            </p>
           </div>
           <div className="metric-box">
             <span>Retry policy</span>
             <strong>{form.retryLimit}</strong>
-            <p>Failed file operations can be re-queued this many times before being surfaced in reporting.</p>
+            <p>
+              {demoMode
+                ? "A synthetic policy value for the walkthrough; it does not execute retries."
+                : "A compatible external worker may re-queue failed operations up to this client default."}
+            </p>
           </div>
         </div>
       </article>

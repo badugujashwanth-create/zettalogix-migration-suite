@@ -1,0 +1,11 @@
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Historical public Supabase browser publishable key; current examples use placeholders"
+condition = "AND"
+commits = [
+  "708240baef512eac482353e5b52dd9860ce85599",
+  "f0214d526417c3071f5e6d4005c62bea5e082015",
+]
+paths = ['''^(?:ZettalogixMigrationSuite/)?ZMS\.WebUI/\.env\.example$''']

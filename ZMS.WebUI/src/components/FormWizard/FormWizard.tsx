@@ -1,7 +1,9 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import AppIcon from "../AppIcon/AppIcon";
 import { ConnectionRecord, CreateJobInput } from "../../utils/models";
 import { formatConnectionType } from "../../utils/formatters";
+import { isDemoMode } from "../../services/demoMode";
 import styles from "./FormWizard.module.css";
 
 interface FormWizardProps {
@@ -34,6 +36,7 @@ export default function FormWizard({
   onSubmit,
   loading
 }: FormWizardProps): JSX.Element | null {
+  const demoMode = isDemoMode();
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<CreateJobInput>(initialForm);
 
@@ -95,7 +98,7 @@ export default function FormWizard({
             <h3>Blueprint a new migration wave</h3>
             <p>Use a staged workflow so discovery, endpoint selection, and review remain clear for operators.</p>
           </div>
-          <button type="button" className="ghost-button" onClick={onClose}>
+          <button data-demo-id="close-wizard" type="button" className="ghost-button" onClick={onClose}>
             Close
           </button>
         </div>
@@ -124,8 +127,9 @@ export default function FormWizard({
                 <div className={styles.callout}>
                   <strong>Discovery profile</strong>
                   <p>
-                    Discovery now comes from the connector-backed API layer, including file share, SharePoint, and
-                    Google Drive sources.
+                    {demoMode
+                      ? "Discovery uses fictional connection records in this browser session; no provider or API is contacted."
+                      : "Discovery depends on the configured external API and its file share, SharePoint, or Google Drive connector."}
                   </p>
                 </div>
               </div>
@@ -260,12 +264,12 @@ export default function FormWizard({
               <span className="eyebrow">Readiness Guide</span>
               <strong>Operator checklist</strong>
               <ul>
-                <li>Validate source connectivity before scheduling the run.</li>
-                <li>Confirm the target SharePoint site and document library already exist.</li>
-                <li>Monitor retries for locked or denied items after start.</li>
+                <li>{demoMode ? "Inspect the supplied synthetic source state." : "Validate source connectivity before scheduling the run."}</li>
+                <li>{demoMode ? "Use only fictional destination values." : "Confirm the target SharePoint site and document library already exist."}</li>
+                <li>{demoMode ? "Review local transitions and failure evidence." : "Monitor retries for locked or denied items after start."}</li>
               </ul>
               <Link className={styles.helpLink} to="/help" onClick={onClose}>
-                <span className="material-symbols-outlined">help</span>
+                <AppIcon name="help" />
                 Open Help Center
               </Link>
             </div>

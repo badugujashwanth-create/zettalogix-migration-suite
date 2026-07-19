@@ -1,6 +1,7 @@
-import { afterAll, beforeAll, expect, test, vi } from "vitest";
+import { afterAll, beforeAll, beforeEach, expect, test, vi } from "vitest";
 
 import { api } from "./api";
+import { resetDemoState } from "./demoApi";
 
 const storage = new Map<string, string>();
 const originalWindow = globalThis.window;
@@ -26,6 +27,11 @@ beforeAll(() => {
 afterAll(() => {
   Object.defineProperty(globalThis, "window", { configurable: true, value: originalWindow });
   globalThis.fetch = originalFetch;
+});
+
+beforeEach(() => {
+  storage.clear();
+  resetDemoState();
 });
 
 test("synthetic demo performs job state transitions without the live API", async () => {
@@ -80,4 +86,24 @@ test("synthetic connection tests update real local state", async () => {
   expect(result.isSuccess).toBe(true);
   expect((await api.getConnections()).find((item) => item.id === created.id)?.status).toBe("Healthy");
   expect(globalThis.fetch).not.toHaveBeenCalled();
+});
+
+test("synthetic state resets to a repeatable two-job baseline", async () => {
+  const created = await api.createJob({
+    name: "Temporary demo wave",
+    sourceConnectionId: "demo-source",
+    targetConnectionId: "demo-target",
+    sourcePath: "/Temporary",
+    sourceLibraryName: "Temporary",
+    targetSite: "https://contoso.example/sites/records",
+    targetLibrary: "Temporary Records",
+    targetLibraryUrlSegment: "temporary",
+    targetRootPath: "/2026",
+    preserveMetadata: true
+  });
+  expect(await api.getJob(created.id)).toBeDefined();
+
+  resetDemoState();
+  expect(await api.getJobs()).toHaveLength(2);
+  expect(await api.getJob(created.id)).toBeUndefined();
 });

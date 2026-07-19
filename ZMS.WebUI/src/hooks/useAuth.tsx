@@ -20,7 +20,11 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
-  const supabase = useMemo(() => isSupabaseConfigured() ? createClient() : null, []);
+  const demoMode = isDemoMode();
+  const supabase = useMemo(
+    () => demoMode || !isSupabaseConfigured() ? null : createClient(),
+    [demoMode]
+  );
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 

@@ -2,6 +2,7 @@ import type { Provider } from "@supabase/supabase-js";
 import type { FormEvent } from "react";
 import { useState } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import AppIcon from "../components/AppIcon/AppIcon";
 import { useAuth } from "../hooks/useAuth";
 import { enableDemoMode } from "../services/demoMode";
 import styles from "./AuthPage.module.css";
@@ -85,7 +86,7 @@ export default function AuthPage(): JSX.Element {
             navigate("/dashboard", { replace: true });
           }}
         >
-          <span className="material-symbols-outlined">science</span>
+          <AppIcon name="science" />
           Explore the synthetic demo
         </button>
         <p>Demo mode uses only fictional data and never calls migration or identity services.</p>
@@ -99,7 +100,7 @@ export default function AuthPage(): JSX.Element {
               onClick={() => void beginOAuth(item.provider)}
               disabled={Boolean(pendingProvider)}
             >
-              <span className="material-symbols-outlined">{item.icon}</span>
+              <AppIcon name={item.icon} />
               {pendingProvider === item.provider ? "Redirecting..." : item.label}
             </button>
           ))}
@@ -121,7 +122,7 @@ export default function AuthPage(): JSX.Element {
             />
           </label>
           <button type="submit" className={styles.emailButton} disabled={pendingEmail || Boolean(pendingProvider)}>
-            <span className="material-symbols-outlined">mail</span>
+            <AppIcon name="mail" />
             {pendingEmail ? "Sending link..." : "Send sign-in link"}
           </button>
         </form>

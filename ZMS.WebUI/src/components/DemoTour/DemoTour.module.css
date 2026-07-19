@@ -1,0 +1,36 @@
+.tourCard {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 100;
+  width: min(420px, calc(100vw - 32px));
+  border: 1px solid var(--outline-strong);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.96);
+  padding: 16px 18px;
+  box-shadow: var(--shadow-float);
+}
+
+.sceneLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tourCard strong {
+  color: var(--text-strong);
+  font-size: 17px;
+}
+
+.tourCard p {
+  margin: 7px 0 0;
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}

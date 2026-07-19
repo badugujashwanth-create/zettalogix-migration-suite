@@ -1,56 +1,63 @@
-# Zettalogix Migration Suite Frontend
+# Zettalogix Migration Suite
 
-> **Status: prototype** — the operator UI builds successfully. This repository does not contain or claim the external migration backend.
+> **Status: v0.3.0 release candidate** — a verified React/Electron migration-control prototype with a network-free synthetic workflow. The migration API and worker are external and are not contained or claimed here.
 
-[![Watch the Zettalogix Migration Suite demo](docs/demo/demo-thumbnail.png)](docs/demo/demo.webm)
+[![Watch the 5:40 Zettalogix walkthrough](docs/demo/demo-thumbnail.png)](docs/demo/demo.webm)
 
-> Watch the verified public frontend overview. The external backend is outside this repository and was not modified.
+[Live v0.2 frontend](https://sharepoint-one.vercel.app) · [Synthetic demo](https://sharepoint-one.vercel.app/login?demo=1) · [Architecture](docs/ARCHITECTURE.md) · [Test evidence](docs/TEST_REPORT.md) · [Maturity gaps](docs/MATURITY_GAP_MATRIX.md)
 
-[Live frontend](https://sharepoint-one.vercel.app) · [Synthetic demo](https://sharepoint-one.vercel.app/login?demo=1) · [Architecture](docs/ARCHITECTURE.md) · [Test evidence](docs/TEST_REPORT.md) · [Interview guide](docs/INTERVIEW_GUIDE.md)
+Zettalogix gives migration operators one client surface for job setup, monitoring, connection inventory, evidence review, settings, and guidance. In v0.3, the local demo visibly separates inspectable UI behavior from external execution authority.
 
-This repository contains the React/Vite operator UI and Electron shell for Zettalogix Migration Suite. The frontend calls the backend through `VITE_API_BASE_URL`; it does not store or execute backend secrets.
+## Verified synthetic workflow
 
-## Recruiter-safe synthetic demo
+- cross-workspace search across jobs, connections, and help topics;
+- deterministic migration ledger and four-step job blueprint;
+- local create, start, and pause transitions with event evidence;
+- readiness derived from connection health, mappings, failures, and history;
+- fictional connection registration and testing without provider SDK calls;
+- browser-only execution defaults, reset, and CSV export;
+- hardened Electron shell with sandboxing, HTTPS-only external windows, and CSP; and
+- a built-in 13-scene, 5:40 guided simulation with captions and verification frames.
 
-Choose **Explore the synthetic demo** on the login screen (or use the link above) to inspect the dashboard, search, connections, job creation, start/pause transitions, job history, settings, and CSV export without an account. Demo mode:
-
-- uses clearly fictional, deterministic records;
-- stores the mode only in the browser session;
-- makes no Supabase, migration API, SharePoint, or Google Drive requests; and
-- does not imply that the external migration worker is part of this repository.
+The demo URL uses fictional records stored for the browser session. It does not call Supabase, the migration API, SharePoint, or Google Drive; it does not load Google Picker; and it does not claim that a worker moved content.
 
 ## Repository contents
 
-- `ZMS.WebUI`: React/Vite operator UI.
-- `ZMS.DesktopApp`: Electron shell for loading the web UI.
-- `docs/demo`: verified walkthrough, captions, script, and recording guidance.
+- `ZMS.WebUI`: React, TypeScript, Vite, Zustand, Supabase client boundary, synthetic API, and tests.
+- `ZMS.DesktopApp`: Electron host with context isolation, sandboxing, and external-link enforcement.
+- `docs/demo`: authentic walkthrough, narration, captions, storyboard, and verification evidence.
+- `scripts`: local demo, renderer capture, and audit utilities.
 
-The backend API and migration worker are referenced at `https://github.com/machander-byte/sharepoint_backend.git`. That repository is not present locally and was not modified or verified in this audit.
+The referenced backend is `https://github.com/machander-byte/sharepoint_backend.git`. It was not copied, modified, or verified as part of this release.
 
 ## Local setup
 
-For the synthetic demo, only the frontend is required:
-
 ```powershell
-Set-Location "sharepoint\ZMS.WebUI"
-npm install
-npm run dev
+npm ci --prefix ZMS.WebUI
+npm ci --prefix ZMS.DesktopApp
+npm run dev --prefix ZMS.WebUI -- --host 127.0.0.1
 ```
 
-Open `http://localhost:5173/login?demo=1` and choose **Explore the synthetic demo**.
+Open `http://127.0.0.1:5173/dashboard?demo=1`. For the timed walkthrough, add `&tour=1`.
 
-For authenticated/live operation, copy `.env.example` to `.env`, configure the browser-safe Supabase and API values, and start the external backend (typically at `http://localhost:5206`).
+For authenticated/live client behavior, copy `ZMS.WebUI/.env.example` to `.env`, provide browser-safe Supabase and API values, and operate an authorized compatible backend. Never place provider secrets, refresh tokens, database URLs, or data-protection keys in frontend environment files.
 
-## Frontend environment
+## Verification
 
-`ZMS.WebUI/.env` must contain browser-safe values only. Do not add SharePoint client secrets, Google client secrets or refresh tokens, database connection strings, or Data Protection paths.
+```powershell
+npm test --prefix ZMS.WebUI
+npm run build --prefix ZMS.WebUI
+npm audit --prefix ZMS.WebUI
+npm test --prefix ZMS.DesktopApp
+npm audit --prefix ZMS.DesktopApp
+```
+
+See [TEST_REPORT.md](docs/TEST_REPORT.md) for current results and explicit non-claims.
 
 ## Deployment
 
-The existing frontend is deployed on Vercel. A static Render configuration is also present in `render.yaml`. Since Vite bakes environment variables at build time, redeploy after changing `VITE_API_BASE_URL`.
-
-See [the test report](docs/TEST_REPORT.md), [architecture](docs/ARCHITECTURE.md), and [demo script](docs/demo/DEMO_SCRIPT.md) for evidence and limitations.
+The v0.2 public baseline is hosted on Vercel. `render.yaml` also describes a static frontend. The v0.3 release should be deployed only after merge and provider authorization; the separately owned backend is not provisioned by this repository.
 
 ## License status
 
-No license file is currently present. All rights remain with the copyright holder unless a license is added manually.
+No license file is present. All rights remain with the copyright holder unless a license is added after ownership and compatibility review.

@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
+import AppIcon from "../AppIcon/AppIcon";
+import { isDemoMode } from "../../services/demoMode";
 
 const googleApiScriptUrl = "https://apis.google.com/js/api.js";
 const googleIdentityScriptUrl = "https://accounts.google.com/gsi/client";
@@ -249,10 +251,11 @@ export default function GoogleDriveFolderPicker({
   const developerKey = import.meta.env.VITE_GOOGLE_API_KEY?.trim() ?? "";
   const appId = import.meta.env.VITE_GOOGLE_APP_ID?.trim() ?? "";
   const scope = import.meta.env.VITE_GOOGLE_DRIVE_SCOPE?.trim() || defaultDriveScope;
+  const demoMode = isDemoMode();
 
   const isConfigured = useMemo(
-    () => Boolean(clientId && developerKey && appId),
-    [appId, clientId, developerKey]
+    () => !demoMode && Boolean(clientId && developerKey && appId),
+    [appId, clientId, demoMode, developerKey]
   );
 
   const [isReady, setIsReady] = useState(false);
@@ -371,7 +374,7 @@ export default function GoogleDriveFolderPicker({
         disabled={disabled || !isConfigured || !isReady || isOpening}
         onClick={() => void openPicker()}
       >
-        <span className="material-symbols-outlined">drive_folder_upload</span>
+        <AppIcon name="drive_folder_upload" />
         {isOpening ? "Opening Google Picker..." : "Choose Google Drive Folder"}
       </button>
       {message ? <p className="inline-message success">{message}</p> : null}

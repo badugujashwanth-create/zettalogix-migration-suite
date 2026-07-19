@@ -1,3 +1,4 @@
+import AppIcon from "../components/AppIcon/AppIcon";
 import styles from "./AuthPage.module.css";
 
 interface AuthStatusPageProps {
@@ -9,7 +10,7 @@ export default function AuthStatusPage({ title, message }: AuthStatusPageProps):
   return (
     <main className={styles.authShell}>
       <section className={styles.statusPanel}>
-        <span className="material-symbols-outlined">lock</span>
+        <AppIcon name="lock" />
         <h1>{title}</h1>
         <p>{message}</p>
       </section>
