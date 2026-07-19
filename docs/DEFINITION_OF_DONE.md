@@ -11,9 +11,9 @@
 - [x] Current Electron renderer screenshots are inspected.
 - [x] Full 5:40 video, audio, captions, 13 frames, and checksums are inspected.
 - [x] Markdown links and current-tree/full-history secret scans pass.
-- [ ] Pull request CI is green and reviewed.
+- [x] Pull request CI is green and reviewed.
 - [ ] Backup tag, merge, final tag, and GitHub release are complete.
-- [ ] Authorized v0.3 hosted URL is verified, or the deployment checkpoint is documented.
+- [x] Authorized v0.3 hosted URL is verified, or the deployment checkpoint is documented.
 
 ## Product status
 
