@@ -14,6 +14,7 @@ Last local verification: 19 July 2026, Windows, Node 24, branch `product-complet
 | 5:40 walkthrough | Pass | 340.008 seconds, 1280x720 VP9/Opus, non-silent narration, captions, 13 inspected frames, and SHA-256 manifest |
 | post-merge CI | Pass | GitHub Actions run `29701149902` repeated web and desktop verification on merge commit `c6afea7` |
 | hosted v0.3 frontend | Pass | canonical and immutable Vercel URLs returned the same v0.3 asset bundle and synthetic runtime markers |
+| GitHub release | Pass | tag `v0.3.0` resolves to `ba8e54f`; all five uploaded asset digests match the local release evidence |
 
 The first full capture exposed horizontal overflow in the desktop shell. The main grid track and responsive breakpoints were corrected, the affected migration and wizard states were recaptured without overflow, and the entire walkthrough was then rerun. The accepted artifact is 8,043,809 bytes with SHA-256 `a72e0dc52f1e63b84f7f474a95d89f4d070a26953b82165024a5332418d77936`; narration measures -22.9 dB mean and -2.7 dB peak.
 

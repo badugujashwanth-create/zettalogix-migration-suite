@@ -12,7 +12,7 @@
 - [x] Full 5:40 video, audio, captions, 13 frames, and checksums are inspected.
 - [x] Markdown links and current-tree/full-history secret scans pass.
 - [x] Pull request CI is green and reviewed.
-- [ ] Backup tag, merge, final tag, and GitHub release are complete.
+- [x] Backup tag, merge, final tag, and GitHub release are complete.
 - [x] Authorized v0.3 hosted URL is verified, or the deployment checkpoint is documented.
 
 ## Product status
