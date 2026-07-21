@@ -1,6 +1,8 @@
 # Test report
 
-Last local verification: 19 July 2026, Windows, Node 24, branch `product-completion-v0.3`.
+Release verification: 19 July 2026, Windows, Node 24, branch `product-completion-v0.3`.
+
+Fresh recruiter-evidence reconciliation: 21 July 2026, branch `phase5-zettalogix-recruiter-evidence`; web/desktop tests, builds, dependency audits, and diff integrity were rerun. The first audit detected new transitive `body-parser` and `brace-expansion` advisories; a non-breaking lockfile remediation upgraded them to fixed versions, after which both dependency trees reported 0 vulnerabilities. CI now repeats the full-history Gitleaks gate with `gitleaks-action@v3`.
 
 | Command | Result | Scope |
 |---|---|---|

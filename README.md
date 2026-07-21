@@ -6,7 +6,7 @@
 
 [Open MP4](https://jashwanth-portfolio-ten.vercel.app/media/zettalogix/demo.mp4) · [Download WebM](https://jashwanth-portfolio-ten.vercel.app/media/zettalogix/demo.webm) · [Captions](https://jashwanth-portfolio-ten.vercel.app/media/zettalogix/demo-captions.vtt)
 
-[Live v0.3 frontend](https://sharepoint-one.vercel.app) · [Synthetic demo](https://sharepoint-one.vercel.app/dashboard?demo=1) · [Architecture](docs/ARCHITECTURE.md) · [Test evidence](docs/TEST_REPORT.md) · [Maturity gaps](docs/MATURITY_GAP_MATRIX.md)
+[Live v0.3 frontend](https://sharepoint-one.vercel.app) · [Synthetic demo](https://sharepoint-one.vercel.app/dashboard?demo=1) · [Case study](docs/CASE_STUDY.md) · [Architecture](docs/ARCHITECTURE.md) · [Test evidence](docs/TEST_REPORT.md) · [Interview guide](docs/INTERVIEW_GUIDE.md) · [Maturity gaps](docs/MATURITY_GAP_MATRIX.md)
 
 Zettalogix gives migration operators one client surface for job setup, monitoring, connection inventory, evidence review, settings, and guidance. In v0.3, the local demo visibly separates inspectable UI behavior from external execution authority.
 
