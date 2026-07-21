@@ -2,7 +2,9 @@
 
 > **Status: v0.3.0** — a verified React/Electron migration-control prototype with a network-free synthetic workflow. The migration API and worker are external and are not contained or claimed here.
 
-[![Watch the 5:40 Zettalogix walkthrough](docs/demo/demo-thumbnail.png)](docs/demo/demo.webm)
+[![Watch the 5:40 Zettalogix walkthrough](docs/demo/demo-thumbnail.png)](https://jashwanth-portfolio-ten.vercel.app/work/zettalogix-migration-suite/)
+
+[Open MP4](https://jashwanth-portfolio-ten.vercel.app/media/zettalogix/demo.mp4) · [Download WebM](https://jashwanth-portfolio-ten.vercel.app/media/zettalogix/demo.webm) · [Captions](https://jashwanth-portfolio-ten.vercel.app/media/zettalogix/demo-captions.vtt)
 
 [Live v0.3 frontend](https://sharepoint-one.vercel.app) · [Synthetic demo](https://sharepoint-one.vercel.app/dashboard?demo=1) · [Architecture](docs/ARCHITECTURE.md) · [Test evidence](docs/TEST_REPORT.md) · [Maturity gaps](docs/MATURITY_GAP_MATRIX.md)
 
